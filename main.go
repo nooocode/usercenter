@@ -15,7 +15,7 @@ import (
 
 func main() {
 	config.SetProviderService(&provider.UserProvider{})
-	if err := config.Load(config.WithPath("./dubbogo.yaml")); err != nil {
+	if err := config.Load(); err != nil {
 		panic(err)
 	}
 	fmt.Println("started server")
