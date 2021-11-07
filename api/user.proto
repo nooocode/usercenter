@@ -1,0 +1,22 @@
+syntax="proto3";
+package usercenter;
+option go_package = "./;usercenter";
+
+import "common.proto";
+
+service User{
+    rpc Login(LoginRequest)returns(LoginResponse){}
+}
+
+message LoginRequest{
+    string userName=1;
+    string password=2;
+    string wechatUnionID=3;
+    string wechatOpenID=4;
+}
+
+message LoginResponse{
+    Code code=1;
+    string message=2;
+    string data=3;
+}
