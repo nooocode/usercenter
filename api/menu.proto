@@ -1,3 +1,44 @@
 syntax="proto3";
 package usercenter;
 option go_package = "./;usercenter";
+
+import "common.proto";
+
+service Menu{
+    rpc Add(MenuInfo)returns(CommonResponse){}
+    rpc Update(MenuInfo)returns(CommonResponse){}
+    rpc Delete(DelRequest)returns(CommonResponse){}
+    rpc Query(QueryMenuRequest)returns(QueryMenuResponse){}
+    rpc Enable(EnableRequest)returns(CommonResponse){}
+    rpc GetAll(GetAllRequest)returns(GetAllMenuResponse){}
+    rpc GetDetail(GetDetailRequest)returns(GetMenuDetailResponse){}
+}
+
+message MenuInfo{}
+
+message QueryMenuRequest{
+    int64 pageIndex=1;
+    int64 pageSize=2;
+    string orderField=3;
+    bool desc=4;
+    string name=5;
+    string path=6;
+    string title=7;
+    string parentID=8;
+    int32 level=9;
+}
+
+message QueryMenuResponse{
+    Code code=1;
+    string message=2;
+    repeated MenuInfo data=3;
+    int64 pages=4;
+    int64 records=5;
+    int64 total=6;
+}
+
+message GetAllMenuResponse{
+
+}
+
+message GetMenuDetailResponse{}

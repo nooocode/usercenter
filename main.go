@@ -7,6 +7,8 @@ import (
 	"syscall"
 	"time"
 
+	"codeup.aliyun.com/atali/usercenter/model"
+	"codeup.aliyun.com/atali/usercenter/model/token"
 	"codeup.aliyun.com/atali/usercenter/provider"
 	"dubbo.apache.org/dubbo-go/v3/common/logger"
 	"dubbo.apache.org/dubbo-go/v3/config"
@@ -15,9 +17,17 @@ import (
 
 func main() {
 	config.SetProviderService(&provider.UserProvider{})
+	config.SetProviderService(&provider.TenantProvider{})
+	config.SetProviderService(&provider.RoleProvider{})
+	config.SetProviderService(&provider.MenuProvider{})
+	config.SetProviderService(&provider.APIProvider{})
 	if err := config.Load(); err != nil {
 		panic(err)
 	}
+	params := config.GetRootConfig().ConfigCenter.Params
+	fmt.Println(params)
+	model.Init(params["mysql"], params["debug"] == "true")
+	token.InitTokenCache(params["token-key"], params["redis-addr"], params["redis-user-name"], params["redis-pwd"], 120)
 	fmt.Println("started server")
 	initSignal()
 }

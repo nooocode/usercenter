@@ -28,6 +28,17 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserClient interface {
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, common.ErrorWithAttachment)
+	Add(ctx context.Context, in *UserInfo, opts ...grpc.CallOption) (*CommonResponse, common.ErrorWithAttachment)
+	Update(ctx context.Context, in *UserInfo, opts ...grpc.CallOption) (*CommonResponse, common.ErrorWithAttachment)
+	Delete(ctx context.Context, in *DelRequest, opts ...grpc.CallOption) (*CommonResponse, common.ErrorWithAttachment)
+	Query(ctx context.Context, in *QueryUserRequest, opts ...grpc.CallOption) (*QueryUserResponse, common.ErrorWithAttachment)
+	GetProfile(ctx context.Context, in *GetDetailRequest, opts ...grpc.CallOption) (*GetProfileResponse, common.ErrorWithAttachment)
+	Enable(ctx context.Context, in *EnableRequest, opts ...grpc.CallOption) (*CommonResponse, common.ErrorWithAttachment)
+	GetAll(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*GetAllUserResponse, common.ErrorWithAttachment)
+	GetDetail(ctx context.Context, in *GetDetailRequest, opts ...grpc.CallOption) (*GetUserDetailResponse, common.ErrorWithAttachment)
+	ResetPwd(ctx context.Context, in *GetDetailRequest, opts ...grpc.CallOption) (*CommonResponse, common.ErrorWithAttachment)
+	ChangePwd(ctx context.Context, in *ChangePwdRequest, opts ...grpc.CallOption) (*CommonResponse, common.ErrorWithAttachment)
+	Logout(ctx context.Context, in *LogoutRequest, opts ...grpc.CallOption) (*CommonResponse, common.ErrorWithAttachment)
 }
 
 type userClient struct {
@@ -35,7 +46,18 @@ type userClient struct {
 }
 
 type UserClientImpl struct {
-	Login func(ctx context.Context, in *LoginRequest) (*LoginResponse, error)
+	Login      func(ctx context.Context, in *LoginRequest) (*LoginResponse, error)
+	Add        func(ctx context.Context, in *UserInfo) (*CommonResponse, error)
+	Update     func(ctx context.Context, in *UserInfo) (*CommonResponse, error)
+	Delete     func(ctx context.Context, in *DelRequest) (*CommonResponse, error)
+	Query      func(ctx context.Context, in *QueryUserRequest) (*QueryUserResponse, error)
+	GetProfile func(ctx context.Context, in *GetDetailRequest) (*GetProfileResponse, error)
+	Enable     func(ctx context.Context, in *EnableRequest) (*CommonResponse, error)
+	GetAll     func(ctx context.Context, in *GetAllRequest) (*GetAllUserResponse, error)
+	GetDetail  func(ctx context.Context, in *GetDetailRequest) (*GetUserDetailResponse, error)
+	ResetPwd   func(ctx context.Context, in *GetDetailRequest) (*CommonResponse, error)
+	ChangePwd  func(ctx context.Context, in *ChangePwdRequest) (*CommonResponse, error)
+	Logout     func(ctx context.Context, in *LogoutRequest) (*CommonResponse, error)
 }
 
 func (c *UserClientImpl) GetDubboStub(cc *triple.TripleConn) UserClient {
@@ -52,11 +74,88 @@ func (c *userClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.C
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/Login", in, out)
 }
 
+func (c *userClient) Add(ctx context.Context, in *UserInfo, opts ...grpc.CallOption) (*CommonResponse, common.ErrorWithAttachment) {
+	out := new(CommonResponse)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/Add", in, out)
+}
+
+func (c *userClient) Update(ctx context.Context, in *UserInfo, opts ...grpc.CallOption) (*CommonResponse, common.ErrorWithAttachment) {
+	out := new(CommonResponse)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/Update", in, out)
+}
+
+func (c *userClient) Delete(ctx context.Context, in *DelRequest, opts ...grpc.CallOption) (*CommonResponse, common.ErrorWithAttachment) {
+	out := new(CommonResponse)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/Delete", in, out)
+}
+
+func (c *userClient) Query(ctx context.Context, in *QueryUserRequest, opts ...grpc.CallOption) (*QueryUserResponse, common.ErrorWithAttachment) {
+	out := new(QueryUserResponse)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/Query", in, out)
+}
+
+func (c *userClient) GetProfile(ctx context.Context, in *GetDetailRequest, opts ...grpc.CallOption) (*GetProfileResponse, common.ErrorWithAttachment) {
+	out := new(GetProfileResponse)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetProfile", in, out)
+}
+
+func (c *userClient) Enable(ctx context.Context, in *EnableRequest, opts ...grpc.CallOption) (*CommonResponse, common.ErrorWithAttachment) {
+	out := new(CommonResponse)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/Enable", in, out)
+}
+
+func (c *userClient) GetAll(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*GetAllUserResponse, common.ErrorWithAttachment) {
+	out := new(GetAllUserResponse)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetAll", in, out)
+}
+
+func (c *userClient) GetDetail(ctx context.Context, in *GetDetailRequest, opts ...grpc.CallOption) (*GetUserDetailResponse, common.ErrorWithAttachment) {
+	out := new(GetUserDetailResponse)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetDetail", in, out)
+}
+
+func (c *userClient) ResetPwd(ctx context.Context, in *GetDetailRequest, opts ...grpc.CallOption) (*CommonResponse, common.ErrorWithAttachment) {
+	out := new(CommonResponse)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ResetPwd", in, out)
+}
+
+func (c *userClient) ChangePwd(ctx context.Context, in *ChangePwdRequest, opts ...grpc.CallOption) (*CommonResponse, common.ErrorWithAttachment) {
+	out := new(CommonResponse)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/ChangePwd", in, out)
+}
+
+func (c *userClient) Logout(ctx context.Context, in *LogoutRequest, opts ...grpc.CallOption) (*CommonResponse, common.ErrorWithAttachment) {
+	out := new(CommonResponse)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/Logout", in, out)
+}
+
 // UserServer is the server API for User service.
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility
 type UserServer interface {
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
+	Add(context.Context, *UserInfo) (*CommonResponse, error)
+	Update(context.Context, *UserInfo) (*CommonResponse, error)
+	Delete(context.Context, *DelRequest) (*CommonResponse, error)
+	Query(context.Context, *QueryUserRequest) (*QueryUserResponse, error)
+	GetProfile(context.Context, *GetDetailRequest) (*GetProfileResponse, error)
+	Enable(context.Context, *EnableRequest) (*CommonResponse, error)
+	GetAll(context.Context, *GetAllRequest) (*GetAllUserResponse, error)
+	GetDetail(context.Context, *GetDetailRequest) (*GetUserDetailResponse, error)
+	ResetPwd(context.Context, *GetDetailRequest) (*CommonResponse, error)
+	ChangePwd(context.Context, *ChangePwdRequest) (*CommonResponse, error)
+	Logout(context.Context, *LogoutRequest) (*CommonResponse, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -67,6 +166,39 @@ type UnimplementedUserServer struct {
 
 func (UnimplementedUserServer) Login(context.Context, *LoginRequest) (*LoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
+}
+func (UnimplementedUserServer) Add(context.Context, *UserInfo) (*CommonResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Add not implemented")
+}
+func (UnimplementedUserServer) Update(context.Context, *UserInfo) (*CommonResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
+}
+func (UnimplementedUserServer) Delete(context.Context, *DelRequest) (*CommonResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
+}
+func (UnimplementedUserServer) Query(context.Context, *QueryUserRequest) (*QueryUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Query not implemented")
+}
+func (UnimplementedUserServer) GetProfile(context.Context, *GetDetailRequest) (*GetProfileResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProfile not implemented")
+}
+func (UnimplementedUserServer) Enable(context.Context, *EnableRequest) (*CommonResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Enable not implemented")
+}
+func (UnimplementedUserServer) GetAll(context.Context, *GetAllRequest) (*GetAllUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAll not implemented")
+}
+func (UnimplementedUserServer) GetDetail(context.Context, *GetDetailRequest) (*GetUserDetailResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDetail not implemented")
+}
+func (UnimplementedUserServer) ResetPwd(context.Context, *GetDetailRequest) (*CommonResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ResetPwd not implemented")
+}
+func (UnimplementedUserServer) ChangePwd(context.Context, *ChangePwdRequest) (*CommonResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChangePwd not implemented")
+}
+func (UnimplementedUserServer) Logout(context.Context, *LogoutRequest) (*CommonResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Logout not implemented")
 }
 func (s *UnimplementedUserServer) XXX_SetProxyImpl(impl protocol.Invoker) {
 	s.proxyImpl = impl
@@ -115,6 +247,259 @@ func _User_Login_Handler(srv interface{}, ctx context.Context, dec func(interfac
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_Add_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserInfo)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	invo := invocation.NewRPCInvocation("Add", args, nil)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/usercenter.User/Add",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).Add(ctx, req.(*UserInfo))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserInfo)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	invo := invocation.NewRPCInvocation("Update", args, nil)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/usercenter.User/Update",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).Update(ctx, req.(*UserInfo))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DelRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	invo := invocation.NewRPCInvocation("Delete", args, nil)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/usercenter.User/Delete",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).Delete(ctx, req.(*DelRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_Query_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	invo := invocation.NewRPCInvocation("Query", args, nil)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/usercenter.User/Query",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).Query(ctx, req.(*QueryUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_GetProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDetailRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	invo := invocation.NewRPCInvocation("GetProfile", args, nil)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/usercenter.User/GetProfile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).GetProfile(ctx, req.(*GetDetailRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_Enable_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EnableRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	invo := invocation.NewRPCInvocation("Enable", args, nil)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/usercenter.User/Enable",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).Enable(ctx, req.(*EnableRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_GetAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	invo := invocation.NewRPCInvocation("GetAll", args, nil)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/usercenter.User/GetAll",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).GetAll(ctx, req.(*GetAllRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_GetDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDetailRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	invo := invocation.NewRPCInvocation("GetDetail", args, nil)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/usercenter.User/GetDetail",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).GetDetail(ctx, req.(*GetDetailRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_ResetPwd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDetailRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	invo := invocation.NewRPCInvocation("ResetPwd", args, nil)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/usercenter.User/ResetPwd",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).ResetPwd(ctx, req.(*GetDetailRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_ChangePwd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChangePwdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	invo := invocation.NewRPCInvocation("ChangePwd", args, nil)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/usercenter.User/ChangePwd",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).ChangePwd(ctx, req.(*ChangePwdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_Logout_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LogoutRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	invo := invocation.NewRPCInvocation("Logout", args, nil)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/usercenter.User/Logout",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).Logout(ctx, req.(*LogoutRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -125,6 +510,50 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Login",
 			Handler:    _User_Login_Handler,
+		},
+		{
+			MethodName: "Add",
+			Handler:    _User_Add_Handler,
+		},
+		{
+			MethodName: "Update",
+			Handler:    _User_Update_Handler,
+		},
+		{
+			MethodName: "Delete",
+			Handler:    _User_Delete_Handler,
+		},
+		{
+			MethodName: "Query",
+			Handler:    _User_Query_Handler,
+		},
+		{
+			MethodName: "GetProfile",
+			Handler:    _User_GetProfile_Handler,
+		},
+		{
+			MethodName: "Enable",
+			Handler:    _User_Enable_Handler,
+		},
+		{
+			MethodName: "GetAll",
+			Handler:    _User_GetAll_Handler,
+		},
+		{
+			MethodName: "GetDetail",
+			Handler:    _User_GetDetail_Handler,
+		},
+		{
+			MethodName: "ResetPwd",
+			Handler:    _User_ResetPwd_Handler,
+		},
+		{
+			MethodName: "ChangePwd",
+			Handler:    _User_ChangePwd_Handler,
+		},
+		{
+			MethodName: "Logout",
+			Handler:    _User_Logout_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -6,6 +6,17 @@ import "common.proto";
 
 service User{
     rpc Login(LoginRequest)returns(LoginResponse){}
+    rpc Add(UserInfo)returns(CommonResponse){}
+    rpc Update(UserInfo)returns(CommonResponse){}
+    rpc Delete(DelRequest)returns(CommonResponse){}
+    rpc Query(QueryUserRequest)returns(QueryUserResponse){}
+    rpc GetProfile(GetDetailRequest)returns(GetProfileResponse){}
+    rpc Enable(EnableRequest)returns(CommonResponse){}
+    rpc GetAll(GetAllRequest)returns(GetAllUserResponse){}
+    rpc GetDetail(GetDetailRequest)returns(GetUserDetailResponse){}
+    rpc ResetPwd(GetDetailRequest)returns(CommonResponse){}
+    rpc ChangePwd(ChangePwdRequest)returns(CommonResponse){}
+    rpc Logout(LogoutRequest)returns(CommonResponse){}
 }
 
 message LoginRequest{
@@ -20,3 +31,78 @@ message LoginResponse{
     string message=2;
     string data=3;
 }
+
+message UserInfo{
+    string id=1;
+    string tenantID=2;
+    string userName=3;
+    string nickname=4;
+    repeated UserRole userRoles=5;
+    repeated string roleIDs=6;
+    bool enable=7;
+    string email=8;
+    string mobile=9;
+    string idCard=10;
+    string avatar=11;
+    string eid=12;
+    string title=13;
+    string description=14;
+    string realName=15;
+    bool gender=16;
+}
+
+message UserRole{
+    string id=1;
+    string userID=2;
+    string roleID=3;
+}
+
+message QueryUserRequest{
+    int64 pageIndex=1;
+    int64 pageSize=2;
+    string orderField=3;
+    bool desc=4;
+    string userName=5;
+    string nickname=6;
+    string idCard=7;
+    string mobile=8;
+    string title=9;
+    string userNames=10;
+    string wechatID=11;
+}
+
+message QueryUserResponse{
+    Code code=1;
+    string message=2;
+    repeated UserInfo data=3;
+    int64 pages=4;
+    int64 records=5;
+    int64 total=6;
+}
+
+message GetProfileResponse{
+    Code code=1;
+    string message=2;
+    UserInfo data=3;
+}
+
+message GetAllUserResponse{
+    Code code=1;
+    string message=2;
+    repeated UserInfo data=3;
+}
+
+message GetUserDetailResponse{
+    Code code=1;
+    string message=2;
+    UserInfo data=3;
+}
+
+message ChangePwdRequest{
+    string id=1;
+    string tenantID=2;
+    string newPwd=3;
+    string oldPwd=4;
+}
+
+message LogoutRequest{}

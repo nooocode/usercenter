@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"codeup.aliyun.com/atali/pkg/model"
+	apipb "codeup.aliyun.com/atali/usercenter/api"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 )
@@ -252,7 +253,7 @@ func DeleteRole(roleID string) (err error) {
 	})
 }
 
-func QueryRole(req *QueryRoleRequest, resp *QueryRoleResponse) {
+func QueryRole(req *apipb.QueryRoleRequest, resp *apipb.QueryRoleResponse) {
 	db := dbClient.DB().Model(&Role{})
 
 	if req.Name != "" {

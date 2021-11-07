@@ -4,6 +4,7 @@ import (
 	"errors"
 
 	"codeup.aliyun.com/atali/pkg/model"
+	apipb "codeup.aliyun.com/atali/usercenter/api"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 )
@@ -256,7 +257,7 @@ type QueryMenuResponse struct {
 //@description: 分页查询Menu
 //@param: api Menu, info PageInfo, order string, desc bool
 //@return: list []*Menu, total int64 , err error
-func QueryMenu(req *QueryMenuRequest, resp *QueryMenuResponse) {
+func QueryMenu(req *apipb.QueryMenuRequest, resp *apipb.QueryMenuResponse) {
 	db := dbClient.DB().Model(&Menu{})
 
 	if req.Name != "" {

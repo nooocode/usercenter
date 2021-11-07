@@ -3,8 +3,26 @@ package usercenter;
 option go_package = "./;usercenter";
 
 message CommonResponse{
-    int32 code=1;
+    Code code=1;
     string message=2;
+}
+
+message DelRequest{
+    string id=1;
+    string tenantID=2;
+}
+
+message EnableRequest{
+    string id=1;
+    string tenantID=2;
+    bool enable=3;
+}
+
+message GetAllRequest{}
+
+message GetDetailRequest{
+    string id=1;
+    string tenantID=2;
 }
 
 enum Code{

@@ -1,3 +1,52 @@
 syntax="proto3";
 package usercenter;
 option go_package = "./;usercenter";
+
+import "common.proto";
+
+service API{
+    rpc Add(APIInfo)returns(CommonResponse){}
+    rpc Update(APIInfo)returns(CommonResponse){}
+    rpc Delete(DelRequest)returns(CommonResponse){}
+    rpc Query(QueryAPIRequest)returns(QueryAPIResponse){}
+    rpc Enable(EnableRequest)returns(CommonResponse){}
+    rpc GetAll(GetAllRequest)returns(GetAllAPIResponse){}
+    rpc GetDetail(GetDetailRequest)returns(GetAPIDetailResponse){}
+}
+
+message APIInfo{
+    string id=1;
+    string tenantID=2;
+    string path=3;
+    string group=4;
+    string method=5;
+    string description=6;
+    bool enable=7;
+    bool checkAuth=8;
+    bool checkLogin=9;
+}
+
+message QueryAPIRequest{
+    int64 pageIndex=1;
+    int64 pageSize=2;
+    string orderField=3;
+    bool desc=4;
+    string path=5;
+    string method=6;
+    string group=7;
+    int32 checkAuth=8;
+    int32 checkLogin=9;
+}
+
+message QueryAPIResponse{
+    Code code=1;
+    string message=2;
+    repeated APIInfo data=3;
+    int64 pages=4;
+    int64 records=5;
+    int64 total=6;
+}
+
+message GetAllAPIResponse{}
+
+message GetAPIDetailResponse{}

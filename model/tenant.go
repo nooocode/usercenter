@@ -4,6 +4,7 @@ import (
 	"errors"
 
 	"codeup.aliyun.com/atali/pkg/model"
+	apipb "codeup.aliyun.com/atali/usercenter/api"
 	"github.com/jinzhu/copier"
 	"gorm.io/gorm"
 )
@@ -70,7 +71,7 @@ type QueryTenantResponse struct {
 	Data []*Tenant `json:"data"`
 }
 
-func QueryTenant(req *QueryTenantRequest, resp *QueryTenantResponse) {
+func QueryTenant(req *apipb.QueryTenantRequest, resp *apipb.QueryTenantResponse) {
 	db := dbClient.DB().Model(&Tenant{})
 	if req.Name != "" {
 		db = db.Where("name LIKE ?", "%"+req.Name+"%")

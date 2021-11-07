@@ -6,6 +6,7 @@ import (
 
 	"codeup.aliyun.com/atali/pkg/model"
 	"codeup.aliyun.com/atali/pkg/utils/log"
+	apipb "codeup.aliyun.com/atali/usercenter/api"
 )
 
 type API struct {
@@ -83,7 +84,7 @@ type QueryAPIResponse struct {
 //@description: 分页查询API
 //@param: api API, info PageInfo, order string, desc bool
 //@return: list []*API, total int64 , err error
-func QueryAPI(req *QueryAPIRequest, resp *QueryAPIResponse) {
+func QueryAPI(req *apipb.QueryAPIRequest, resp *apipb.QueryAPIResponse) {
 	db := dbClient.DB().Model(&API{})
 
 	if req.Path != "" {
@@ -184,15 +185,11 @@ func EnableAPI(id string, enable bool) error {
 }
 
 func updateNotCheckAuthRule() {
-	resp := &QueryAPIResponse{}
-	QueryAPI(&QueryAPIRequest{
+	resp := &apipb.QueryAPIResponse{}
+	QueryAPI(&apipb.QueryAPIRequest{
 		CheckAuth:  2,
 		CheckLogin: 1,
-		CommonRequest: model.CommonRequest{
-			PageInfo: model.PageInfo{
-				PageSize: 1000,
-			},
-		},
+		PageSize:   1000,
 	}, resp)
 	if resp.Code != model.Success {
 		log.Errorf(context.Background(), "updateNotCheckAuthRule error:%s", resp.Message)
@@ -221,14 +218,10 @@ func updateNotCheckAuthRule() {
 }
 
 func updateNotCheckLoginRule() {
-	resp := &QueryAPIResponse{}
-	QueryAPI(&QueryAPIRequest{
+	resp := &apipb.QueryAPIResponse{}
+	QueryAPI(&apipb.QueryAPIRequest{
 		CheckLogin: 2,
-		CommonRequest: model.CommonRequest{
-			PageInfo: model.PageInfo{
-				PageSize: 1000,
-			},
-		},
+		PageSize:   1000,
 	}, resp)
 	if resp.Code != model.Success {
 		log.Errorf(context.Background(), "updateNotCheckLoginRule error:%s", resp.Message)

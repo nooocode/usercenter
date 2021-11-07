@@ -155,7 +155,7 @@ type QueryUserResponse struct {
 //@description: 分页查询User
 //@param: user User, info PageInfo, order string, desc bool
 //@return: list []*User, total int64 , err error
-func QueryUser(req *QueryUserRequest, resp *QueryUserResponse) {
+func QueryUser(req *apipb.QueryUserRequest, resp *apipb.QueryUserResponse) {
 	db := dbClient.DB().Model(&User{})
 
 	if req.UserName != "" {
@@ -168,8 +168,8 @@ func QueryUser(req *QueryUserRequest, resp *QueryUserResponse) {
 		db = db.Where("nickname LIKE ?", "%"+req.Nickname+"%")
 	}
 
-	if req.IDCard != "" {
-		db = db.Where("id_card = ?", req.IDCard)
+	if req.IdCard != "" {
+		db = db.Where("id_card = ?", req.IdCard)
 	}
 
 	if req.Mobile != "" {
@@ -197,11 +197,6 @@ func QueryUser(req *QueryUserRequest, resp *QueryUserResponse) {
 	if err != nil {
 		resp.Code = model.InternalServerError
 		resp.Message = err.Error()
-	}
-	for _, user := range resp.Data {
-		user.Password = ""
-		user.WechatUnionID = ""
-		user.WechatOpenID = ""
 	}
 	resp.Total = resp.Records
 }
