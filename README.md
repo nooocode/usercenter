@@ -21,7 +21,7 @@ dubbo:
     address: 127.0.0.1:8848
     data-id: "usercenter"
     group: basic
-    namespace: atali
+    namespace: nooocode
 ```
 
 ```yaml
@@ -31,7 +31,7 @@ dubbo:
     address: 127.0.0.1:8848
     data-id: "usercenter"
     group: basic
-    namespace: atali
+    namespace: nooocode
     params:
       mysql: "root:123456@(127.0.0.1:3306)/usercenter?charset=utf8mb4&parseTime=True&loc=Local"
       debug: "true"
@@ -44,8 +44,8 @@ dubbo:
     name: usercenter
     module: local
     version: 1.0.0 
-    owner: guoxf
-    organization: atali
+    owner: nooocode
+    organization: nooocode
     metadata-type: local # 元数据上报方式，默认为本地
   metadata-report: # 元数据上报配置, 不包含此字段则不开启元数据上报，应用级服务发现依赖此字段，参考例子：https://github.com/apache/dubbo-go-samples/tree/master/registry/servicediscovery
     protocol: nacos # 元数据上报方式，支持nacos/zookeeper 
@@ -53,7 +53,7 @@ dubbo:
     username: ""
     password: ""
     timeout: "3s"
-    group: "atali"
+    group: "nooocode"
   registries:
     nacos:
       protocol: nacos
@@ -70,8 +70,8 @@ dubbo:
       UserProvider:
         protocol-ids: triple
         # interface is for registry
-        interface: org.atali.User
-        group: atali
+        interface: org.nooocode.User
+        group: nooocode
         version: 1.0.0
 ```
 * 操作二
