@@ -73,6 +73,30 @@ dubbo:
         interface: org.atali.User
         group: atali
         version: 1.0.0
+      TenantProvider:
+        protocol-ids: triple
+        # interface is for registry
+        interface: org.atali.Tenant
+        group: atali
+        version: 1.0.0
+      RoleProvider:
+        protocol-ids: triple
+        # interface is for registry
+        interface: org.atali.Role
+        group: atali
+        version: 1.0.0
+      MenuProvider:
+        protocol-ids: triple
+        # interface is for registry
+        interface: org.atali.Menu
+        group: atali
+        version: 1.0.0
+      APIProvider:
+        protocol-ids: triple
+        # interface is for registry
+        interface: org.atali.API
+        group: atali
+        version: 1.0.0
 ```
 * 操作二
 * 操作三  
