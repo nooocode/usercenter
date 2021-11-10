@@ -3,7 +3,7 @@ package model
 import (
 	"errors"
 
-	"codeup.aliyun.com/atali/pkg/model"
+	"github.com/nooocode/pkg/model"
 )
 
 type Title struct {

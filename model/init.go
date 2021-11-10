@@ -1,7 +1,7 @@
 package model
 
 import (
-	"codeup.aliyun.com/atali/pkg/db/mysql"
+	"github.com/nooocode/pkg/db/mysql"
 	"go.uber.org/zap"
 )
 

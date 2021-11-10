@@ -9,9 +9,9 @@ import (
 	"sync"
 	"time"
 
-	"codeup.aliyun.com/atali/pkg/utils/log"
 	"github.com/dgrijalva/jwt-go/v4"
 	"github.com/go-redis/redis/v8"
+	"github.com/nooocode/pkg/utils/log"
 	"github.com/patrickmn/go-cache"
 )
 

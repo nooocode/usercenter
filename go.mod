@@ -1,9 +1,8 @@
-module codeup.aliyun.com/atali/usercenter
+module github.com/nooocode/usercenter
 
 go 1.16
 
 require (
-	codeup.aliyun.com/atali/pkg v1.0.0
 	dubbo.apache.org/dubbo-go/v3 v3.0.0-rc3
 	github.com/casbin/casbin/v2 v2.28.3
 	github.com/casbin/gorm-adapter/v3 v3.2.12
@@ -12,6 +11,7 @@ require (
 	github.com/elithrar/simple-scrypt v1.3.0
 	github.com/go-redis/redis/v8 v8.11.4
 	github.com/jinzhu/copier v0.3.2
+	github.com/nooocode/pkg v1.0.1
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	go.uber.org/zap v1.19.1
 	google.golang.org/grpc v1.42.0

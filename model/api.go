@@ -4,9 +4,9 @@ import (
 	"context"
 	"errors"
 
-	"codeup.aliyun.com/atali/pkg/model"
-	"codeup.aliyun.com/atali/pkg/utils/log"
-	apipb "codeup.aliyun.com/atali/usercenter/api"
+	"github.com/nooocode/pkg/model"
+	"github.com/nooocode/pkg/utils/log"
+	apipb "github.com/nooocode/usercenter/api"
 )
 
 type API struct {

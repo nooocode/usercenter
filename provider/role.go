@@ -3,8 +3,8 @@ package provider
 import (
 	"context"
 
-	apipb "codeup.aliyun.com/atali/usercenter/api"
-	"codeup.aliyun.com/atali/usercenter/model"
+	apipb "github.com/nooocode/usercenter/api"
+	"github.com/nooocode/usercenter/model"
 )
 
 type RoleProvider struct {
