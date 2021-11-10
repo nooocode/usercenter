@@ -3,9 +3,9 @@ package model
 import (
 	"errors"
 
-	"codeup.aliyun.com/atali/pkg/model"
-	apipb "codeup.aliyun.com/atali/usercenter/api"
 	"github.com/jinzhu/copier"
+	"github.com/nooocode/pkg/model"
+	apipb "github.com/nooocode/usercenter/api"
 	"gorm.io/gorm"
 )
 

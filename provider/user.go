@@ -3,9 +3,9 @@ package provider
 import (
 	"context"
 
-	commonmodel "codeup.aliyun.com/atali/pkg/model"
-	apipb "codeup.aliyun.com/atali/usercenter/api"
-	"codeup.aliyun.com/atali/usercenter/model"
+	commonmodel "github.com/nooocode/pkg/model"
+	apipb "github.com/nooocode/usercenter/api"
+	"github.com/nooocode/usercenter/model"
 )
 
 type UserProvider struct {

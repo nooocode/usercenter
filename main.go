@@ -7,12 +7,12 @@ import (
 	"syscall"
 	"time"
 
-	"codeup.aliyun.com/atali/usercenter/model"
-	"codeup.aliyun.com/atali/usercenter/model/token"
-	"codeup.aliyun.com/atali/usercenter/provider"
 	"dubbo.apache.org/dubbo-go/v3/common/logger"
 	"dubbo.apache.org/dubbo-go/v3/config"
 	_ "dubbo.apache.org/dubbo-go/v3/imports"
+	"github.com/nooocode/usercenter/model"
+	"github.com/nooocode/usercenter/model/token"
+	"github.com/nooocode/usercenter/provider"
 )
 
 func main() {

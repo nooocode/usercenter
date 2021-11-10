@@ -1,9 +1,9 @@
-module codeup.aliyun.com/atali/usercenter
+module github.com/nooocode/usercenter
 
 go 1.16
 
 require (
-	codeup.aliyun.com/atali/pkg v1.0.0
+	github.com/nooocode/pkg v1.0.0
 	dubbo.apache.org/dubbo-go/v3 v3.0.0-rc3
 	github.com/casbin/casbin/v2 v2.28.3
 	github.com/casbin/gorm-adapter/v3 v3.2.12

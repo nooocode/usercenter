@@ -7,12 +7,12 @@ import (
 	"sort"
 	"strings"
 
-	"codeup.aliyun.com/atali/pkg/model"
-	"codeup.aliyun.com/atali/pkg/utils/log"
-	apipb "codeup.aliyun.com/atali/usercenter/api"
-	"codeup.aliyun.com/atali/usercenter/model/token"
 	"github.com/dgrijalva/jwt-go/v4"
 	scrypt "github.com/elithrar/simple-scrypt"
+	"github.com/nooocode/pkg/model"
+	"github.com/nooocode/pkg/utils/log"
+	apipb "github.com/nooocode/usercenter/api"
+	"github.com/nooocode/usercenter/model/token"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 )

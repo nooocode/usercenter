@@ -4,9 +4,9 @@ import (
 	"errors"
 	"fmt"
 
-	"codeup.aliyun.com/atali/pkg/model"
-	"codeup.aliyun.com/atali/usercenter/model/token"
 	"github.com/dgrijalva/jwt-go/v4"
+	"github.com/nooocode/pkg/model"
+	"github.com/nooocode/usercenter/model/token"
 )
 
 func Authenticate(t, method, url string, checkAuth bool) (*token.CurrentUser, int, error) {
