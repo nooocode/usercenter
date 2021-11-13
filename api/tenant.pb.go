@@ -259,7 +259,7 @@ func (x *QueryTenantResponse) GetCode() Code {
 	if x != nil {
 		return x.Code
 	}
-	return Code_Success
+	return Code_None
 }
 
 func (x *QueryTenantResponse) GetMessage() string {
@@ -343,7 +343,7 @@ func (x *GetAllTenantResponse) GetCode() Code {
 	if x != nil {
 		return x.Code
 	}
-	return Code_Success
+	return Code_None
 }
 
 func (x *GetAllTenantResponse) GetMessage() string {
@@ -406,7 +406,7 @@ func (x *GetTenantDetailResponse) GetCode() Code {
 	if x != nil {
 		return x.Code
 	}
-	return Code_Success
+	return Code_None
 }
 
 func (x *GetTenantDetailResponse) GetMessage() string {

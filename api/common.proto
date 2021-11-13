@@ -26,8 +26,9 @@ message GetDetailRequest{
 }
 
 enum Code{
+    None=0;
     //成功
-    Success=0;
+    Success=20000;
     //服务端错误
 	InternalServerError       = 50000;
     //错误请求参数

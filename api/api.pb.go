@@ -291,7 +291,7 @@ func (x *QueryAPIResponse) GetCode() Code {
 	if x != nil {
 		return x.Code
 	}
-	return Code_Success
+	return Code_None
 }
 
 func (x *QueryAPIResponse) GetMessage() string {
@@ -375,7 +375,7 @@ func (x *GetAllAPIResponse) GetCode() Code {
 	if x != nil {
 		return x.Code
 	}
-	return Code_Success
+	return Code_None
 }
 
 func (x *GetAllAPIResponse) GetMessage() string {
@@ -438,7 +438,7 @@ func (x *GetAPIDetailResponse) GetCode() Code {
 	if x != nil {
 		return x.Code
 	}
-	return Code_Success
+	return Code_None
 }
 
 func (x *GetAPIDetailResponse) GetMessage() string {

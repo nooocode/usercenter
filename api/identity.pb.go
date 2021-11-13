@@ -137,7 +137,7 @@ func (x *AuthenticateResponse) GetCode() Code {
 	if x != nil {
 		return x.Code
 	}
-	return Code_Success
+	return Code_None
 }
 
 func (x *AuthenticateResponse) GetMessage() string {

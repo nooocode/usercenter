@@ -1,8 +1,12 @@
 package http
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/nooocode/usercenter/utils/middleware"
+)
 
 func RegisterAuthRouter(r *gin.Engine) {
+	r.Use(middleware.AuthRequired)
 	userGroup := r.Group("/api/core/auth/user")
 	userGroup.POST("login", Login)
 	userGroup.POST("logout", Logout)

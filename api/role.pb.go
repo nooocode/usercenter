@@ -338,7 +338,7 @@ func (x *QueryRoleResponse) GetCode() Code {
 	if x != nil {
 		return x.Code
 	}
-	return Code_Success
+	return Code_None
 }
 
 func (x *QueryRoleResponse) GetMessage() string {
@@ -422,7 +422,7 @@ func (x *GetAllRoleResponse) GetCode() Code {
 	if x != nil {
 		return x.Code
 	}
-	return Code_Success
+	return Code_None
 }
 
 func (x *GetAllRoleResponse) GetMessage() string {
@@ -485,7 +485,7 @@ func (x *GetRoleDetailResponse) GetCode() Code {
 	if x != nil {
 		return x.Code
 	}
-	return Code_Success
+	return Code_None
 }
 
 func (x *GetRoleDetailResponse) GetMessage() string {

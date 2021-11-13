@@ -584,7 +584,7 @@ func (x *QueryMenuResponse) GetCode() Code {
 	if x != nil {
 		return x.Code
 	}
-	return Code_Success
+	return Code_None
 }
 
 func (x *QueryMenuResponse) GetMessage() string {
@@ -668,7 +668,7 @@ func (x *GetAllMenuResponse) GetCode() Code {
 	if x != nil {
 		return x.Code
 	}
-	return Code_Success
+	return Code_None
 }
 
 func (x *GetAllMenuResponse) GetMessage() string {
@@ -731,7 +731,7 @@ func (x *GetMenuDetailResponse) GetCode() Code {
 	if x != nil {
 		return x.Code
 	}
-	return Code_Success
+	return Code_None
 }
 
 func (x *GetMenuDetailResponse) GetMessage() string {

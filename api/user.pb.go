@@ -137,7 +137,7 @@ func (x *LoginResponse) GetCode() Code {
 	if x != nil {
 		return x.Code
 	}
-	return Code_Success
+	return Code_None
 }
 
 func (x *LoginResponse) GetMessage() string {
@@ -560,7 +560,7 @@ func (x *QueryUserResponse) GetCode() Code {
 	if x != nil {
 		return x.Code
 	}
-	return Code_Success
+	return Code_None
 }
 
 func (x *QueryUserResponse) GetMessage() string {
@@ -644,7 +644,7 @@ func (x *GetProfileResponse) GetCode() Code {
 	if x != nil {
 		return x.Code
 	}
-	return Code_Success
+	return Code_None
 }
 
 func (x *GetProfileResponse) GetMessage() string {
@@ -707,7 +707,7 @@ func (x *GetAllUserResponse) GetCode() Code {
 	if x != nil {
 		return x.Code
 	}
-	return Code_Success
+	return Code_None
 }
 
 func (x *GetAllUserResponse) GetMessage() string {
@@ -770,7 +770,7 @@ func (x *GetUserDetailResponse) GetCode() Code {
 	if x != nil {
 		return x.Code
 	}
-	return Code_Success
+	return Code_None
 }
 
 func (x *GetUserDetailResponse) GetMessage() string {
