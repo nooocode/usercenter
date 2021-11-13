@@ -165,7 +165,11 @@ func GetAllTenant(c *gin.Context) {
 }
 
 func GetTenantDetail(c *gin.Context) {
-	resp := model.CommonDetailResponse{}
+	resp := model.CommonDetailResponse{
+		CommonResponse: model.CommonResponse{
+			Code: model.Success,
+		},
+	}
 	idStr := c.Query("id")
 	if idStr == "" {
 		resp.Code = model.BadRequest

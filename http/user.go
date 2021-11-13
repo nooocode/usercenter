@@ -195,7 +195,11 @@ func GetAllUser(c *gin.Context) {
 }
 
 func GetUserDetail(c *gin.Context) {
-	resp := model.CommonDetailResponse{}
+	resp := model.CommonDetailResponse{
+		CommonResponse: model.CommonResponse{
+			Code: model.Success,
+		},
+	}
 	idStr := c.Query("id")
 	if idStr == "" {
 		resp.Code = model.BadRequest
