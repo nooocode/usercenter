@@ -6,10 +6,11 @@ import (
 
 	"github.com/dgrijalva/jwt-go/v4"
 	"github.com/nooocode/pkg/model"
+	apipb "github.com/nooocode/usercenter/api"
 	"github.com/nooocode/usercenter/model/token"
 )
 
-func Authenticate(t, method, url string, checkAuth bool) (*token.CurrentUser, int, error) {
+func Authenticate(t, method, url string, checkAuth bool) (*apipb.CurrentUser, int, error) {
 	// 判断是否不需要登录
 	ok, err := enforcer.Enforce("-1", url, method)
 	if err != nil {

@@ -11,6 +11,7 @@ import (
 	"encoding/json"
 
 	"github.com/dgrijalva/jwt-go/v4"
+	apipb "github.com/nooocode/usercenter/api"
 )
 
 const defaultExpired = 30 * 24 * time.Hour
@@ -32,14 +33,14 @@ func SetSecretKey(key string) {
 }
 
 //EncodeToken 生产Token
-func EncodeToken(user *CurrentUser) (string, error) {
+func EncodeToken(user *apipb.CurrentUser) (string, error) {
 	expired := DefaultTokenCache.TokenExpired()
 
 	token := jwt.New(jwt.SigningMethodHS256)
 	claims := make(jwt.MapClaims)
 	claims["exp"] = time.Now().Add(time.Minute * time.Duration(expired)).Unix()
 	claims["iat"] = time.Now().Unix()
-	claims["id"] = user.ID
+	claims["id"] = user.Id
 	claims["userName"] = user.UserName
 	claims["domain"] = user.Domain
 	claims["deviceType"] = user.DeviceType
@@ -55,7 +56,7 @@ func EncodeToken(user *CurrentUser) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	err = DefaultTokenCache.StoreToken(fmt.Sprint(user.ID), tokenString)
+	err = DefaultTokenCache.StoreToken(fmt.Sprint(user.Id), tokenString)
 	if err != nil {
 		return "", err
 	}
@@ -95,7 +96,7 @@ func getTenantID(str string) (int, error) {
 }
 
 //DecodeToken  解析token
-func DecodeToken(t string) (*CurrentUser, error) {
+func DecodeToken(t string) (*apipb.CurrentUser, error) {
 	token, err := jwt.Parse(t,
 		func(token *jwt.Token) (interface{}, error) {
 			return []byte(secretKey), nil
@@ -114,15 +115,15 @@ func DecodeToken(t string) (*CurrentUser, error) {
 
 }
 
-func ExtractorCurrentUser(t *jwt.Token) *CurrentUser {
+func ExtractorCurrentUser(t *jwt.Token) *apipb.CurrentUser {
 	claims, ok := t.Claims.(jwt.MapClaims)
 	if !ok {
 		return nil
 	}
 
-	currentUser := CurrentUser{}
+	currentUser := apipb.CurrentUser{}
 	id, _ := (claims["id"]).(string)
-	currentUser.ID = id
+	currentUser.Id = id
 	currentUser.UserName = (claims["userName"]).(string)
 
 	if _, ok := claims["domain"]; ok {
@@ -167,7 +168,7 @@ func GetUserID(t string) (string, error) {
 	if len(array) != 3 {
 		return "", nil
 	}
-	var currentUser CurrentUser
+	var currentUser apipb.CurrentUser
 	b, err := base64.RawStdEncoding.DecodeString(array[1])
 	if err != nil {
 		return "", err
@@ -177,7 +178,7 @@ func GetUserID(t string) (string, error) {
 		return "", err
 	}
 
-	return fmt.Sprint(currentUser.ID), err
+	return fmt.Sprint(currentUser.Id), err
 }
 
 func GetSessionID(t string) (string, error) {
@@ -189,7 +190,7 @@ func GetSessionID(t string) (string, error) {
 }
 
 func getSessionID(sig string) (string, error) {
-	var currentUser CurrentUser
+	var currentUser apipb.CurrentUser
 	b, err := base64.RawStdEncoding.DecodeString(sig)
 	if err != nil {
 		return "", err
@@ -200,19 +201,4 @@ func getSessionID(sig string) (string, error) {
 	}
 
 	return currentUser.SessionID, err
-}
-
-// swagger:model
-type CurrentUser struct {
-	ID         string `json:"id"`
-	UserName   string `protobuf:"bytes,2,opt,name=userName,proto3" json:"userName"`
-	Gender     bool   `json:"gender"`
-	DeviceType int32  `protobuf:"varint,5,opt,name=deviceType,proto3" json:"deviceType"`
-	Domain     string `protobuf:"bytes,6,opt,name=domain,proto3" json:"domain"`
-	ClientIP   string `protobuf:"bytes,7,opt,name=clientIP,proto3" json:"clientIP"`
-	SessionID  string `protobuf:"bytes,13,opt,name=sessionID,proto3" json:"sessionID"`
-	// 数据加密的公钥
-	Key      string   `protobuf:"bytes,14,opt,name=key,proto3" json:"key"`
-	RoleIDs  []string `json:"roleIDs"`
-	TenantID string   `json:"tenantID"`
 }

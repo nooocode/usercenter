@@ -97,6 +97,12 @@ dubbo:
         interface: org.atali.API
         group: atali
         version: 1.0.0
+      IdentityProvider:
+        protocol-ids: triple
+        # interface is for registry
+        interface: org.atali.Identity
+        group: atali
+        version: 1.0.0
 ```
 * 操作二
 * 操作三  

@@ -351,7 +351,7 @@ func NewMemory(expired int) TokenCache {
 		}
 
 		m.tokenLock.Lock()
-		tokens, ok := m.userCache[fmt.Sprint(currentUser.ID)]
+		tokens, ok := m.userCache[fmt.Sprint(currentUser.Id)]
 		if !ok {
 			m.tokenLock.Unlock()
 			return

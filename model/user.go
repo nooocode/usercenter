@@ -330,8 +330,8 @@ func Login(req *apipb.LoginRequest, resp *apipb.LoginResponse) {
 		resp.Code = model.InternalServerError
 		resp.Message = err.Error()
 	}
-	currentUser := &token.CurrentUser{
-		ID:       user.ID,
+	currentUser := &apipb.CurrentUser{
+		Id:       user.ID,
 		UserName: user.UserName,
 		Gender:   user.Gender,
 		RoleIDs:  user.GetRoleIDs(),
@@ -377,8 +377,8 @@ func LoginByWechat(register bool, req *User, resp *apipb.LoginResponse) {
 		return
 	}
 
-	currentUser := &token.CurrentUser{
-		ID:       user.ID,
+	currentUser := &apipb.CurrentUser{
+		Id:       user.ID,
 		UserName: user.UserName,
 		Gender:   user.Gender,
 		RoleIDs:  user.GetRoleIDs(),
@@ -425,7 +425,7 @@ func Logout(t string) error {
 	if currentUser == nil {
 		return nil
 	}
-	err = token.DefaultTokenCache.Del(fmt.Sprint(currentUser.ID), t)
+	err = token.DefaultTokenCache.Del(fmt.Sprint(currentUser.Id), t)
 	if err != nil {
 		log.Error(context.Background(), err)
 	}

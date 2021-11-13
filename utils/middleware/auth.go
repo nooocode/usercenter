@@ -6,16 +6,16 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/nooocode/pkg/model"
+	apipb "github.com/nooocode/usercenter/api"
 	ucmodel "github.com/nooocode/usercenter/model"
-	"github.com/nooocode/usercenter/model/token"
 )
 
-func GetUser(c *gin.Context) (bool, *token.CurrentUser) {
+func GetUser(c *gin.Context) (bool, *apipb.CurrentUser) {
 	obj, exists := c.Get("User")
 	if !exists {
 		return false, nil
 	}
-	user, ok := obj.(*token.CurrentUser)
+	user, ok := obj.(*apipb.CurrentUser)
 	if !ok {
 		return false, nil
 	}
@@ -27,7 +27,7 @@ func GetUserID(c *gin.Context) string {
 	if !exists || user == nil {
 		return ""
 	}
-	return user.ID
+	return user.Id
 }
 
 func GetUserName(c *gin.Context) string {
@@ -58,7 +58,7 @@ func GetAccessToken(c *gin.Context) string {
 func AuthRequired(c *gin.Context) {
 	t := GetAccessToken(c)
 	if t == "camunda-admin" {
-		c.Set("User", &token.CurrentUser{
+		c.Set("User", &apipb.CurrentUser{
 			UserName: "camunda-admin",
 		})
 		return

@@ -1,0 +1,35 @@
+syntax="proto3";
+package usercenter;
+option go_package = "./;usercenter";
+
+import "common.proto";
+
+service Identity{
+    rpc Authenticate(AuthenticateRequest)returns(AuthenticateResponse){}
+}
+
+message AuthenticateRequest{
+    string token=1;
+    string url=2;
+    bool checkAuth=3;
+    string method=4;
+}
+
+message AuthenticateResponse{
+    Code code=1;
+    string message=2;
+    CurrentUser currentUser=3;
+}
+
+message CurrentUser{
+    string id=1;
+    string userName=2;
+    bool gender=3;
+    int32 deviceType=4;
+    string domain=5;
+    string sessionID=6;
+    string key=7;
+    repeated string roleIDs=8;
+    string tenantID=9;
+    string clientIP=10;
+}
