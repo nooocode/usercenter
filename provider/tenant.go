@@ -13,21 +13,21 @@ type TenantProvider struct {
 
 func (u *TenantProvider) Add(ctx context.Context, in *apipb.TenantInfo) (*apipb.CommonResponse, error) {
 	resp := &apipb.CommonResponse{}
-	// err := model.CreateTenant(userInfoToTenant(in), false)
-	// if err != nil {
-	// 	resp.Code = apipb.Code_InternalServerError
-	// 	resp.Message = err.Error()
-	// }
+	err := model.CreateTenant(model.PBToTenant(in))
+	if err != nil {
+		resp.Code = apipb.Code_InternalServerError
+		resp.Message = err.Error()
+	}
 	return resp, nil
 }
 
 func (u *TenantProvider) Update(ctx context.Context, in *apipb.TenantInfo) (*apipb.CommonResponse, error) {
 	resp := &apipb.CommonResponse{}
-	// err := model.UpdateTenant(userInfoToTenant(in))
-	// if err != nil {
-	// 	resp.Code = apipb.Code_InternalServerError
-	// 	resp.Message = err.Error()
-	// }
+	err := model.UpdateTenant(model.PBToTenant(in))
+	if err != nil {
+		resp.Code = apipb.Code_InternalServerError
+		resp.Message = err.Error()
+	}
 	return resp, nil
 }
 
@@ -59,13 +59,13 @@ func (u *TenantProvider) Enable(ctx context.Context, in *apipb.EnableRequest) (*
 
 func (u *TenantProvider) GetAll(ctx context.Context, in *apipb.GetAllRequest) (*apipb.GetAllTenantResponse, error) {
 	resp := &apipb.GetAllTenantResponse{}
-	// users, err := model.GetAllTenant()
-	// if err != nil {
-	// 	resp.Code = apipb.Code_InternalServerError
-	// 	resp.Message = err.Error()
-	// } else {
-	// 	resp.Data = userToTenantInfos(users)
-	// }
+	users, err := model.GetAllTenant()
+	if err != nil {
+		resp.Code = apipb.Code_InternalServerError
+		resp.Message = err.Error()
+	} else {
+		resp.Data = model.TenantsToPB(users)
+	}
 
 	return resp, nil
 }

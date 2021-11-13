@@ -11,13 +11,13 @@ import (
 
 type Menu struct {
 	model.Model
-	Level       uint             `json:"level"`
+	Level       uint32           `json:"level"`
 	ParentID    string           `json:"parentID" gorm:"comment:父菜单ID"`
 	Path        string           `json:"path" gorm:"size:200;comment:路由path"`
 	Name        string           `json:"name" gorm:"size:100;comment:路由name"`
 	Hidden      bool             `json:"hidden" gorm:"comment:是否在列表隐藏"`
 	Component   string           `json:"component" gorm:"size:200;comment:对应前端文件路径"`
-	Sort        int              `json:"sort" gorm:"comment:排序标记"`
+	Sort        int32            `json:"sort" gorm:"comment:排序标记"`
 	Cache       bool             `json:"cache" gorm:"comment:是否缓存"`
 	DefaultMenu bool             `json:"defaultMenu" gorm:"comment:是否是基础路由（开发中）"`
 	Title       string           `json:"title" gorm:"size:100;comment:菜单名"`
@@ -30,7 +30,7 @@ type Menu struct {
 
 type MenuParameter struct {
 	gorm.Model
-	MenuID string
+	MenuID string `json:"menuID" gorm:"index"`
 	Type   string `json:"type" gorm:"size:50;comment:地址栏携带参数为params还是query"`
 	Key    string `json:"key" gorm:"size:100;comment:地址栏携带参数的key"`
 	Value  string `json:"value" gorm:"size:200;comment:地址栏携带参数的值"`

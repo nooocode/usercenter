@@ -27,7 +27,7 @@ type RoleMenu struct {
 	RoleID string `json:"roleID" gorm:"index;comment:角色ID"`
 	MenuID string `json:"menuID" gorm:"index;comment:菜单ID"`
 	Funcs  string `json:"funcs" gorm:"size:500;comment:功能名称,多个以逗号隔开"`
-	Menu   *Menu
+	Menu   *Menu  `json:"menu"`
 }
 
 //@author: [guoxf](https://github.com/guoxf)

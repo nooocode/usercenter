@@ -31,7 +31,6 @@ type RoleClient interface {
 	Update(ctx context.Context, in *RoleInfo, opts ...grpc.CallOption) (*CommonResponse, common.ErrorWithAttachment)
 	Delete(ctx context.Context, in *DelRequest, opts ...grpc.CallOption) (*CommonResponse, common.ErrorWithAttachment)
 	Query(ctx context.Context, in *QueryRoleRequest, opts ...grpc.CallOption) (*QueryRoleResponse, common.ErrorWithAttachment)
-	Enable(ctx context.Context, in *EnableRequest, opts ...grpc.CallOption) (*CommonResponse, common.ErrorWithAttachment)
 	GetAll(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*GetAllRoleResponse, common.ErrorWithAttachment)
 	GetDetail(ctx context.Context, in *GetDetailRequest, opts ...grpc.CallOption) (*GetRoleDetailResponse, common.ErrorWithAttachment)
 }
@@ -45,7 +44,6 @@ type RoleClientImpl struct {
 	Update    func(ctx context.Context, in *RoleInfo) (*CommonResponse, error)
 	Delete    func(ctx context.Context, in *DelRequest) (*CommonResponse, error)
 	Query     func(ctx context.Context, in *QueryRoleRequest) (*QueryRoleResponse, error)
-	Enable    func(ctx context.Context, in *EnableRequest) (*CommonResponse, error)
 	GetAll    func(ctx context.Context, in *GetAllRequest) (*GetAllRoleResponse, error)
 	GetDetail func(ctx context.Context, in *GetDetailRequest) (*GetRoleDetailResponse, error)
 }
@@ -82,12 +80,6 @@ func (c *roleClient) Query(ctx context.Context, in *QueryRoleRequest, opts ...gr
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/Query", in, out)
 }
 
-func (c *roleClient) Enable(ctx context.Context, in *EnableRequest, opts ...grpc.CallOption) (*CommonResponse, common.ErrorWithAttachment) {
-	out := new(CommonResponse)
-	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
-	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/Enable", in, out)
-}
-
 func (c *roleClient) GetAll(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*GetAllRoleResponse, common.ErrorWithAttachment) {
 	out := new(GetAllRoleResponse)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
@@ -108,7 +100,6 @@ type RoleServer interface {
 	Update(context.Context, *RoleInfo) (*CommonResponse, error)
 	Delete(context.Context, *DelRequest) (*CommonResponse, error)
 	Query(context.Context, *QueryRoleRequest) (*QueryRoleResponse, error)
-	Enable(context.Context, *EnableRequest) (*CommonResponse, error)
 	GetAll(context.Context, *GetAllRequest) (*GetAllRoleResponse, error)
 	GetDetail(context.Context, *GetDetailRequest) (*GetRoleDetailResponse, error)
 	mustEmbedUnimplementedRoleServer()
@@ -130,9 +121,6 @@ func (UnimplementedRoleServer) Delete(context.Context, *DelRequest) (*CommonResp
 }
 func (UnimplementedRoleServer) Query(context.Context, *QueryRoleRequest) (*QueryRoleResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Query not implemented")
-}
-func (UnimplementedRoleServer) Enable(context.Context, *EnableRequest) (*CommonResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Enable not implemented")
 }
 func (UnimplementedRoleServer) GetAll(context.Context, *GetAllRequest) (*GetAllRoleResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAll not implemented")
@@ -256,29 +244,6 @@ func _Role_Query_Handler(srv interface{}, ctx context.Context, dec func(interfac
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Role_Enable_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EnableRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	base := srv.(dubbo3.Dubbo3GrpcService)
-	args := []interface{}{}
-	args = append(args, in)
-	invo := invocation.NewRPCInvocation("Enable", args, nil)
-	if interceptor == nil {
-		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
-		return result, result.Error()
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/usercenter.Role/Enable",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RoleServer).Enable(ctx, req.(*EnableRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Role_GetAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetAllRequest)
 	if err := dec(in); err != nil {
@@ -347,10 +312,6 @@ var Role_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Query",
 			Handler:    _Role_Query_Handler,
-		},
-		{
-			MethodName: "Enable",
-			Handler:    _Role_Enable_Handler,
 		},
 		{
 			MethodName: "GetAll",

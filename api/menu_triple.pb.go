@@ -31,7 +31,6 @@ type MenuClient interface {
 	Update(ctx context.Context, in *MenuInfo, opts ...grpc.CallOption) (*CommonResponse, common.ErrorWithAttachment)
 	Delete(ctx context.Context, in *DelRequest, opts ...grpc.CallOption) (*CommonResponse, common.ErrorWithAttachment)
 	Query(ctx context.Context, in *QueryMenuRequest, opts ...grpc.CallOption) (*QueryMenuResponse, common.ErrorWithAttachment)
-	Enable(ctx context.Context, in *EnableRequest, opts ...grpc.CallOption) (*CommonResponse, common.ErrorWithAttachment)
 	GetAll(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*GetAllMenuResponse, common.ErrorWithAttachment)
 	GetDetail(ctx context.Context, in *GetDetailRequest, opts ...grpc.CallOption) (*GetMenuDetailResponse, common.ErrorWithAttachment)
 }
@@ -45,7 +44,6 @@ type MenuClientImpl struct {
 	Update    func(ctx context.Context, in *MenuInfo) (*CommonResponse, error)
 	Delete    func(ctx context.Context, in *DelRequest) (*CommonResponse, error)
 	Query     func(ctx context.Context, in *QueryMenuRequest) (*QueryMenuResponse, error)
-	Enable    func(ctx context.Context, in *EnableRequest) (*CommonResponse, error)
 	GetAll    func(ctx context.Context, in *GetAllRequest) (*GetAllMenuResponse, error)
 	GetDetail func(ctx context.Context, in *GetDetailRequest) (*GetMenuDetailResponse, error)
 }
@@ -82,12 +80,6 @@ func (c *menuClient) Query(ctx context.Context, in *QueryMenuRequest, opts ...gr
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/Query", in, out)
 }
 
-func (c *menuClient) Enable(ctx context.Context, in *EnableRequest, opts ...grpc.CallOption) (*CommonResponse, common.ErrorWithAttachment) {
-	out := new(CommonResponse)
-	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
-	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/Enable", in, out)
-}
-
 func (c *menuClient) GetAll(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*GetAllMenuResponse, common.ErrorWithAttachment) {
 	out := new(GetAllMenuResponse)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
@@ -108,7 +100,6 @@ type MenuServer interface {
 	Update(context.Context, *MenuInfo) (*CommonResponse, error)
 	Delete(context.Context, *DelRequest) (*CommonResponse, error)
 	Query(context.Context, *QueryMenuRequest) (*QueryMenuResponse, error)
-	Enable(context.Context, *EnableRequest) (*CommonResponse, error)
 	GetAll(context.Context, *GetAllRequest) (*GetAllMenuResponse, error)
 	GetDetail(context.Context, *GetDetailRequest) (*GetMenuDetailResponse, error)
 	mustEmbedUnimplementedMenuServer()
@@ -130,9 +121,6 @@ func (UnimplementedMenuServer) Delete(context.Context, *DelRequest) (*CommonResp
 }
 func (UnimplementedMenuServer) Query(context.Context, *QueryMenuRequest) (*QueryMenuResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Query not implemented")
-}
-func (UnimplementedMenuServer) Enable(context.Context, *EnableRequest) (*CommonResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Enable not implemented")
 }
 func (UnimplementedMenuServer) GetAll(context.Context, *GetAllRequest) (*GetAllMenuResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAll not implemented")
@@ -256,29 +244,6 @@ func _Menu_Query_Handler(srv interface{}, ctx context.Context, dec func(interfac
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Menu_Enable_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EnableRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	base := srv.(dubbo3.Dubbo3GrpcService)
-	args := []interface{}{}
-	args = append(args, in)
-	invo := invocation.NewRPCInvocation("Enable", args, nil)
-	if interceptor == nil {
-		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
-		return result, result.Error()
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/usercenter.Menu/Enable",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MenuServer).Enable(ctx, req.(*EnableRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Menu_GetAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetAllRequest)
 	if err := dec(in); err != nil {
@@ -347,10 +312,6 @@ var Menu_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Query",
 			Handler:    _Menu_Query_Handler,
-		},
-		{
-			MethodName: "Enable",
-			Handler:    _Menu_Enable_Handler,
 		},
 		{
 			MethodName: "GetAll",

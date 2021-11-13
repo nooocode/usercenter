@@ -14,7 +14,17 @@ service Tenant{
     rpc GetDetail(GetDetailRequest)returns(GetTenantDetailResponse){}
 }
 
-message TenantInfo{}
+message TenantInfo{
+    string id=1;
+    string name=2;
+    string contact=3;
+    string cellPhone=4;
+    string address=5;
+    string businessScope=6;
+    string areaCovered=7;
+    int32 staffSize=8;
+    bool enable=9;
+}
 
 message QueryTenantRequest{
     int64 pageIndex=1;
@@ -33,6 +43,14 @@ message QueryTenantResponse{
     int64 total=6;
 }
 
-message GetAllTenantResponse{}
+message GetAllTenantResponse{
+    Code code=1;
+    string message=2;
+    repeated TenantInfo data=3;
+}
 
-message GetTenantDetailResponse{}
+message GetTenantDetailResponse{
+    Code code=1;
+    string message=2;
+    TenantInfo data=3;
+}

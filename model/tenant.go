@@ -32,8 +32,8 @@ type Tenant struct {
 	// 占地面积
 	AreaCovered string `json:"areaCovered" gorm:"size:100"`
 	// 人员规模
-	StaffSize int  `json:"staffSize"`
-	Enable    bool `json:"enable" gorm:"index"`
+	StaffSize int32 `json:"staffSize"`
+	Enable    bool  `json:"enable" gorm:"index"`
 }
 
 func CreateTenant(m *Tenant) error {

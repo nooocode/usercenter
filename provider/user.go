@@ -3,7 +3,6 @@ package provider
 import (
 	"context"
 
-	commonmodel "github.com/nooocode/pkg/model"
 	apipb "github.com/nooocode/usercenter/api"
 	"github.com/nooocode/usercenter/model"
 )
@@ -20,7 +19,7 @@ func (u *UserProvider) Login(ctx context.Context, in *apipb.LoginRequest) (*apip
 
 func (u *UserProvider) Add(ctx context.Context, in *apipb.UserInfo) (*apipb.CommonResponse, error) {
 	resp := &apipb.CommonResponse{}
-	err := model.CreateUser(userInfoToUser(in), false)
+	err := model.CreateUser(model.PBToUser(in), false)
 	if err != nil {
 		resp.Code = apipb.Code_InternalServerError
 		resp.Message = err.Error()
@@ -30,7 +29,7 @@ func (u *UserProvider) Add(ctx context.Context, in *apipb.UserInfo) (*apipb.Comm
 
 func (u *UserProvider) Update(ctx context.Context, in *apipb.UserInfo) (*apipb.CommonResponse, error) {
 	resp := &apipb.CommonResponse{}
-	err := model.UpdateUser(userInfoToUser(in))
+	err := model.UpdateUser(model.PBToUser(in))
 	if err != nil {
 		resp.Code = apipb.Code_InternalServerError
 		resp.Message = err.Error()
@@ -62,7 +61,7 @@ func (u *UserProvider) GetProfile(ctx context.Context, in *apipb.GetDetailReques
 		resp.Code = apipb.Code_InternalServerError
 		resp.Message = err.Error()
 	}
-	resp.Data = userToUserInfo(&user)
+	resp.Data = model.UserToPB(&user)
 	return resp, nil
 }
 
@@ -83,7 +82,7 @@ func (u *UserProvider) GetAll(ctx context.Context, in *apipb.GetAllRequest) (*ap
 		resp.Code = apipb.Code_InternalServerError
 		resp.Message = err.Error()
 	} else {
-		resp.Data = userToUserInfos(users)
+		resp.Data = model.UsersToPB(users)
 	}
 
 	return resp, nil
@@ -96,7 +95,7 @@ func (u *UserProvider) GetDetail(ctx context.Context, in *apipb.GetDetailRequest
 		resp.Code = apipb.Code_InternalServerError
 		resp.Message = err.Error()
 	}
-	resp.Data = userToUserInfo(&user)
+	resp.Data = model.UserToPB(&user)
 	return resp, nil
 }
 
@@ -129,84 +128,4 @@ func (u *UserProvider) Logout(ctx context.Context, in *apipb.LogoutRequest) (*ap
 		resp.Message = err.Error()
 	}
 	return resp, nil
-}
-
-func userInfoToUser(in *apipb.UserInfo) *model.User {
-	return &model.User{
-		TenantModel: commonmodel.TenantModel{
-			Model: commonmodel.Model{
-				ID: in.Id,
-			},
-			TenantID: in.Id,
-		},
-		UserName:    in.UserName,
-		Nickname:    in.Nickname,
-		UserRoles:   userRolesToUserRoles(in.UserRoles),
-		RoleIDs:     in.RoleIDs,
-		Enable:      in.Enable,
-		Email:       in.Email,
-		Mobile:      in.Mobile,
-		IDCard:      in.IdCard,
-		Avatar:      in.Avatar,
-		EID:         in.Eid,
-		Title:       in.Title,
-		Description: in.Description,
-		RealName:    in.RealName,
-		Gender:      in.Gender,
-	}
-}
-
-func userToUserInfo(in *model.User) *apipb.UserInfo {
-	return &apipb.UserInfo{
-		Id:          in.ID,
-		TenantID:    in.ID,
-		UserName:    in.UserName,
-		Nickname:    in.Nickname,
-		UserRoles:   userRolesToPBUserRoles(in.UserRoles),
-		RoleIDs:     in.RoleIDs,
-		Enable:      in.Enable,
-		Email:       in.Email,
-		Mobile:      in.Mobile,
-		IdCard:      in.IDCard,
-		Avatar:      in.Avatar,
-		Eid:         in.EID,
-		Title:       in.Title,
-		Description: in.Description,
-		RealName:    in.RealName,
-		Gender:      in.Gender,
-	}
-}
-
-func userToUserInfos(in []*model.User) []*apipb.UserInfo {
-	var list []*apipb.UserInfo
-	for _, user := range in {
-		list = append(list, userToUserInfo(user))
-	}
-	return list
-}
-
-func userRolesToUserRoles(userRoles []*apipb.UserRole) []*model.UserRole {
-	var list []*model.UserRole
-	for _, userRole := range userRoles {
-		list = append(list, &model.UserRole{
-			Model: commonmodel.Model{
-				ID: userRole.Id,
-			},
-			UserID: userRole.UserID,
-			RoleID: userRole.RoleID,
-		})
-	}
-	return list
-}
-
-func userRolesToPBUserRoles(userRoles []*model.UserRole) []*apipb.UserRole {
-	var list []*apipb.UserRole
-	for _, userRole := range userRoles {
-		list = append(list, &apipb.UserRole{
-			Id:     userRole.ID,
-			UserID: userRole.UserID,
-			RoleID: userRole.RoleID,
-		})
-	}
-	return list
 }

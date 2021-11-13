@@ -47,6 +47,14 @@ message QueryAPIResponse{
     int64 total=6;
 }
 
-message GetAllAPIResponse{}
+message GetAllAPIResponse{
+    Code code=1;
+    string message=2;
+    repeated APIInfo data=3;
+}
 
-message GetAPIDetailResponse{}
+message GetAPIDetailResponse{
+    Code code=1;
+    string message=2;
+    APIInfo data=3;
+}
