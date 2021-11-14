@@ -243,7 +243,7 @@ func DeleteRole(roleID string) (err error) {
 		if err != nil {
 			return err
 		}
-		err = tx.Unscoped().Delete(&Role{}, roleID).Error
+		err = tx.Unscoped().Delete(&Role{}, "id=?", roleID).Error
 		if err != nil {
 			return err
 		}
@@ -269,10 +269,13 @@ func QueryRole(req *apipb.QueryRoleRequest, resp *apipb.QueryRoleResponse) {
 		}
 	}
 	var err error
-	resp.Records, resp.Pages, err = dbClient.PageQuery(db, req.PageSize, req.PageIndex, OrderStr, &resp.Data)
+	var roles []*Role
+	resp.Records, resp.Pages, err = dbClient.PageQuery(db, req.PageSize, req.PageIndex, OrderStr, &roles)
 	if err != nil {
 		resp.Code = model.InternalServerError
 		resp.Message = err.Error()
+	} else {
+		resp.Data = RolesToPB(roles)
 	}
 }
 
