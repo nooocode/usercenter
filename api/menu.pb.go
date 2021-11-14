@@ -429,15 +429,24 @@ type QueryMenuRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PageIndex  int64  `protobuf:"varint,1,opt,name=pageIndex,proto3" json:"pageIndex,omitempty"`
-	PageSize   int64  `protobuf:"varint,2,opt,name=pageSize,proto3" json:"pageSize,omitempty"`
-	OrderField string `protobuf:"bytes,3,opt,name=orderField,proto3" json:"orderField,omitempty"`
-	Desc       bool   `protobuf:"varint,4,opt,name=desc,proto3" json:"desc,omitempty"`
-	Name       string `protobuf:"bytes,5,opt,name=name,proto3" json:"name,omitempty"`
-	Path       string `protobuf:"bytes,6,opt,name=path,proto3" json:"path,omitempty"`
-	Title      string `protobuf:"bytes,7,opt,name=title,proto3" json:"title,omitempty"`
-	ParentID   string `protobuf:"bytes,8,opt,name=parentID,proto3" json:"parentID,omitempty"`
-	Level      int32  `protobuf:"varint,9,opt,name=level,proto3" json:"level,omitempty"`
+	// @inject_tag: uri:"pageIndex" form:"pageIndex"
+	PageIndex int64 `protobuf:"varint,1,opt,name=pageIndex,proto3" json:"pageIndex,omitempty" uri:"pageIndex" form:"pageIndex"`
+	// @inject_tag: uri:"pageSize" form:"pageSize"
+	PageSize int64 `protobuf:"varint,2,opt,name=pageSize,proto3" json:"pageSize,omitempty" uri:"pageSize" form:"pageSize"`
+	// @inject_tag: uri:"orderField" form:"orderField"
+	OrderField string `protobuf:"bytes,3,opt,name=orderField,proto3" json:"orderField,omitempty" uri:"orderField" form:"orderField"`
+	// @inject_tag: uri:"desc" form:"desc"
+	Desc bool `protobuf:"varint,4,opt,name=desc,proto3" json:"desc,omitempty" uri:"desc" form:"desc"`
+	// @inject_tag: uri:"name" form:"name"
+	Name string `protobuf:"bytes,5,opt,name=name,proto3" json:"name,omitempty" uri:"name" form:"name"`
+	// @inject_tag: uri:"path" form:"path"
+	Path string `protobuf:"bytes,6,opt,name=path,proto3" json:"path,omitempty" uri:"path" form:"path"`
+	// @inject_tag: uri:"title" form:"title"
+	Title string `protobuf:"bytes,7,opt,name=title,proto3" json:"title,omitempty" uri:"title" form:"title"`
+	// @inject_tag: uri:"parentID" form:"parentID"
+	ParentID string `protobuf:"bytes,8,opt,name=parentID,proto3" json:"parentID,omitempty" uri:"parentID" form:"parentID"`
+	// @inject_tag: uri:"level" form:"level"
+	Level int32 `protobuf:"varint,9,opt,name=level,proto3" json:"level,omitempty" uri:"level" form:"level"`
 }
 
 func (x *QueryMenuRequest) Reset() {

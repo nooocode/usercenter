@@ -136,11 +136,16 @@ type QueryTenantRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PageIndex  int64  `protobuf:"varint,1,opt,name=pageIndex,proto3" json:"pageIndex,omitempty"`
-	PageSize   int64  `protobuf:"varint,2,opt,name=pageSize,proto3" json:"pageSize,omitempty"`
-	OrderField string `protobuf:"bytes,3,opt,name=orderField,proto3" json:"orderField,omitempty"`
-	Desc       bool   `protobuf:"varint,4,opt,name=desc,proto3" json:"desc,omitempty"`
-	Name       string `protobuf:"bytes,5,opt,name=name,proto3" json:"name,omitempty"`
+	// @inject_tag: uri:"pageIndex" form:"pageIndex"
+	PageIndex int64 `protobuf:"varint,1,opt,name=pageIndex,proto3" json:"pageIndex,omitempty" uri:"pageIndex" form:"pageIndex"`
+	// @inject_tag: uri:"pageSize" form:"pageSize"
+	PageSize int64 `protobuf:"varint,2,opt,name=pageSize,proto3" json:"pageSize,omitempty" uri:"pageSize" form:"pageSize"`
+	// @inject_tag: uri:"orderField" form:"orderField"
+	OrderField string `protobuf:"bytes,3,opt,name=orderField,proto3" json:"orderField,omitempty" uri:"orderField" form:"orderField"`
+	// @inject_tag: uri:"desc" form:"desc"
+	Desc bool `protobuf:"varint,4,opt,name=desc,proto3" json:"desc,omitempty" uri:"desc" form:"desc"`
+	// @inject_tag: uri:"name" form:"name"
+	Name string `protobuf:"bytes,5,opt,name=name,proto3" json:"name,omitempty" uri:"name" form:"name"`
 }
 
 func (x *QueryTenantRequest) Reset() {

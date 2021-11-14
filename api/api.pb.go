@@ -136,15 +136,24 @@ type QueryAPIRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PageIndex  int64  `protobuf:"varint,1,opt,name=pageIndex,proto3" json:"pageIndex,omitempty"`
-	PageSize   int64  `protobuf:"varint,2,opt,name=pageSize,proto3" json:"pageSize,omitempty"`
-	OrderField string `protobuf:"bytes,3,opt,name=orderField,proto3" json:"orderField,omitempty"`
-	Desc       bool   `protobuf:"varint,4,opt,name=desc,proto3" json:"desc,omitempty"`
-	Path       string `protobuf:"bytes,5,opt,name=path,proto3" json:"path,omitempty"`
-	Method     string `protobuf:"bytes,6,opt,name=method,proto3" json:"method,omitempty"`
-	Group      string `protobuf:"bytes,7,opt,name=group,proto3" json:"group,omitempty"`
-	CheckAuth  int32  `protobuf:"varint,8,opt,name=checkAuth,proto3" json:"checkAuth,omitempty"`
-	CheckLogin int32  `protobuf:"varint,9,opt,name=checkLogin,proto3" json:"checkLogin,omitempty"`
+	// @inject_tag: uri:"pageIndex" form:"pageIndex"
+	PageIndex int64 `protobuf:"varint,1,opt,name=pageIndex,proto3" json:"pageIndex,omitempty" uri:"pageIndex" form:"pageIndex"`
+	// @inject_tag: uri:"pageSize" form:"pageSize"
+	PageSize int64 `protobuf:"varint,2,opt,name=pageSize,proto3" json:"pageSize,omitempty" uri:"pageSize" form:"pageSize"`
+	// @inject_tag: uri:"orderField" form:"orderField"
+	OrderField string `protobuf:"bytes,3,opt,name=orderField,proto3" json:"orderField,omitempty" uri:"orderField" form:"orderField"`
+	// @inject_tag: uri:"desc" form:"desc"
+	Desc bool `protobuf:"varint,4,opt,name=desc,proto3" json:"desc,omitempty" uri:"desc" form:"desc"`
+	// @inject_tag: uri:"path" form:"path"
+	Path string `protobuf:"bytes,5,opt,name=path,proto3" json:"path,omitempty" uri:"path" form:"path"`
+	// @inject_tag: uri:"method" form:"method"
+	Method string `protobuf:"bytes,6,opt,name=method,proto3" json:"method,omitempty" uri:"method" form:"method"`
+	// @inject_tag: uri:"group" form:"group"
+	Group string `protobuf:"bytes,7,opt,name=group,proto3" json:"group,omitempty" uri:"group" form:"group"`
+	// @inject_tag: uri:"checkAuth" form:"checkAuth"
+	CheckAuth int32 `protobuf:"varint,8,opt,name=checkAuth,proto3" json:"checkAuth,omitempty" uri:"checkAuth" form:"checkAuth"`
+	// @inject_tag: uri:"checkLogin" form:"checkLogin"
+	CheckLogin int32 `protobuf:"varint,9,opt,name=checkLogin,proto3" json:"checkLogin,omitempty" uri:"checkLogin" form:"checkLogin"`
 }
 
 func (x *QueryAPIRequest) Reset() {

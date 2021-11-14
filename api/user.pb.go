@@ -389,17 +389,28 @@ type QueryUserRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PageIndex  int64  `protobuf:"varint,1,opt,name=pageIndex,proto3" json:"pageIndex,omitempty"`
-	PageSize   int64  `protobuf:"varint,2,opt,name=pageSize,proto3" json:"pageSize,omitempty"`
-	OrderField string `protobuf:"bytes,3,opt,name=orderField,proto3" json:"orderField,omitempty"`
-	Desc       bool   `protobuf:"varint,4,opt,name=desc,proto3" json:"desc,omitempty"`
-	UserName   string `protobuf:"bytes,5,opt,name=userName,proto3" json:"userName,omitempty"`
-	Nickname   string `protobuf:"bytes,6,opt,name=nickname,proto3" json:"nickname,omitempty"`
-	IdCard     string `protobuf:"bytes,7,opt,name=idCard,proto3" json:"idCard,omitempty"`
-	Mobile     string `protobuf:"bytes,8,opt,name=mobile,proto3" json:"mobile,omitempty"`
-	Title      string `protobuf:"bytes,9,opt,name=title,proto3" json:"title,omitempty"`
-	UserNames  string `protobuf:"bytes,10,opt,name=userNames,proto3" json:"userNames,omitempty"`
-	WechatID   string `protobuf:"bytes,11,opt,name=wechatID,proto3" json:"wechatID,omitempty"`
+	// @inject_tag: uri:"pageIndex" form:"pageIndex"
+	PageIndex int64 `protobuf:"varint,1,opt,name=pageIndex,proto3" json:"pageIndex,omitempty" uri:"pageIndex" form:"pageIndex"`
+	// @inject_tag: uri:"pageSize" form:"pageSize"
+	PageSize int64 `protobuf:"varint,2,opt,name=pageSize,proto3" json:"pageSize,omitempty" uri:"pageSize" form:"pageSize"`
+	// @inject_tag: uri:"orderField" form:"orderField"
+	OrderField string `protobuf:"bytes,3,opt,name=orderField,proto3" json:"orderField,omitempty" uri:"orderField" form:"orderField"`
+	// @inject_tag: uri:"desc" form:"desc"
+	Desc bool `protobuf:"varint,4,opt,name=desc,proto3" json:"desc,omitempty" uri:"desc" form:"desc"`
+	// @inject_tag: uri:"userName" form:"userName"
+	UserName string `protobuf:"bytes,5,opt,name=userName,proto3" json:"userName,omitempty" uri:"userName" form:"userName"`
+	// @inject_tag: uri:"nickname" form:"nickname"
+	Nickname string `protobuf:"bytes,6,opt,name=nickname,proto3" json:"nickname,omitempty" uri:"nickname" form:"nickname"`
+	// @inject_tag: uri:"idCard" form:"idCard"
+	IdCard string `protobuf:"bytes,7,opt,name=idCard,proto3" json:"idCard,omitempty" uri:"idCard" form:"idCard"`
+	// @inject_tag: uri:"mobile" form:"mobile"
+	Mobile string `protobuf:"bytes,8,opt,name=mobile,proto3" json:"mobile,omitempty" uri:"mobile" form:"mobile"`
+	// @inject_tag: uri:"title" form:"title"
+	Title string `protobuf:"bytes,9,opt,name=title,proto3" json:"title,omitempty" uri:"title" form:"title"`
+	// @inject_tag: uri:"userNames" form:"userNames"
+	UserNames string `protobuf:"bytes,10,opt,name=userNames,proto3" json:"userNames,omitempty" uri:"userNames" form:"userNames"`
+	// @inject_tag: uri:"wechatID" form:"wechatID"
+	WechatID string `protobuf:"bytes,11,opt,name=wechatID,proto3" json:"wechatID,omitempty" uri:"wechatID" form:"wechatID"`
 }
 
 func (x *QueryUserRequest) Reset() {
