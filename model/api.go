@@ -116,10 +116,13 @@ func QueryAPI(req *apipb.QueryAPIRequest, resp *apipb.QueryAPIResponse) {
 		}
 	}
 	var err error
-	resp.Records, resp.Pages, err = dbClient.PageQuery(db, req.PageSize, req.PageIndex, OrderStr, &resp.Data)
+	var apis []API
+	resp.Records, resp.Pages, err = dbClient.PageQuery(db, req.PageSize, req.PageIndex, OrderStr, &apis)
 	if err != nil {
 		resp.Code = model.InternalServerError
 		resp.Message = err.Error()
+	} else {
+		resp.Data = APIsToPB(apis)
 	}
 	resp.Total = resp.Records
 }

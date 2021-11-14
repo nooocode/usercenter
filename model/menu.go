@@ -99,7 +99,7 @@ func DeleteMenu(id string) (err error) {
 		}
 
 		// 删除和角色关联
-		err = tx.Unscoped().Model(&RoleMenu{}).Delete("menu_id=?", id).Error
+		err = tx.Unscoped().Delete(&RoleMenu{}, "menu_id=?", id).Error
 		if err != nil {
 			return err
 		}

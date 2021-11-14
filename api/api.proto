@@ -16,14 +16,13 @@ service API{
 
 message APIInfo{
     string id=1;
-    string tenantID=2;
-    string path=3;
-    string group=4;
-    string method=5;
-    string description=6;
-    bool enable=7;
-    bool checkAuth=8;
-    bool checkLogin=9;
+    string path=2;
+    string group=3;
+    string method=4;
+    string description=5;
+    bool enable=6;
+    bool checkAuth=7;
+    bool checkLogin=8;
 }
 
 message QueryAPIRequest{
