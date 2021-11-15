@@ -30,8 +30,6 @@ dubbo:
     protocol: nacos
     address: 127.0.0.1:8848
     data-id: "usercenter"
-    group: basic
-    namespace: nooocode
     params:
       mysql: "root:123456@(127.0.0.1:3306)/usercenter?charset=utf8mb4&parseTime=True&loc=Local"
       debug: "true"
@@ -53,7 +51,6 @@ dubbo:
     username: ""
     password: ""
     timeout: "3s"
-    group: "nooocode"
   registries:
     nacos:
       protocol: nacos
@@ -71,38 +68,25 @@ dubbo:
         protocol-ids: triple
         # interface is for registry
         interface: org.nooocode.User
-        group: nooocode
-        version: 1.0.0
       TenantProvider:
         protocol-ids: triple
         # interface is for registry
-        interface: org.atali.Tenant
-        group: atali
-        version: 1.0.0
+        interface: org.nooocode.Tenant
       RoleProvider:
         protocol-ids: triple
         # interface is for registry
-        interface: org.atali.Role
-        group: atali
-        version: 1.0.0
+        interface: org.nooocode.Role
       MenuProvider:
         protocol-ids: triple
         # interface is for registry
-        interface: org.atali.Menu
-        group: atali
-        version: 1.0.0
+        interface: org.nooocode.Menu
       APIProvider:
         protocol-ids: triple
         # interface is for registry
-        interface: org.atali.API
-        group: atali
-        version: 1.0.0
+        interface: org.nooocode.API
       IdentityProvider:
         protocol-ids: triple
-        # interface is for registry
-        interface: org.atali.Identity
-        group: atali
-        version: 1.0.0
+        interface: org.nooocode.Identity
 ```
 * 操作二
 * 操作三  
