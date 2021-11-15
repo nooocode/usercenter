@@ -8,7 +8,7 @@ import (
 )
 
 type IdentityProvider struct {
-	apipb.UnimplementedAPIServer
+	apipb.UnimplementedIdentityServer
 }
 
 func (u *IdentityProvider) Authenticate(ctx context.Context, in *apipb.AuthenticateRequest) (*apipb.AuthenticateResponse, error) {
