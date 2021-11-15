@@ -57,12 +57,6 @@ func GetAccessToken(c *gin.Context) string {
 
 func AuthRequired(c *gin.Context) {
 	t := GetAccessToken(c)
-	if t == "camunda-admin" {
-		c.Set("User", &apipb.CurrentUser{
-			UserName: "camunda-admin",
-		})
-		return
-	}
 	currentUser, code, err := ucmodel.Authenticate(t, c.Request.Method, c.Request.URL.Path, true)
 
 	if code != model.Success {
