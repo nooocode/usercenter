@@ -1,9 +1,11 @@
 package middleware
 
 import (
+	"context"
 	"net/http"
 	"strings"
 
+	"dubbo.apache.org/dubbo-go/v3/config"
 	"github.com/gin-gonic/gin"
 	"github.com/nooocode/pkg/model"
 	apipb "github.com/nooocode/usercenter/api"
@@ -64,6 +66,44 @@ func AuthRequired(c *gin.Context) {
 		return
 	}
 	currentUser, code, err := ucmodel.Authenticate(t, c.Request.Method, c.Request.URL.Path, true)
+
+	if code != model.Success {
+
+		c.AbortWithStatusJSON(http.StatusOK, model.CommonResponse{
+			Code:    code,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	c.Set("User", currentUser)
+}
+
+var IdentityImpl = new(apipb.IdentityClientImpl)
+
+func InitIdentity() {
+	config.SetConsumerService(IdentityImpl)
+}
+
+func Authenticate(t, method, url string, checkAuth bool) (*apipb.CurrentUser, int, error) {
+	resp, err := IdentityImpl.Authenticate(context.Background(), &apipb.AuthenticateRequest{
+		Token:     t,
+		Method:    method,
+		Url:       url,
+		CheckAuth: checkAuth,
+	})
+	return resp.CurrentUser, int(resp.Code), err
+}
+
+func AuthRequiredWithRPC(c *gin.Context) {
+	t := GetAccessToken(c)
+	if t == "camunda-admin" {
+		c.Set("User", &apipb.CurrentUser{
+			UserName: "camunda-admin",
+		})
+		return
+	}
+	currentUser, code, err := Authenticate(t, c.Request.Method, c.Request.URL.Path, true)
 
 	if code != model.Success {
 
