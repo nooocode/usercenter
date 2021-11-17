@@ -5,6 +5,8 @@ ENV GOPROXY=https://goproxy.io,direct
 
 WORKDIR /workspace
 COPY . .
+RUN go install github.com/swaggo/swag/cmd/swag@latest
+RUN swag init
 RUN go env && go build -gcflags=-G=3 -o usercenter main.go
 RUN pwd
 
@@ -15,6 +17,8 @@ ENV DUBBO_GO_CONFIG_PATH="./dubbogo.yaml"
 
 WORKDIR /workspace
 COPY --from=builder /workspace/usercenter ./
+COPY --from=builder /workspace/swagger.json ./docs
+COPY --from=builder /workspace/swagger.yaml ./docs
 
 EXPOSE 20000
 

@@ -15,13 +15,21 @@ service API{
 }
 
 message APIInfo{
+    //UUID
     string id=1;
+    //路径
     string path=2;
+    //分组
     string group=3;
+    //方法 GET POST PUT 等等
     string method=4;
+    //描述
     string description=5;
+    //是否启用
     bool enable=6;
+    //是否检查权限
     bool checkAuth=7;
+    //是否需要登录
     bool checkLogin=8;
 }
 

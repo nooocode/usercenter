@@ -1,0 +1,304 @@
+definitions:
+  usercenter.APIInfo:
+    properties:
+      checkAuth:
+        description: 是否检查权限
+        type: boolean
+      checkLogin:
+        description: 是否需要登录
+        type: boolean
+      description:
+        description: 描述
+        type: string
+      enable:
+        description: 是否启用
+        type: boolean
+      group:
+        description: 分组
+        type: string
+      id:
+        description: UUID
+        type: string
+      method:
+        description: 方法 GET POST PUT 等等
+        type: string
+      path:
+        description: 路径
+        type: string
+    type: object
+  usercenter.CommonResponse:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+  usercenter.DelRequest:
+    properties:
+      id:
+        type: string
+      tenantID:
+        type: string
+    type: object
+  usercenter.EnableRequest:
+    properties:
+      enable:
+        type: boolean
+      id:
+        type: string
+      tenantID:
+        type: string
+    type: object
+  usercenter.GetAPIDetailResponse:
+    properties:
+      code:
+        type: integer
+      data:
+        $ref: '#/definitions/usercenter.APIInfo'
+      message:
+        type: string
+    type: object
+  usercenter.GetAllAPIResponse:
+    properties:
+      code:
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/usercenter.APIInfo'
+        type: array
+      message:
+        type: string
+    type: object
+  usercenter.QueryAPIResponse:
+    properties:
+      code:
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/usercenter.APIInfo'
+        type: array
+      message:
+        type: string
+      pages:
+        type: integer
+      records:
+        type: integer
+      total:
+        type: integer
+    type: object
+info:
+  contact: {}
+paths:
+  /api/core/auth/api/add:
+    post:
+      consumes:
+      - application/json
+      description: 新增API
+      parameters:
+      - description: jwt token
+        in: header
+        name: authorization
+        required: true
+        type: string
+      - description: Add API
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/usercenter.APIInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/usercenter.CommonResponse'
+      summary: 新增API
+      tags:
+      - API管理
+  /api/core/auth/api/all:
+    get:
+      consumes:
+      - application/json
+      description: 查询所有API
+      parameters:
+      - description: jwt token
+        in: header
+        name: authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/usercenter.GetAllAPIResponse'
+      summary: 查询所有API
+      tags:
+      - API管理
+  /api/core/auth/api/delete:
+    delete:
+      consumes:
+      - application/json
+      description: 软删除API
+      parameters:
+      - description: jwt token
+        in: header
+        name: authorization
+        required: true
+        type: string
+      - description: Delete API
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/usercenter.DelRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/usercenter.CommonResponse'
+      summary: 删除API
+      tags:
+      - API管理
+  /api/core/auth/api/detail:
+    get:
+      consumes:
+      - application/json
+      description: 查询明细
+      parameters:
+      - description: ID
+        in: query
+        name: id
+        required: true
+        type: string
+      - description: jwt token
+        in: header
+        name: authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/usercenter.GetAPIDetailResponse'
+      summary: 查询明细
+      tags:
+      - API管理
+  /api/core/auth/api/enable:
+    post:
+      consumes:
+      - application/json
+      description: 禁用/启用API
+      parameters:
+      - description: jwt token
+        in: header
+        name: authorization
+        required: true
+        type: string
+      - description: Enable/Disable API
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/usercenter.EnableRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/usercenter.CommonResponse'
+      summary: 禁用/启用API
+      tags:
+      - API管理
+  /api/core/auth/api/query:
+    get:
+      consumes:
+      - application/json
+      description: 分页查询
+      parameters:
+      - description: jwt token
+        in: header
+        name: authorization
+        required: true
+        type: string
+      - description: 从1开始
+        in: query
+        name: pageIndex
+        type: integer
+      - description: 默认每页10条
+        in: query
+        name: pageSize
+        type: integer
+      - description: 排序字段
+        in: query
+        name: orderField
+        type: string
+      - description: 是否倒序排序
+        in: query
+        name: desc
+        type: boolean
+      - description: 路径
+        in: query
+        name: path
+        type: string
+      - description: 方法
+        in: query
+        name: method
+        type: string
+      - description: 分组
+        in: query
+        name: group
+        type: string
+      - description: 是否检查权限
+        in: query
+        name: checkAuth
+        type: string
+      - description: 是否需要登录
+        in: query
+        name: checkLogin
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/usercenter.QueryAPIResponse'
+      summary: 分页查询
+      tags:
+      - API管理
+  /api/core/auth/api/update:
+    put:
+      consumes:
+      - application/json
+      description: 更新API
+      parameters:
+      - description: jwt token
+        in: header
+        name: authorization
+        required: true
+        type: string
+      - description: Update API
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/usercenter.APIInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/usercenter.CommonResponse'
+      summary: 更新API
+      tags:
+      - API管理
+swagger: "2.0"

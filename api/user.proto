@@ -57,6 +57,7 @@ message UserRole{
     string roleID=3;
 }
 
+//QueryUserRequest QueryUserRequest
 message QueryUserRequest{
     // @inject_tag: uri:"pageIndex" form:"pageIndex"
    int64 pageIndex=1;
