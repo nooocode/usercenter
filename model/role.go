@@ -282,16 +282,6 @@ func QueryRole(req *apipb.QueryRoleRequest, resp *apipb.QueryRoleResponse) {
 	}
 }
 
-type QueryRoleRequest struct {
-	model.CommonRequest
-	Name string `json:"name" form:"name" uri:"name"`
-}
-
-type QueryRoleResponse struct {
-	model.CommonResponse
-	Data []*Role `json:"data"`
-}
-
 //@author: [guoxf](https://github.com/guoxf)
 //@function: findChildrenRole
 //@description: 查询子角色

@@ -2,6 +2,7 @@ package http
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -41,6 +42,7 @@ func Login(c *gin.Context) {
 
 func Profile(c *gin.Context) {
 	userID := middleware.GetUserID(c)
+	fmt.Println(userID)
 	userProfile, err := ucmodel.GetUserProfile(userID)
 	if err != nil {
 		c.JSON(http.StatusOK, map[string]interface{}{

@@ -148,10 +148,8 @@ func GetRoleDetail(c *gin.Context) {
 }
 
 func GetAllRole(c *gin.Context) {
-	resp := &ucmodel.QueryRoleResponse{
-		CommonResponse: model.CommonResponse{
-			Code: model.Success,
-		},
+	resp := &apipb.QueryRoleResponse{
+		Code: model.Success,
 	}
 	req := &apipb.GetAllRequest{}
 	err := c.BindQuery(req)
@@ -173,7 +171,7 @@ func GetAllRole(c *gin.Context) {
 		c.JSON(http.StatusOK, resp)
 		return
 	}
-	resp.Data = roles
+	resp.Data = ucmodel.RolesToPB(roles)
 	resp.Records = int64(len(roles))
 	resp.Pages = 1
 	c.JSON(http.StatusOK, resp)

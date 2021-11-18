@@ -16,17 +16,11 @@ type Tenant struct {
 	// @inject_tag: validate:"required"
 	Name string `json:"name" validate:"required" gorm:"index;size:200"`
 	// 联系人
-	// required: true
-	// @inject_tag: validate:"required"
-	Contact string `json:"contact" validate:"required" gorm:"size:100"`
+	Contact string `json:"contact" gorm:"size:100"`
 	// 联系人电话
-	// required: true
-	// @inject_tag: validate:"required"
-	CellPhone string `json:"cellPhone" validate:"required" gorm:"size:50"`
+	CellPhone string `json:"cellPhone" gorm:"size:50"`
 	// 地址
-	// required: true
-	// @inject_tag: validate:"required"
-	Address string `json:"address" validate:"required" gorm:"size:200"`
+	Address string `json:"address" gorm:"size:200"`
 	// 业务范围
 	BusinessScope string `json:"businessScope" gorm:"size:200"`
 	// 占地面积

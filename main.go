@@ -50,9 +50,9 @@ func Start(port int) {
 	docs.SwaggerInfo.Schemes = []string{"http", "https"}
 
 	r := gin.Default()
+	r.Use(middleware.AuthRequired)
 	r.Use(utils.Cors())
 	http.RegisterAuthRouter(r)
 	r.GET("/usercenter/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-	r.Use(middleware.AuthRequired)
 	r.Run(fmt.Sprintf(":%d", port))
 }
