@@ -53,6 +53,6 @@ func Start(port int) {
 	r.Use(middleware.AuthRequired)
 	r.Use(utils.Cors())
 	http.RegisterAuthRouter(r)
-	r.GET("/usercenter/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	r.GET("/swagger/usercenter/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	r.Run(fmt.Sprintf(":%d", port))
 }

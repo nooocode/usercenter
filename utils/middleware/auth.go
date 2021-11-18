@@ -58,6 +58,9 @@ func GetAccessToken(c *gin.Context) string {
 }
 
 func AuthRequired(c *gin.Context) {
+	if strings.HasPrefix(c.Request.URL.Path, "/swagger/") {
+		return
+	}
 	t := GetAccessToken(c)
 	currentUser, code, err := ucmodel.Authenticate(t, c.Request.Method, c.Request.URL.Path, true)
 
@@ -90,13 +93,10 @@ func Authenticate(t, method, url string, checkAuth bool) (*apipb.CurrentUser, in
 }
 
 func AuthRequiredWithRPC(c *gin.Context) {
-	t := GetAccessToken(c)
-	if t == "camunda-admin" {
-		c.Set("User", &apipb.CurrentUser{
-			UserName: "camunda-admin",
-		})
+	if strings.HasPrefix(c.Request.URL.Path, "/swagger/") {
 		return
 	}
+	t := GetAccessToken(c)
 	currentUser, code, err := Authenticate(t, c.Request.Method, c.Request.URL.Path, true)
 
 	if code != model.Success {
