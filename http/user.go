@@ -258,7 +258,7 @@ func ResetPwd(c *gin.Context) {
 		},
 	}
 	req := &ResetPwdRequest{}
-	err := c.BindQuery(req)
+	err := c.BindJSON(req)
 	if err != nil {
 		resp.Code = model.BadRequest
 		resp.Message = err.Error()
@@ -282,12 +282,22 @@ type ChangePwdRequest struct {
 }
 
 func ChangePwd(c *gin.Context) {
-	resp := model.CommonDetailResponse{}
+	resp := model.CommonDetailResponse{
+		CommonResponse: model.CommonResponse{
+			Code: model.Success,
+		},
+	}
 	req := &ChangePwdRequest{}
-	err := c.BindQuery(req)
+	err := c.BindJSON(req)
 	if err != nil {
 		resp.Code = model.BadRequest
 		resp.Message = err.Error()
+		c.JSON(http.StatusOK, resp)
+		return
+	}
+	if req.NewPwd != req.NewConfirmPwd {
+		resp.Code = model.BadRequest
+		resp.Message = "新密码和确认密码不一样"
 		c.JSON(http.StatusOK, resp)
 		return
 	}

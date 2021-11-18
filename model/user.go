@@ -298,6 +298,7 @@ func UpdatePwd(id string, oldPwd, newPwd string) error {
 	if err != nil {
 		return err
 	}
+
 	err = scrypt.CompareHashAndPassword([]byte(user.Password), []byte(oldPwd))
 	if err != nil {
 		return err
