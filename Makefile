@@ -9,3 +9,5 @@ test-image:
 	docker run -v `pwd`:/workspace/code --env DUBBO_GO_CONFIG_PATH="./code/dubbogo.yaml" --rm  ${IMAGE}
 push-image:
 	docker push ${IMAGE}
+gen-doc:
+	swag init --parseDependency --parseInternal --parseDepth 1
