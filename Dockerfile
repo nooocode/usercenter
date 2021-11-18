@@ -17,8 +17,8 @@ ENV DUBBO_GO_CONFIG_PATH="./dubbogo.yaml"
 
 WORKDIR /workspace
 COPY --from=builder /workspace/usercenter ./
-COPY --from=builder /workspace/swagger.json ./docs
-COPY --from=builder /workspace/swagger.yaml ./docs
+COPY --from=builder /workspace/docs/swagger.json ./docs
+COPY --from=builder /workspace/docs/swagger.yaml ./docs
 
 EXPOSE 20000
 
