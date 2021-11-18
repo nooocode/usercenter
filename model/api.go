@@ -3,6 +3,7 @@ package model
 import (
 	"context"
 	"errors"
+	"fmt"
 
 	"github.com/nooocode/pkg/model"
 	"github.com/nooocode/pkg/utils/log"
@@ -188,7 +189,9 @@ func EnableAPI(id string, enable bool) error {
 }
 
 func updateNotCheckAuthRule() {
-	resp := &apipb.QueryAPIResponse{}
+	resp := &apipb.QueryAPIResponse{
+		Code: model.Success,
+	}
 	QueryAPI(&apipb.QueryAPIRequest{
 		CheckAuth:  2,
 		CheckLogin: 1,
@@ -198,6 +201,7 @@ func updateNotCheckAuthRule() {
 		log.Errorf(context.Background(), "updateNotCheckAuthRule error:%s", resp.Message)
 		return
 	}
+	fmt.Println("updateNotCheckAuthRule===>", resp.Data)
 	var newRules []*CasbinRule
 	for _, api := range resp.Data {
 		newRules = append(newRules, &CasbinRule{
@@ -221,7 +225,9 @@ func updateNotCheckAuthRule() {
 }
 
 func updateNotCheckLoginRule() {
-	resp := &apipb.QueryAPIResponse{}
+	resp := &apipb.QueryAPIResponse{
+		Code: model.Success,
+	}
 	QueryAPI(&apipb.QueryAPIRequest{
 		CheckLogin: 2,
 		PageSize:   1000,

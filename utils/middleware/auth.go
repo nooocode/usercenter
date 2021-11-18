@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"context"
+	"errors"
 	"net/http"
 	"strings"
 
@@ -92,7 +93,13 @@ func Authenticate(t, method, url string, checkAuth bool) (*apipb.CurrentUser, in
 		Url:       url,
 		CheckAuth: checkAuth,
 	})
-	return resp.CurrentUser, int(resp.Code), err
+	if err != nil {
+		return nil, 0, err
+	}
+	if resp.Code != model.Success {
+		return nil, int(resp.Code), errors.New(resp.Message)
+	}
+	return resp.CurrentUser, model.Success, nil
 }
 
 func AuthRequiredWithRPC(c *gin.Context) {

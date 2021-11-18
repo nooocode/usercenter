@@ -14,6 +14,16 @@ func Init(connStr string, debug bool) {
 		AutoMigrate()
 	}
 	InitCasbin()
+	roles, err := GetAllRole("")
+	if err != nil {
+		panic(err)
+	}
+	for _, role := range roles {
+		updateRoleAuth(role.ID)
+	}
+	updateNotCheckAuthRule()
+	updateNotCheckLoginRule()
+
 }
 
 //AutoMigrate 自动生成表
