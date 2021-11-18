@@ -65,10 +65,13 @@ func AuthRequired(c *gin.Context) {
 	currentUser, code, err := ucmodel.Authenticate(t, c.Request.Method, c.Request.URL.Path, true)
 
 	if code != model.Success {
-
+		message := ""
+		if err != nil {
+			message = err.Error()
+		}
 		c.AbortWithStatusJSON(http.StatusOK, model.CommonResponse{
 			Code:    code,
-			Message: err.Error(),
+			Message: message,
 		})
 		return
 	}
@@ -100,10 +103,13 @@ func AuthRequiredWithRPC(c *gin.Context) {
 	currentUser, code, err := Authenticate(t, c.Request.Method, c.Request.URL.Path, true)
 
 	if code != model.Success {
-
+		message := ""
+		if err != nil {
+			message = err.Error()
+		}
 		c.AbortWithStatusJSON(http.StatusOK, model.CommonResponse{
 			Code:    code,
-			Message: err.Error(),
+			Message: message,
 		})
 		return
 	}
