@@ -275,9 +275,10 @@ func ResetPwd(c *gin.Context) {
 
 type ChangePwdRequest struct {
 	model.CommonRequest
-	ID     string `json:"id" form:"id" uri:"id"`
-	OldPwd string `json:"oldPwd" form:"oldPwd" uri:"oldPwd"`
-	NewPwd string `json:"newPwd" form:"newPwd" uri:"newPwd"`
+	ID            string `json:"id" form:"id" uri:"id"`
+	OldPwd        string `json:"oldPwd" form:"oldPwd" uri:"oldPwd"`
+	NewPwd        string `json:"newPwd" form:"newPwd" uri:"newPwd"`
+	NewConfirmPwd string `json:"newConfirmPwd" form:"newConfirmPwd" uri:"newConfirmPwd"`
 }
 
 func ChangePwd(c *gin.Context) {
@@ -289,6 +290,9 @@ func ChangePwd(c *gin.Context) {
 		resp.Message = err.Error()
 		c.JSON(http.StatusOK, resp)
 		return
+	}
+	if req.ID == "" {
+		req.ID = middleware.GetUserID(c)
 	}
 	err = ucmodel.UpdatePwd(req.ID, req.OldPwd, req.NewPwd)
 	if err != nil {
