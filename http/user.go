@@ -252,7 +252,11 @@ type ResetPwdRequest struct {
 }
 
 func ResetPwd(c *gin.Context) {
-	resp := model.CommonDetailResponse{}
+	resp := model.CommonDetailResponse{
+		CommonResponse: model.CommonResponse{
+			Code: model.Success,
+		},
+	}
 	req := &ResetPwdRequest{}
 	err := c.BindQuery(req)
 	if err != nil {
