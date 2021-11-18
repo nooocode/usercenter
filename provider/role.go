@@ -49,7 +49,7 @@ func (u *RoleProvider) Query(ctx context.Context, in *apipb.QueryRoleRequest) (*
 
 func (u *RoleProvider) GetAll(ctx context.Context, in *apipb.GetAllRequest) (*apipb.GetAllRoleResponse, error) {
 	resp := &apipb.GetAllRoleResponse{}
-	roles, err := model.GetAllRole()
+	roles, err := model.GetAllRole(in.TenantID)
 	if err != nil {
 		resp.Code = apipb.Code_InternalServerError
 		resp.Message = err.Error()

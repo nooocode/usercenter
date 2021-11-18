@@ -14,7 +14,7 @@ require (
 	github.com/go-redis/redis/v8 v8.11.4
 	github.com/google/uuid v1.3.0
 	github.com/jinzhu/copier v0.3.2
-	github.com/nooocode/pkg v1.0.2
+	github.com/nooocode/pkg v1.0.3
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/swaggo/gin-swagger v1.3.3
 	github.com/swaggo/swag v1.7.4

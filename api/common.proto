@@ -18,7 +18,9 @@ message EnableRequest{
     bool enable=3;
 }
 
-message GetAllRequest{}
+message GetAllRequest{
+    string tenantID=1;
+}
 
 message GetDetailRequest{
     string id=1;

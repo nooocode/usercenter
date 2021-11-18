@@ -77,7 +77,7 @@ func (u *UserProvider) Enable(ctx context.Context, in *apipb.EnableRequest) (*ap
 
 func (u *UserProvider) GetAll(ctx context.Context, in *apipb.GetAllRequest) (*apipb.GetAllUserResponse, error) {
 	resp := &apipb.GetAllUserResponse{}
-	users, err := model.GetAllUsers()
+	users, err := model.GetAllUsers(in.TenantID)
 	if err != nil {
 		resp.Code = apipb.Code_InternalServerError
 		resp.Message = err.Error()

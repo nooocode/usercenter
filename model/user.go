@@ -172,6 +172,10 @@ func QueryUser(req *apipb.QueryUserRequest, resp *apipb.QueryUserResponse) {
 		db = db.Where("id_card = ?", req.IdCard)
 	}
 
+	if req.TenantID != "" {
+		db = db.Where("tenant_id = ?", req.TenantID)
+	}
+
 	if req.Mobile != "" {
 		db = db.Where("mobile LIKE ?", "%"+req.Mobile+"%")
 	}
@@ -208,8 +212,12 @@ func QueryUser(req *apipb.QueryUserRequest, resp *apipb.QueryUserResponse) {
 //@function: GetAllUsers
 //@description: 获取所有User
 //@return: users []User , err error
-func GetAllUsers() (users []*User, err error) {
-	err = dbClient.DB().Find(&users).Error
+func GetAllUsers(tenantID string) (users []*User, err error) {
+	if tenantID != "" {
+		err = dbClient.DB().Find(&users, "tenant_id=?", tenantID).Error
+	} else {
+		err = dbClient.DB().Find(&users).Error
+	}
 	return
 }
 

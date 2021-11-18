@@ -45,6 +45,8 @@ message QueryRoleRequest{
     bool desc=4;
     // @inject_tag: uri:"name" form:"name"
     string name=5;
+    //租户ID
+    string tenantID=6;
 }
 
 message QueryRoleResponse{

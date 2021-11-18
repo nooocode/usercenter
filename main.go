@@ -6,6 +6,7 @@ import (
 	"dubbo.apache.org/dubbo-go/v3/config"
 	_ "dubbo.apache.org/dubbo-go/v3/imports"
 	"github.com/gin-gonic/gin"
+	"github.com/nooocode/pkg/constants"
 	"github.com/nooocode/pkg/utils"
 	"github.com/nooocode/usercenter/docs"
 	"github.com/nooocode/usercenter/http"
@@ -33,6 +34,8 @@ func main() {
 	fmt.Println(params)
 	model.Init(params["mysql"], params["debug"] == "true")
 	token.InitTokenCache(params["token-key"], params["redis-addr"], params["redis-user-name"], params["redis-pwd"], 120)
+	constants.SetPlatformTenantID(params["platformTenantID"])
+	constants.SetSuperAdminRoleID(params["superAdminRoleID"])
 	fmt.Println("started server")
 	Start(48080)
 }

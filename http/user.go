@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/nooocode/pkg/constants"
 	"github.com/nooocode/pkg/model"
 	"github.com/nooocode/pkg/utils/log"
 	apipb "github.com/nooocode/usercenter/api"
@@ -75,7 +76,11 @@ func AddUser(c *gin.Context) {
 		c.JSON(http.StatusOK, resp)
 		return
 	}
-	req.TenantID = middleware.GetTenantID(c)
+	//只有平台租户才能为其他租户创建用户
+	tenantID := middleware.GetTenantID(c)
+	if tenantID != constants.PlatformTenantID {
+		req.TenantID = tenantID
+	}
 	err = ucmodel.CreateUser(req, false)
 	if err != nil {
 		resp.Code = model.InternalServerError
@@ -104,6 +109,11 @@ func UpdateUser(c *gin.Context) {
 		resp.Message = err.Error()
 		c.JSON(http.StatusOK, resp)
 		return
+	}
+	//只有平台租户才能更改用户的租户
+	tenantID := middleware.GetTenantID(c)
+	if tenantID != constants.PlatformTenantID {
+		req.TenantID = tenantID
 	}
 	err = ucmodel.UpdateUser(req)
 	if err != nil {
@@ -170,6 +180,11 @@ func QueryUser(c *gin.Context) {
 		c.JSON(http.StatusOK, resp)
 		return
 	}
+	//只有平台租户才能查询其他租户的角色
+	tenantID := middleware.GetTenantID(c)
+	if tenantID != constants.PlatformTenantID {
+		req.TenantID = tenantID
+	}
 	ucmodel.QueryUser(req, resp)
 
 	c.JSON(http.StatusOK, resp)
@@ -181,7 +196,20 @@ func GetAllUser(c *gin.Context) {
 			Code: model.Success,
 		},
 	}
-	users, err := ucmodel.GetAllUsers()
+	req := &apipb.GetAllRequest{}
+	err := c.BindQuery(req)
+	if err != nil {
+		resp.Code = model.BadRequest
+		resp.Message = err.Error()
+		c.JSON(http.StatusOK, resp)
+		return
+	}
+	//只有平台租户才能查询其他租户的角色
+	tenantID := middleware.GetTenantID(c)
+	if tenantID != constants.PlatformTenantID {
+		req.TenantID = tenantID
+	}
+	users, err := ucmodel.GetAllUsers(req.TenantID)
 	if err != nil {
 		resp.Code = model.InternalServerError
 		resp.Message = err.Error()

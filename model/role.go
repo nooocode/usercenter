@@ -259,6 +259,9 @@ func QueryRole(req *apipb.QueryRoleRequest, resp *apipb.QueryRoleResponse) {
 	if req.Name != "" {
 		db = db.Where("name LIKE ?", "%"+req.Name+"%")
 	}
+	if req.TenantID != "" {
+		db = db.Where("tenant_id = ?", req.TenantID)
+	}
 
 	OrderStr := "`name`"
 	if req.OrderField != "" {
@@ -431,7 +434,11 @@ func GetFullRoleByID(id string) (*Role, error) {
 	return role, err
 }
 
-func GetAllRole() (roles []*Role, err error) {
-	err = dbClient.DB().Find(&roles).Error
+func GetAllRole(tenantID string) (roles []*Role, err error) {
+	if tenantID != "" {
+		err = dbClient.DB().Find(&roles, "tenant_id=?", tenantID).Error
+	} else {
+		err = dbClient.DB().Find(&roles).Error
+	}
 	return
 }
