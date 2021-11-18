@@ -94,7 +94,7 @@ func Authenticate(t, method, url string, checkAuth bool) (*apipb.CurrentUser, in
 		CheckAuth: checkAuth,
 	})
 	if err != nil {
-		return nil, 0, err
+		return nil, model.InternalServerError, err
 	}
 	if resp.Code != model.Success {
 		return nil, int(resp.Code), errors.New(resp.Message)
