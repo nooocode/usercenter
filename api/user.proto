@@ -119,4 +119,6 @@ message ChangePwdRequest{
     string oldPwd=4;
 }
 
-message LogoutRequest{}
+message LogoutRequest{
+    string token=1;
+}

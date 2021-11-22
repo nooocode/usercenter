@@ -213,10 +213,8 @@ func QueryAPI(c *gin.Context) {
 // @Success 200 {object} apipb.GetAllAPIResponse
 // @Router /api/core/auth/api/all [get]
 func GetAllAPI(c *gin.Context) {
-	resp := &ucmodel.QueryAPIResponse{
-		CommonResponse: model.CommonResponse{
-			Code: model.Success,
-		},
+	resp := &apipb.QueryAPIResponse{
+		Code: model.Success,
 	}
 	apis, err := ucmodel.GetAllAPIs()
 	if err != nil {
@@ -225,7 +223,7 @@ func GetAllAPI(c *gin.Context) {
 		c.JSON(http.StatusOK, resp)
 		return
 	}
-	resp.Data = apis
+	resp.Data = ucmodel.APIsToPB(apis)
 	resp.Records = int64(len(apis))
 	resp.Pages = 1
 	c.JSON(http.StatusOK, resp)

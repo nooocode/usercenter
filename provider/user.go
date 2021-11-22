@@ -3,6 +3,7 @@ package provider
 import (
 	"context"
 
+	commonmodel "github.com/nooocode/pkg/model"
 	apipb "github.com/nooocode/usercenter/api"
 	"github.com/nooocode/usercenter/model"
 )
@@ -12,13 +13,17 @@ type UserProvider struct {
 }
 
 func (u *UserProvider) Login(ctx context.Context, in *apipb.LoginRequest) (*apipb.LoginResponse, error) {
-	resp := &apipb.LoginResponse{}
+	resp := &apipb.LoginResponse{
+		Code: commonmodel.Success,
+	}
 	model.Login(in, resp)
 	return resp, nil
 }
 
 func (u *UserProvider) Add(ctx context.Context, in *apipb.UserInfo) (*apipb.CommonResponse, error) {
-	resp := &apipb.CommonResponse{}
+	resp := &apipb.CommonResponse{
+		Code: commonmodel.Success,
+	}
 	user := model.PBToUser(in)
 	user.Password = in.Password
 	err := model.CreateUser(user, false)
@@ -30,7 +35,9 @@ func (u *UserProvider) Add(ctx context.Context, in *apipb.UserInfo) (*apipb.Comm
 }
 
 func (u *UserProvider) Update(ctx context.Context, in *apipb.UserInfo) (*apipb.CommonResponse, error) {
-	resp := &apipb.CommonResponse{}
+	resp := &apipb.CommonResponse{
+		Code: commonmodel.Success,
+	}
 	err := model.UpdateUser(model.PBToUser(in))
 	if err != nil {
 		resp.Code = apipb.Code_InternalServerError
@@ -40,7 +47,9 @@ func (u *UserProvider) Update(ctx context.Context, in *apipb.UserInfo) (*apipb.C
 }
 
 func (u *UserProvider) Delete(ctx context.Context, in *apipb.DelRequest) (*apipb.CommonResponse, error) {
-	resp := &apipb.CommonResponse{}
+	resp := &apipb.CommonResponse{
+		Code: commonmodel.Success,
+	}
 	err := model.DeleteUser(in.Id)
 	if err != nil {
 		resp.Code = apipb.Code_InternalServerError
@@ -50,13 +59,17 @@ func (u *UserProvider) Delete(ctx context.Context, in *apipb.DelRequest) (*apipb
 }
 
 func (u *UserProvider) Query(ctx context.Context, in *apipb.QueryUserRequest) (*apipb.QueryUserResponse, error) {
-	resp := &apipb.QueryUserResponse{}
+	resp := &apipb.QueryUserResponse{
+		Code: commonmodel.Success,
+	}
 	model.QueryUser(in, resp)
 	return resp, nil
 }
 
 func (u *UserProvider) GetProfile(ctx context.Context, in *apipb.GetDetailRequest) (*apipb.GetProfileResponse, error) {
-	resp := &apipb.GetProfileResponse{}
+	resp := &apipb.GetProfileResponse{
+		Code: commonmodel.Success,
+	}
 	//TODO
 	user, err := model.GetUserById(in.Id)
 	if err != nil {
@@ -68,7 +81,9 @@ func (u *UserProvider) GetProfile(ctx context.Context, in *apipb.GetDetailReques
 }
 
 func (u *UserProvider) Enable(ctx context.Context, in *apipb.EnableRequest) (*apipb.CommonResponse, error) {
-	resp := &apipb.CommonResponse{}
+	resp := &apipb.CommonResponse{
+		Code: commonmodel.Success,
+	}
 	err := model.EnableUser(in.Id, in.Enable)
 	if err != nil {
 		resp.Code = apipb.Code_InternalServerError
@@ -78,7 +93,9 @@ func (u *UserProvider) Enable(ctx context.Context, in *apipb.EnableRequest) (*ap
 }
 
 func (u *UserProvider) GetAll(ctx context.Context, in *apipb.GetAllRequest) (*apipb.GetAllUserResponse, error) {
-	resp := &apipb.GetAllUserResponse{}
+	resp := &apipb.GetAllUserResponse{
+		Code: commonmodel.Success,
+	}
 	users, err := model.GetAllUsers(in.TenantID)
 	if err != nil {
 		resp.Code = apipb.Code_InternalServerError
@@ -91,7 +108,9 @@ func (u *UserProvider) GetAll(ctx context.Context, in *apipb.GetAllRequest) (*ap
 }
 
 func (u *UserProvider) GetDetail(ctx context.Context, in *apipb.GetDetailRequest) (*apipb.GetUserDetailResponse, error) {
-	resp := &apipb.GetUserDetailResponse{}
+	resp := &apipb.GetUserDetailResponse{
+		Code: commonmodel.Success,
+	}
 	user, err := model.GetUserById(in.Id)
 	if err != nil {
 		resp.Code = apipb.Code_InternalServerError
@@ -102,7 +121,9 @@ func (u *UserProvider) GetDetail(ctx context.Context, in *apipb.GetDetailRequest
 }
 
 func (u *UserProvider) ResetPwd(ctx context.Context, in *apipb.GetDetailRequest) (*apipb.CommonResponse, error) {
-	resp := &apipb.CommonResponse{}
+	resp := &apipb.CommonResponse{
+		Code: commonmodel.Success,
+	}
 	err := model.ResetPwd(in.Id, model.DefaultPwd)
 	if err != nil {
 		resp.Code = apipb.Code_InternalServerError
@@ -112,7 +133,9 @@ func (u *UserProvider) ResetPwd(ctx context.Context, in *apipb.GetDetailRequest)
 }
 
 func (u *UserProvider) ChangePwd(ctx context.Context, in *apipb.ChangePwdRequest) (*apipb.CommonResponse, error) {
-	resp := &apipb.CommonResponse{}
+	resp := &apipb.CommonResponse{
+		Code: commonmodel.Success,
+	}
 	err := model.UpdatePwd(in.Id, in.OldPwd, in.NewPwd)
 	if err != nil {
 		resp.Code = apipb.Code_InternalServerError
@@ -122,9 +145,11 @@ func (u *UserProvider) ChangePwd(ctx context.Context, in *apipb.ChangePwdRequest
 }
 
 func (u *UserProvider) Logout(ctx context.Context, in *apipb.LogoutRequest) (*apipb.CommonResponse, error) {
-	resp := &apipb.CommonResponse{}
+	resp := &apipb.CommonResponse{
+		Code: commonmodel.Success,
+	}
 	//TODO
-	err := model.Logout("")
+	err := model.Logout(in.Token)
 	if err != nil {
 		resp.Code = apipb.Code_InternalServerError
 		resp.Message = err.Error()

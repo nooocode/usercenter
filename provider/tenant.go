@@ -3,6 +3,7 @@ package provider
 import (
 	"context"
 
+	commonmodel "github.com/nooocode/pkg/model"
 	apipb "github.com/nooocode/usercenter/api"
 	"github.com/nooocode/usercenter/model"
 )
@@ -12,7 +13,9 @@ type TenantProvider struct {
 }
 
 func (u *TenantProvider) Add(ctx context.Context, in *apipb.TenantInfo) (*apipb.CommonResponse, error) {
-	resp := &apipb.CommonResponse{}
+	resp := &apipb.CommonResponse{
+		Code: commonmodel.Success,
+	}
 	err := model.CreateTenant(model.PBToTenant(in))
 	if err != nil {
 		resp.Code = apipb.Code_InternalServerError
@@ -22,7 +25,9 @@ func (u *TenantProvider) Add(ctx context.Context, in *apipb.TenantInfo) (*apipb.
 }
 
 func (u *TenantProvider) Update(ctx context.Context, in *apipb.TenantInfo) (*apipb.CommonResponse, error) {
-	resp := &apipb.CommonResponse{}
+	resp := &apipb.CommonResponse{
+		Code: commonmodel.Success,
+	}
 	err := model.UpdateTenant(model.PBToTenant(in))
 	if err != nil {
 		resp.Code = apipb.Code_InternalServerError
@@ -32,7 +37,9 @@ func (u *TenantProvider) Update(ctx context.Context, in *apipb.TenantInfo) (*api
 }
 
 func (u *TenantProvider) Delete(ctx context.Context, in *apipb.DelRequest) (*apipb.CommonResponse, error) {
-	resp := &apipb.CommonResponse{}
+	resp := &apipb.CommonResponse{
+		Code: commonmodel.Success,
+	}
 	err := model.DeleteTenant(in.Id)
 	if err != nil {
 		resp.Code = apipb.Code_InternalServerError
@@ -42,13 +49,17 @@ func (u *TenantProvider) Delete(ctx context.Context, in *apipb.DelRequest) (*api
 }
 
 func (u *TenantProvider) Query(ctx context.Context, in *apipb.QueryTenantRequest) (*apipb.QueryTenantResponse, error) {
-	resp := &apipb.QueryTenantResponse{}
+	resp := &apipb.QueryTenantResponse{
+		Code: commonmodel.Success,
+	}
 	model.QueryTenant(in, resp)
 	return resp, nil
 }
 
 func (u *TenantProvider) Enable(ctx context.Context, in *apipb.EnableRequest) (*apipb.CommonResponse, error) {
-	resp := &apipb.CommonResponse{}
+	resp := &apipb.CommonResponse{
+		Code: commonmodel.Success,
+	}
 	err := model.EnableTenant(in.Id, in.Enable)
 	if err != nil {
 		resp.Code = apipb.Code_InternalServerError
@@ -58,7 +69,9 @@ func (u *TenantProvider) Enable(ctx context.Context, in *apipb.EnableRequest) (*
 }
 
 func (u *TenantProvider) GetAll(ctx context.Context, in *apipb.GetAllRequest) (*apipb.GetAllTenantResponse, error) {
-	resp := &apipb.GetAllTenantResponse{}
+	resp := &apipb.GetAllTenantResponse{
+		Code: commonmodel.Success,
+	}
 	users, err := model.GetAllTenant()
 	if err != nil {
 		resp.Code = apipb.Code_InternalServerError
@@ -71,12 +84,14 @@ func (u *TenantProvider) GetAll(ctx context.Context, in *apipb.GetAllRequest) (*
 }
 
 func (u *TenantProvider) GetDetail(ctx context.Context, in *apipb.GetDetailRequest) (*apipb.GetTenantDetailResponse, error) {
-	resp := &apipb.GetTenantDetailResponse{}
-	// user, err := model.GetTenantById(in.Id)
-	// if err != nil {
-	// 	resp.Code = apipb.Code_InternalServerError
-	// 	resp.Message = err.Error()
-	// }
-	// resp.Data = userToTenantInfo(&user)
+	resp := &apipb.GetTenantDetailResponse{
+		Code: commonmodel.Success,
+	}
+	tenant, err := model.GetTenantByID(in.Id)
+	if err != nil {
+		resp.Code = apipb.Code_InternalServerError
+		resp.Message = err.Error()
+	}
+	resp.Data = model.TenantToPB(tenant)
 	return resp, nil
 }

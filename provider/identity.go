@@ -3,6 +3,7 @@ package provider
 import (
 	"context"
 
+	commonmodel "github.com/nooocode/pkg/model"
 	apipb "github.com/nooocode/usercenter/api"
 	"github.com/nooocode/usercenter/model"
 )
@@ -12,7 +13,9 @@ type IdentityProvider struct {
 }
 
 func (u *IdentityProvider) Authenticate(ctx context.Context, in *apipb.AuthenticateRequest) (*apipb.AuthenticateResponse, error) {
-	resp := &apipb.AuthenticateResponse{}
+	resp := &apipb.AuthenticateResponse{
+		Code: commonmodel.Success,
+	}
 	currentUser, code, err := model.Authenticate(in.Token, in.Method, in.Url, in.CheckAuth)
 	if err != nil {
 		resp.Code = apipb.Code_InternalServerError
