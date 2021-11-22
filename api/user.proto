@@ -49,6 +49,7 @@ message UserInfo{
     string description=14;
     string realName=15;
     bool gender=16;
+    string password=17;
 }
 
 message UserRole{

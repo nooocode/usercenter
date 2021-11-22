@@ -19,7 +19,9 @@ func (u *UserProvider) Login(ctx context.Context, in *apipb.LoginRequest) (*apip
 
 func (u *UserProvider) Add(ctx context.Context, in *apipb.UserInfo) (*apipb.CommonResponse, error) {
 	resp := &apipb.CommonResponse{}
-	err := model.CreateUser(model.PBToUser(in), false)
+	user := model.PBToUser(in)
+	user.Password = in.Password
+	err := model.CreateUser(user, false)
 	if err != nil {
 		resp.Code = apipb.Code_InternalServerError
 		resp.Message = err.Error()
