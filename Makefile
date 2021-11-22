@@ -1,4 +1,4 @@
-IMAGE=nooocode/usercenter:v1.0.2
+IMAGE=nooocode/usercenter:v1.0.5
 run:
 	DUBBO_GO_CONFIG_PATH="./dubbogo.yaml" go run main.go
 build-image:

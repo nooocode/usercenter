@@ -84,8 +84,8 @@ func DeleteTenant(c *gin.Context) {
 		log.Warnf(context.Background(), "TransID:%s,新建API请求参数无效:%v", transID, err)
 		return
 	}
-	err = middleware.Validate.Struct(req)
-	if err != nil {
+
+	if req.ID == "" {
 		resp.Code = model.BadRequest
 		resp.Message = err.Error()
 		c.JSON(http.StatusOK, resp)
