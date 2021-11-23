@@ -82,6 +82,7 @@ message QueryUserRequest{
     string userNames=10;
     // @inject_tag: uri:"wechatID" form:"wechatID"
     string wechatID=11;
+    // @inject_tag: uri:"tenantID" form:"tenantID"
     string tenantID=12;
 }
 

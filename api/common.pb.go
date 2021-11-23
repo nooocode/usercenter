@@ -285,7 +285,8 @@ type GetAllRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	TenantID string `protobuf:"bytes,1,opt,name=tenantID,proto3" json:"tenantID,omitempty"`
+	// @inject_tag: uri:"tenantID" form:"tenantID"
+	TenantID string `protobuf:"bytes,1,opt,name=tenantID,proto3" json:"tenantID,omitempty" uri:"tenantID" form:"tenantID"`
 }
 
 func (x *GetAllRequest) Reset() {
@@ -332,8 +333,10 @@ type GetDetailRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id       string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	TenantID string `protobuf:"bytes,2,opt,name=tenantID,proto3" json:"tenantID,omitempty"`
+	// @inject_tag: uri:"id" form:"id"
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty" uri:"id" form:"id"`
+	// @inject_tag: uri:"tenantID" form:"tenantID"
+	TenantID string `protobuf:"bytes,2,opt,name=tenantID,proto3" json:"tenantID,omitempty" uri:"tenantID" form:"tenantID"`
 }
 
 func (x *GetDetailRequest) Reset() {

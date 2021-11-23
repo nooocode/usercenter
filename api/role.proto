@@ -46,6 +46,7 @@ message QueryRoleRequest{
     // @inject_tag: uri:"name" form:"name"
     string name=5;
     //租户ID
+    // @inject_tag: uri:"tenantID" form:"tenantID"
     string tenantID=6;
 }
 

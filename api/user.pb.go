@@ -420,7 +420,8 @@ type QueryUserRequest struct {
 	UserNames string `protobuf:"bytes,10,opt,name=userNames,proto3" json:"userNames,omitempty" uri:"userNames" form:"userNames"`
 	// @inject_tag: uri:"wechatID" form:"wechatID"
 	WechatID string `protobuf:"bytes,11,opt,name=wechatID,proto3" json:"wechatID,omitempty" uri:"wechatID" form:"wechatID"`
-	TenantID string `protobuf:"bytes,12,opt,name=tenantID,proto3" json:"tenantID,omitempty"`
+	// @inject_tag: uri:"tenantID" form:"tenantID"
+	TenantID string `protobuf:"bytes,12,opt,name=tenantID,proto3" json:"tenantID,omitempty" uri:"tenantID" form:"tenantID"`
 }
 
 func (x *QueryUserRequest) Reset() {

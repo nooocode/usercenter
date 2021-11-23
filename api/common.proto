@@ -19,11 +19,14 @@ message EnableRequest{
 }
 
 message GetAllRequest{
+    // @inject_tag: uri:"tenantID" form:"tenantID"
     string tenantID=1;
 }
 
 message GetDetailRequest{
+    // @inject_tag: uri:"id" form:"id"
     string id=1;
+    // @inject_tag: uri:"tenantID" form:"tenantID"
     string tenantID=2;
 }
 

@@ -226,7 +226,8 @@ type QueryRoleRequest struct {
 	// @inject_tag: uri:"name" form:"name"
 	Name string `protobuf:"bytes,5,opt,name=name,proto3" json:"name,omitempty" uri:"name" form:"name"`
 	//租户ID
-	TenantID string `protobuf:"bytes,6,opt,name=tenantID,proto3" json:"tenantID,omitempty"`
+	// @inject_tag: uri:"tenantID" form:"tenantID"
+	TenantID string `protobuf:"bytes,6,opt,name=tenantID,proto3" json:"tenantID,omitempty" uri:"tenantID" form:"tenantID"`
 }
 
 func (x *QueryRoleRequest) Reset() {
