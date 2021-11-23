@@ -12,7 +12,7 @@ func PBToUser(in *apipb.UserInfo) *User {
 			Model: commonmodel.Model{
 				ID: in.Id,
 			},
-			TenantID: in.Id,
+			TenantID: in.TenantID,
 		},
 		UserName:    in.UserName,
 		Nickname:    in.Nickname,
@@ -34,7 +34,7 @@ func PBToUser(in *apipb.UserInfo) *User {
 func UserToPB(in *User) *apipb.UserInfo {
 	return &apipb.UserInfo{
 		Id:          in.ID,
-		TenantID:    in.ID,
+		TenantID:    in.TenantID,
 		UserName:    in.UserName,
 		Nickname:    in.Nickname,
 		UserRoles:   UserRolesToPB(in.UserRoles),
@@ -272,7 +272,7 @@ func PBToRole(in *apipb.RoleInfo) *Role {
 			Model: commonmodel.Model{
 				ID: in.Id,
 			},
-			TenantID: in.Id,
+			TenantID: in.TenantID,
 		},
 		Name:          in.Name,
 		ParentID:      in.ParentID,
@@ -291,7 +291,7 @@ func RoleToPB(in *Role) *apipb.RoleInfo {
 	}
 	return &apipb.RoleInfo{
 		Id:            in.ID,
-		TenantID:      in.ID,
+		TenantID:      in.TenantID,
 		Name:          in.Name,
 		ParentID:      in.ParentID,
 		DefaultRouter: in.DefaultRouter,
