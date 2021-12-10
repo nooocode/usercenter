@@ -3,6 +3,7 @@ package provider
 import (
 	"context"
 
+	"github.com/nooocode/pkg/constants"
 	commonmodel "github.com/nooocode/pkg/model"
 	apipb "github.com/nooocode/usercenter/api"
 	"github.com/nooocode/usercenter/model"
@@ -28,6 +29,11 @@ func (u *TenantProvider) Update(ctx context.Context, in *apipb.TenantInfo) (*api
 	resp := &apipb.CommonResponse{
 		Code: commonmodel.Success,
 	}
+	if in.Id == constants.PlatformTenantID {
+		resp.Code = commonmodel.BadRequest
+		resp.Message = "平台租户不允许更新"
+		return resp, nil
+	}
 	err := model.UpdateTenant(model.PBToTenant(in))
 	if err != nil {
 		resp.Code = apipb.Code_InternalServerError
@@ -39,6 +45,11 @@ func (u *TenantProvider) Update(ctx context.Context, in *apipb.TenantInfo) (*api
 func (u *TenantProvider) Delete(ctx context.Context, in *apipb.DelRequest) (*apipb.CommonResponse, error) {
 	resp := &apipb.CommonResponse{
 		Code: commonmodel.Success,
+	}
+	if in.Id == constants.PlatformTenantID {
+		resp.Code = commonmodel.BadRequest
+		resp.Message = "平台租户不允许删除"
+		return resp, nil
 	}
 	err := model.DeleteTenant(in.Id)
 	if err != nil {
@@ -59,6 +70,11 @@ func (u *TenantProvider) Query(ctx context.Context, in *apipb.QueryTenantRequest
 func (u *TenantProvider) Enable(ctx context.Context, in *apipb.EnableRequest) (*apipb.CommonResponse, error) {
 	resp := &apipb.CommonResponse{
 		Code: commonmodel.Success,
+	}
+	if in.Id == constants.PlatformTenantID {
+		resp.Code = commonmodel.BadRequest
+		resp.Message = "平台租户不允许更新"
+		return resp, nil
 	}
 	err := model.EnableTenant(in.Id, in.Enable)
 	if err != nil {

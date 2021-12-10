@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/nooocode/pkg/constants"
 	"github.com/nooocode/pkg/model"
 	"github.com/nooocode/pkg/utils/log"
 	apipb "github.com/nooocode/usercenter/api"
@@ -62,6 +63,12 @@ func UpdateTenant(c *gin.Context) {
 		c.JSON(http.StatusOK, resp)
 		return
 	}
+	if req.ID == constants.PlatformTenantID {
+		resp.Code = model.BadRequest
+		resp.Message = "平台租户不允许更新"
+		c.JSON(http.StatusOK, resp)
+		return
+	}
 	err = ucmodel.UpdateTenant(req)
 	if err != nil {
 		resp.Code = model.InternalServerError
@@ -91,6 +98,12 @@ func DeleteTenant(c *gin.Context) {
 		c.JSON(http.StatusOK, resp)
 		return
 	}
+	if req.ID == constants.PlatformTenantID {
+		resp.Code = model.BadRequest
+		resp.Message = "平台租户不允许删除"
+		c.JSON(http.StatusOK, resp)
+		return
+	}
 	err = ucmodel.DeleteTenant(req.ID)
 	if err != nil {
 		resp.Code = model.InternalServerError
@@ -111,6 +124,12 @@ func EnableTenant(c *gin.Context) {
 		resp.Message = err.Error()
 		c.JSON(http.StatusOK, resp)
 		log.Warnf(context.Background(), "TransID:%s,新建租户请求参数无效:%v", transID, err)
+		return
+	}
+	if req.ID == constants.PlatformTenantID {
+		resp.Code = model.BadRequest
+		resp.Message = "平台租户不允许更新"
+		c.JSON(http.StatusOK, resp)
 		return
 	}
 	err = middleware.Validate.Struct(req)
