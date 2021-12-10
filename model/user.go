@@ -27,6 +27,8 @@ type User struct {
 	RoleIDs       []string    `json:"roleIDs" gorm:"-"`
 	WechatUnionID string      `json:"wechatUnionID" gorm:"size:36;index;comment:微信UionID"`
 	WechatOpenID  string      `json:"wechatOpenID" gorm:"size:36;index;comment:微信OpenID"`
+	//用户类型
+	Type int32 `json:"type" gorm:"index"`
 	//启用账号后可以登录系统
 	Enable bool `json:"enable" gorm:"index"`
 	// 用户名/密码错误次数
@@ -309,7 +311,8 @@ func UpdatePwd(id string, oldPwd, newPwd string) error {
 //UpdateProfile 更新个人信息
 func UpdateProfile(m *User) error {
 	return dbClient.DB().Model(m).Select("gender", "country",
-		"province", "city", "county", "birthday", "nickname", "description", "eid", "avatar").Where("id=?", m.ID).Updates(m).Error
+		"province", "city", "county", "birthday", "nickname", "description", 
+		"eid", "avatar","mobile","email","real_name").Where("id=?", m.ID).Updates(m).Error
 }
 
 func Login(req *apipb.LoginRequest, resp *apipb.LoginResponse) {

@@ -28,6 +28,7 @@ func PBToUser(in *apipb.UserInfo) *User {
 		Description: in.Description,
 		RealName:    in.RealName,
 		Gender:      in.Gender,
+		Type:        in.Type,
 	}
 }
 
@@ -49,6 +50,7 @@ func UserToPB(in *User) *apipb.UserInfo {
 		Description: in.Description,
 		RealName:    in.RealName,
 		Gender:      in.Gender,
+		Type:        in.Type,
 	}
 }
 

@@ -50,6 +50,7 @@ func EncodeToken(user *apipb.CurrentUser) (string, error) {
 	claims["key"] = user.Key
 	roleIDs, _ := json.Marshal(user.RoleIDs)
 	claims["roleIDs"] = string(roleIDs)
+	claims["type"] = user.Type
 
 	token.Claims = claims
 	tokenString, err := token.SignedString([]byte(secretKey))
@@ -132,6 +133,10 @@ func ExtractorCurrentUser(t *jwt.Token) *apipb.CurrentUser {
 
 	if _, ok := claims["deviceType"]; ok {
 		currentUser.DeviceType = int32(claims["deviceType"].(float64))
+	}
+
+	if _, ok := claims["type"]; ok {
+		currentUser.Type = int32(claims["type"].(float64))
 	}
 
 	if _, ok := claims["tenantID"]; ok {

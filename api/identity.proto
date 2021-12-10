@@ -32,4 +32,6 @@ message CurrentUser{
     repeated string roleIDs=8;
     string tenantID=9;
     string clientIP=10;
+    //用户类型
+    int32 type=11;
 }

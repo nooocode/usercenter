@@ -50,6 +50,7 @@ message UserInfo{
     string realName=15;
     bool gender=16;
     string password=17;
+    int32 type=18;
 }
 
 message UserRole{
