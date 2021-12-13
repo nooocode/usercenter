@@ -28,7 +28,8 @@ type User struct {
 	WechatUnionID string      `json:"wechatUnionID" gorm:"size:36;index;comment:微信UionID"`
 	WechatOpenID  string      `json:"wechatOpenID" gorm:"size:36;index;comment:微信OpenID"`
 	//用户类型
-	Type int32 `json:"type" gorm:"index"`
+	Type  int32  `json:"type" gorm:"index"`
+	Group string `json:"group" gorm:"index;size:50"`
 	//启用账号后可以登录系统
 	Enable bool `json:"enable" gorm:"index"`
 	// 用户名/密码错误次数
@@ -190,6 +191,14 @@ func QueryUser(req *apipb.QueryUserRequest, resp *apipb.QueryUserResponse) {
 
 	if req.Title != "" {
 		db = db.Where("title LIKE ?", "%"+req.Title+"%")
+	}
+
+	if req.Type > 0 {
+		db = db.Where("type = ?", req.Type)
+	}
+
+	if req.Group != "" {
+		db = db.Where("group = ?", req.Group)
 	}
 
 	OrderStr := "`user_name`"

@@ -52,6 +52,8 @@ message UserInfo{
     string password=17;
     int32 type=18;
     string tenantName=19;
+    //分组，例如属于某个组织的，或者某个个人
+    string group=20;
 }
 
 message UserRole{
@@ -86,6 +88,11 @@ message QueryUserRequest{
     string wechatID=11;
     // @inject_tag: uri:"tenantID" form:"tenantID"
     string tenantID=12;
+    //用户类型
+    // @inject_tag: uri:"type" form:"type"
+    int32 type=13;
+    // @inject_tag: uri:"group" form:"group"
+    string group=14;
 }
 
 message QueryUserResponse{

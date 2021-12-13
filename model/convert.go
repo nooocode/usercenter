@@ -29,6 +29,7 @@ func PBToUser(in *apipb.UserInfo) *User {
 		RealName:    in.RealName,
 		Gender:      in.Gender,
 		Type:        in.Type,
+		Group:       in.Group,
 	}
 }
 
@@ -51,6 +52,7 @@ func UserToPB(in *User) *apipb.UserInfo {
 		RealName:    in.RealName,
 		Gender:      in.Gender,
 		Type:        in.Type,
+		Group:       in.Group,
 	}
 	if in.Tenant != nil {
 		user.TenantName = in.Tenant.Name
