@@ -34,7 +34,7 @@ type UserClient interface {
 	Query(ctx context.Context, in *QueryUserRequest, opts ...grpc.CallOption) (*QueryUserResponse, common.ErrorWithAttachment)
 	GetProfile(ctx context.Context, in *GetDetailRequest, opts ...grpc.CallOption) (*GetProfileResponse, common.ErrorWithAttachment)
 	Enable(ctx context.Context, in *EnableRequest, opts ...grpc.CallOption) (*CommonResponse, common.ErrorWithAttachment)
-	GetAll(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*GetAllUserResponse, common.ErrorWithAttachment)
+	GetAll(ctx context.Context, in *GetAllUsersRequest, opts ...grpc.CallOption) (*GetAllUsersResponse, common.ErrorWithAttachment)
 	GetDetail(ctx context.Context, in *GetDetailRequest, opts ...grpc.CallOption) (*GetUserDetailResponse, common.ErrorWithAttachment)
 	ResetPwd(ctx context.Context, in *GetDetailRequest, opts ...grpc.CallOption) (*CommonResponse, common.ErrorWithAttachment)
 	ChangePwd(ctx context.Context, in *ChangePwdRequest, opts ...grpc.CallOption) (*CommonResponse, common.ErrorWithAttachment)
@@ -53,7 +53,7 @@ type UserClientImpl struct {
 	Query      func(ctx context.Context, in *QueryUserRequest) (*QueryUserResponse, error)
 	GetProfile func(ctx context.Context, in *GetDetailRequest) (*GetProfileResponse, error)
 	Enable     func(ctx context.Context, in *EnableRequest) (*CommonResponse, error)
-	GetAll     func(ctx context.Context, in *GetAllRequest) (*GetAllUserResponse, error)
+	GetAll     func(ctx context.Context, in *GetAllUsersRequest) (*GetAllUsersResponse, error)
 	GetDetail  func(ctx context.Context, in *GetDetailRequest) (*GetUserDetailResponse, error)
 	ResetPwd   func(ctx context.Context, in *GetDetailRequest) (*CommonResponse, error)
 	ChangePwd  func(ctx context.Context, in *ChangePwdRequest) (*CommonResponse, error)
@@ -110,8 +110,8 @@ func (c *userClient) Enable(ctx context.Context, in *EnableRequest, opts ...grpc
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/Enable", in, out)
 }
 
-func (c *userClient) GetAll(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*GetAllUserResponse, common.ErrorWithAttachment) {
-	out := new(GetAllUserResponse)
+func (c *userClient) GetAll(ctx context.Context, in *GetAllUsersRequest, opts ...grpc.CallOption) (*GetAllUsersResponse, common.ErrorWithAttachment) {
+	out := new(GetAllUsersResponse)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetAll", in, out)
 }
@@ -151,7 +151,7 @@ type UserServer interface {
 	Query(context.Context, *QueryUserRequest) (*QueryUserResponse, error)
 	GetProfile(context.Context, *GetDetailRequest) (*GetProfileResponse, error)
 	Enable(context.Context, *EnableRequest) (*CommonResponse, error)
-	GetAll(context.Context, *GetAllRequest) (*GetAllUserResponse, error)
+	GetAll(context.Context, *GetAllUsersRequest) (*GetAllUsersResponse, error)
 	GetDetail(context.Context, *GetDetailRequest) (*GetUserDetailResponse, error)
 	ResetPwd(context.Context, *GetDetailRequest) (*CommonResponse, error)
 	ChangePwd(context.Context, *ChangePwdRequest) (*CommonResponse, error)
@@ -185,7 +185,7 @@ func (UnimplementedUserServer) GetProfile(context.Context, *GetDetailRequest) (*
 func (UnimplementedUserServer) Enable(context.Context, *EnableRequest) (*CommonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Enable not implemented")
 }
-func (UnimplementedUserServer) GetAll(context.Context, *GetAllRequest) (*GetAllUserResponse, error) {
+func (UnimplementedUserServer) GetAll(context.Context, *GetAllUsersRequest) (*GetAllUsersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAll not implemented")
 }
 func (UnimplementedUserServer) GetDetail(context.Context, *GetDetailRequest) (*GetUserDetailResponse, error) {
@@ -386,7 +386,7 @@ func _User_Enable_Handler(srv interface{}, ctx context.Context, dec func(interfa
 }
 
 func _User_GetAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetAllRequest)
+	in := new(GetAllUsersRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -403,7 +403,7 @@ func _User_GetAll_Handler(srv interface{}, ctx context.Context, dec func(interfa
 		FullMethod: "/usercenter.User/GetAll",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).GetAll(ctx, req.(*GetAllRequest))
+		return srv.(UserServer).GetAll(ctx, req.(*GetAllUsersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

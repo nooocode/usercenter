@@ -225,12 +225,20 @@ func QueryUser(req *apipb.QueryUserRequest, resp *apipb.QueryUserResponse) {
 //@function: GetAllUsers
 //@description: 获取所有User
 //@return: users []User , err error
-func GetAllUsers(tenantID string) (users []*User, err error) {
-	if tenantID != "" {
-		err = dbClient.DB().Find(&users, "tenant_id=?", tenantID).Error
-	} else {
-		err = dbClient.DB().Find(&users).Error
+func GetAllUsers(req *apipb.GetAllUsersRequest) (users []*User, err error) {
+	db := dbClient.DB().Model(&User{})
+	if req.TenantID != "" {
+		db = db.Where("tenant_id = ?", req.TenantID)
 	}
+	if req.Type > 0 {
+		db = db.Where("type = ?", req.Type)
+	}
+
+	if req.Group != "" {
+		db = db.Where("group = ?", req.Group)
+	}
+	err = db.Find(&users).Error
+
 	return
 }
 

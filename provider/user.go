@@ -92,11 +92,11 @@ func (u *UserProvider) Enable(ctx context.Context, in *apipb.EnableRequest) (*ap
 	return resp, nil
 }
 
-func (u *UserProvider) GetAll(ctx context.Context, in *apipb.GetAllRequest) (*apipb.GetAllUserResponse, error) {
-	resp := &apipb.GetAllUserResponse{
+func (u *UserProvider) GetAll(ctx context.Context, in *apipb.GetAllUsersRequest) (*apipb.GetAllUsersResponse, error) {
+	resp := &apipb.GetAllUsersResponse{
 		Code: commonmodel.Success,
 	}
-	users, err := model.GetAllUsers(in.TenantID)
+	users, err := model.GetAllUsers(in)
 	if err != nil {
 		resp.Code = apipb.Code_InternalServerError
 		resp.Message = err.Error()

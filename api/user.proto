@@ -12,7 +12,7 @@ service User{
     rpc Query(QueryUserRequest)returns(QueryUserResponse){}
     rpc GetProfile(GetDetailRequest)returns(GetProfileResponse){}
     rpc Enable(EnableRequest)returns(CommonResponse){}
-    rpc GetAll(GetAllRequest)returns(GetAllUserResponse){}
+    rpc GetAll(GetAllUsersRequest)returns(GetAllUsersResponse){}
     rpc GetDetail(GetDetailRequest)returns(GetUserDetailResponse){}
     rpc ResetPwd(GetDetailRequest)returns(CommonResponse){}
     rpc ChangePwd(ChangePwdRequest)returns(CommonResponse){}
@@ -110,10 +110,19 @@ message GetProfileResponse{
     UserInfo data=3;
 }
 
-message GetAllUserResponse{
+message GetAllUsersResponse{
     Code code=1;
     string message=2;
     repeated UserInfo data=3;
+}
+
+message GetAllUsersRequest{
+    // @inject_tag: uri:"tenantID" form:"tenantID"
+    string tenantID=1;
+    // @inject_tag: uri:"group" form:"group"
+    string group=2;
+    // @inject_tag: uri:"type" form:"type"
+    int32 type=3;
 }
 
 message GetUserDetailResponse{

@@ -190,13 +190,11 @@ func QueryUser(c *gin.Context) {
 	c.JSON(http.StatusOK, resp)
 }
 
-func GetAllUser(c *gin.Context) {
-	resp := &ucmodel.QueryUserResponse{
-		CommonResponse: model.CommonResponse{
-			Code: model.Success,
-		},
+func GetAllUsers(c *gin.Context) {
+	resp := &apipb.GetAllUsersResponse{
+		Code: model.Success,
 	}
-	req := &apipb.GetAllRequest{}
+	req := &apipb.GetAllUsersRequest{}
 	err := c.BindQuery(req)
 	if err != nil {
 		resp.Code = model.BadRequest
@@ -209,16 +207,14 @@ func GetAllUser(c *gin.Context) {
 	if tenantID != constants.PlatformTenantID {
 		req.TenantID = tenantID
 	}
-	users, err := ucmodel.GetAllUsers(req.TenantID)
+	users, err := ucmodel.GetAllUsers(req)
 	if err != nil {
 		resp.Code = model.InternalServerError
 		resp.Message = err.Error()
 		c.JSON(http.StatusOK, resp)
 		return
 	}
-	resp.Data = users
-	resp.Records = int64(len(users))
-	resp.Pages = 1
+	resp.Data = ucmodel.UsersToPB(users)
 	c.JSON(http.StatusOK, resp)
 }
 

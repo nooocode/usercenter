@@ -14,7 +14,7 @@ func RegisterAuthRouter(r *gin.Engine) {
 	userGroup.GET("query", QueryUser)
 	userGroup.DELETE("delete", DeleteUser)
 	userGroup.POST("enable", EnableUser)
-	userGroup.GET("all", GetAllUser)
+	userGroup.GET("all", GetAllUsers)
 	userGroup.GET("detail", GetUserDetail)
 	userGroup.POST("resetpwd", ResetPwd)
 	userGroup.POST("changepwd", ChangePwd)
