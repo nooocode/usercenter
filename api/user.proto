@@ -51,6 +51,7 @@ message UserInfo{
     bool gender=16;
     string password=17;
     int32 type=18;
+    string tenantName=19;
 }
 
 message UserRole{

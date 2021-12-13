@@ -51,6 +51,7 @@ func UserToPB(in *User) *apipb.UserInfo {
 		RealName:    in.RealName,
 		Gender:      in.Gender,
 		Type:        in.Type,
+		TenantName:  in.Tenant.Name,
 	}
 }
 
@@ -301,6 +302,7 @@ func RoleToPB(in *Role) *apipb.RoleInfo {
 		CanDel:        in.CanDel,
 		RoleMenus:     RoleMenusToPB(in.RoleMenus),
 		Children:      children,
+		TenantName:    in.Tenant.Name,
 	}
 }
 

@@ -20,6 +20,7 @@ type Role struct {
 	DefaultRouter string      `json:"defaultRouter" gorm:"size:100;comment:默认菜单;default:dashboard"`
 	Description   string      `json:"description" gorm:"size:200;"`
 	CanDel        bool        `json:"canDel" gorm:"default:1"`
+	Tenant        Tenant      `json:"tenant"`
 }
 
 type RoleMenu struct {

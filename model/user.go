@@ -60,6 +60,8 @@ type User struct {
 	City     string `json:"city" gorm:"size:100;"`     //城市
 	County   string `json:"county" gorm:"size:100;"`   //区县
 	Birthday int64  `json:"birthday"`                  //公历出生日期包含时分
+
+	Tenant Tenant `json:"tenant"`
 }
 
 func (u User) GetRoleIDs() []string {
@@ -311,8 +313,8 @@ func UpdatePwd(id string, oldPwd, newPwd string) error {
 //UpdateProfile 更新个人信息
 func UpdateProfile(m *User) error {
 	return dbClient.DB().Model(m).Select("gender", "country",
-		"province", "city", "county", "birthday", "nickname", "description", 
-		"eid", "avatar","mobile","email","real_name").Where("id=?", m.ID).Updates(m).Error
+		"province", "city", "county", "birthday", "nickname", "description",
+		"eid", "avatar", "mobile", "email", "real_name").Where("id=?", m.ID).Updates(m).Error
 }
 
 func Login(req *apipb.LoginRequest, resp *apipb.LoginResponse) {
