@@ -20,7 +20,7 @@ type Role struct {
 	DefaultRouter string      `json:"defaultRouter" gorm:"size:100;comment:默认菜单;default:dashboard"`
 	Description   string      `json:"description" gorm:"size:200;"`
 	CanDel        bool        `json:"canDel" gorm:"default:1"`
-	Tenant        Tenant      `json:"tenant"`
+	Tenant        *Tenant     `json:"tenant"`
 }
 
 type RoleMenu struct {
@@ -274,7 +274,7 @@ func QueryRole(req *apipb.QueryRoleRequest, resp *apipb.QueryRoleResponse) {
 	}
 	var err error
 	var roles []*Role
-	resp.Records, resp.Pages, err = dbClient.PageQuery(db, req.PageSize, req.PageIndex, OrderStr, &roles)
+	resp.Records, resp.Pages, err = dbClient.PageQueryWithPreload(db, req.PageSize, req.PageIndex, OrderStr, []string{"Tenant"}, &roles)
 	if err != nil {
 		resp.Code = model.InternalServerError
 		resp.Message = err.Error()

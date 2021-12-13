@@ -61,7 +61,7 @@ type User struct {
 	County   string `json:"county" gorm:"size:100;"`   //区县
 	Birthday int64  `json:"birthday"`                  //公历出生日期包含时分
 
-	Tenant Tenant `json:"tenant"`
+	Tenant *Tenant `json:"tenant"`
 }
 
 func (u User) GetRoleIDs() []string {
@@ -202,7 +202,7 @@ func QueryUser(req *apipb.QueryUserRequest, resp *apipb.QueryUserResponse) {
 	}
 	var err error
 	var users []*User
-	resp.Records, resp.Pages, err = dbClient.PageQuery(db, req.PageSize, req.PageIndex, OrderStr, &users)
+	resp.Records, resp.Pages, err = dbClient.PageQueryWithPreload(db, req.PageSize, req.PageIndex, OrderStr, []string{"Tenant"}, &users)
 	if err != nil {
 		resp.Code = model.InternalServerError
 		resp.Message = err.Error()
