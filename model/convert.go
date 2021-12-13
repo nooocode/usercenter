@@ -33,7 +33,7 @@ func PBToUser(in *apipb.UserInfo) *User {
 }
 
 func UserToPB(in *User) *apipb.UserInfo {
-	return &apipb.UserInfo{
+	user := &apipb.UserInfo{
 		Id:          in.ID,
 		TenantID:    in.TenantID,
 		UserName:    in.UserName,
@@ -51,8 +51,11 @@ func UserToPB(in *User) *apipb.UserInfo {
 		RealName:    in.RealName,
 		Gender:      in.Gender,
 		Type:        in.Type,
-		TenantName:  in.Tenant.Name,
 	}
+	if in.Tenant != nil {
+		user.TenantName = in.Tenant.Name
+	}
+	return user
 }
 
 func UsersToPB(in []*User) []*apipb.UserInfo {
@@ -292,7 +295,7 @@ func RoleToPB(in *Role) *apipb.RoleInfo {
 	if len(in.Children) > 0 {
 		children = RolesToPB(in.Children)
 	}
-	return &apipb.RoleInfo{
+	role := &apipb.RoleInfo{
 		Id:            in.ID,
 		TenantID:      in.TenantID,
 		Name:          in.Name,
@@ -302,8 +305,11 @@ func RoleToPB(in *Role) *apipb.RoleInfo {
 		CanDel:        in.CanDel,
 		RoleMenus:     RoleMenusToPB(in.RoleMenus),
 		Children:      children,
-		TenantName:    in.Tenant.Name,
 	}
+	if in.Tenant != nil {
+		role.TenantName = in.Tenant.Name
+	}
+	return role
 }
 
 func RolesToPB(in []*Role) []*apipb.RoleInfo {
