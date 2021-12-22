@@ -124,3 +124,10 @@ func EnableTenant(id string, enable bool) error {
 	}
 	return nil
 }
+
+func StatisticTenantCount() (int64, error) {
+	db := dbClient.DB().Model(&Tenant{})
+	var count int64
+	err := db.Count(&count).Error
+	return count, err
+}

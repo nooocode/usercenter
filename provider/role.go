@@ -83,3 +83,17 @@ func (u *RoleProvider) GetDetail(ctx context.Context, in *apipb.GetDetailRequest
 	resp.Data = model.RoleToPB(role)
 	return resp, nil
 }
+
+func (u *RoleProvider) StatisticCount(ctx context.Context, in *apipb.StatisticRoleCountRequest) (*apipb.StatisticCountResponse, error) {
+	resp := &apipb.StatisticCountResponse{
+		Code: commonmodel.Success,
+	}
+	count, err := model.StatisticRoleCount(in.TenantID)
+	if err != nil {
+		resp.Code = apipb.Code_InternalServerError
+		resp.Message = err.Error()
+	} else {
+		resp.Count = int32(count)
+	}
+	return resp, nil
+}

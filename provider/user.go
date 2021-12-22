@@ -92,7 +92,6 @@ func (u *UserProvider) UpdateProfile(ctx context.Context, in *apipb.UserInfo) (*
 	return resp, nil
 }
 
-
 func (u *UserProvider) Enable(ctx context.Context, in *apipb.EnableRequest) (*apipb.CommonResponse, error) {
 	resp := &apipb.CommonResponse{
 		Code: commonmodel.Success,
@@ -166,6 +165,20 @@ func (u *UserProvider) Logout(ctx context.Context, in *apipb.LogoutRequest) (*ap
 	if err != nil {
 		resp.Code = apipb.Code_InternalServerError
 		resp.Message = err.Error()
+	}
+	return resp, nil
+}
+
+func (u *UserProvider) StatisticCount(ctx context.Context, in *apipb.StatisticUserCountRequest) (*apipb.StatisticCountResponse, error) {
+	resp := &apipb.StatisticCountResponse{
+		Code: commonmodel.Success,
+	}
+	count, err := model.StatisticUserCount(int(in.Type), in.TenantID, in.Group)
+	if err != nil {
+		resp.Code = apipb.Code_InternalServerError
+		resp.Message = err.Error()
+	} else {
+		resp.Count = int32(count)
 	}
 	return resp, nil
 }

@@ -40,6 +40,7 @@ type UserClient interface {
 	ChangePwd(ctx context.Context, in *ChangePwdRequest, opts ...grpc.CallOption) (*CommonResponse, common.ErrorWithAttachment)
 	Logout(ctx context.Context, in *LogoutRequest, opts ...grpc.CallOption) (*CommonResponse, common.ErrorWithAttachment)
 	UpdateProfile(ctx context.Context, in *UserInfo, opts ...grpc.CallOption) (*CommonResponse, common.ErrorWithAttachment)
+	StatisticCount(ctx context.Context, in *StatisticUserCountRequest, opts ...grpc.CallOption) (*StatisticCountResponse, common.ErrorWithAttachment)
 }
 
 type userClient struct {
@@ -47,19 +48,20 @@ type userClient struct {
 }
 
 type UserClientImpl struct {
-	Login         func(ctx context.Context, in *LoginRequest) (*LoginResponse, error)
-	Add           func(ctx context.Context, in *UserInfo) (*CommonResponse, error)
-	Update        func(ctx context.Context, in *UserInfo) (*CommonResponse, error)
-	Delete        func(ctx context.Context, in *DelRequest) (*CommonResponse, error)
-	Query         func(ctx context.Context, in *QueryUserRequest) (*QueryUserResponse, error)
-	GetProfile    func(ctx context.Context, in *GetDetailRequest) (*GetProfileResponse, error)
-	Enable        func(ctx context.Context, in *EnableRequest) (*CommonResponse, error)
-	GetAll        func(ctx context.Context, in *GetAllUsersRequest) (*GetAllUsersResponse, error)
-	GetDetail     func(ctx context.Context, in *GetDetailRequest) (*GetUserDetailResponse, error)
-	ResetPwd      func(ctx context.Context, in *GetDetailRequest) (*CommonResponse, error)
-	ChangePwd     func(ctx context.Context, in *ChangePwdRequest) (*CommonResponse, error)
-	Logout        func(ctx context.Context, in *LogoutRequest) (*CommonResponse, error)
-	UpdateProfile func(ctx context.Context, in *UserInfo) (*CommonResponse, error)
+	Login          func(ctx context.Context, in *LoginRequest) (*LoginResponse, error)
+	Add            func(ctx context.Context, in *UserInfo) (*CommonResponse, error)
+	Update         func(ctx context.Context, in *UserInfo) (*CommonResponse, error)
+	Delete         func(ctx context.Context, in *DelRequest) (*CommonResponse, error)
+	Query          func(ctx context.Context, in *QueryUserRequest) (*QueryUserResponse, error)
+	GetProfile     func(ctx context.Context, in *GetDetailRequest) (*GetProfileResponse, error)
+	Enable         func(ctx context.Context, in *EnableRequest) (*CommonResponse, error)
+	GetAll         func(ctx context.Context, in *GetAllUsersRequest) (*GetAllUsersResponse, error)
+	GetDetail      func(ctx context.Context, in *GetDetailRequest) (*GetUserDetailResponse, error)
+	ResetPwd       func(ctx context.Context, in *GetDetailRequest) (*CommonResponse, error)
+	ChangePwd      func(ctx context.Context, in *ChangePwdRequest) (*CommonResponse, error)
+	Logout         func(ctx context.Context, in *LogoutRequest) (*CommonResponse, error)
+	UpdateProfile  func(ctx context.Context, in *UserInfo) (*CommonResponse, error)
+	StatisticCount func(ctx context.Context, in *StatisticUserCountRequest) (*StatisticCountResponse, error)
 }
 
 func (c *UserClientImpl) GetDubboStub(cc *triple.TripleConn) UserClient {
@@ -148,6 +150,12 @@ func (c *userClient) UpdateProfile(ctx context.Context, in *UserInfo, opts ...gr
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/UpdateProfile", in, out)
 }
 
+func (c *userClient) StatisticCount(ctx context.Context, in *StatisticUserCountRequest, opts ...grpc.CallOption) (*StatisticCountResponse, common.ErrorWithAttachment) {
+	out := new(StatisticCountResponse)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/StatisticCount", in, out)
+}
+
 // UserServer is the server API for User service.
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility
@@ -165,6 +173,7 @@ type UserServer interface {
 	ChangePwd(context.Context, *ChangePwdRequest) (*CommonResponse, error)
 	Logout(context.Context, *LogoutRequest) (*CommonResponse, error)
 	UpdateProfile(context.Context, *UserInfo) (*CommonResponse, error)
+	StatisticCount(context.Context, *StatisticUserCountRequest) (*StatisticCountResponse, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -211,6 +220,9 @@ func (UnimplementedUserServer) Logout(context.Context, *LogoutRequest) (*CommonR
 }
 func (UnimplementedUserServer) UpdateProfile(context.Context, *UserInfo) (*CommonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateProfile not implemented")
+}
+func (UnimplementedUserServer) StatisticCount(context.Context, *StatisticUserCountRequest) (*StatisticCountResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StatisticCount not implemented")
 }
 func (s *UnimplementedUserServer) XXX_SetProxyImpl(impl protocol.Invoker) {
 	s.proxyImpl = impl
@@ -535,6 +547,29 @@ func _User_UpdateProfile_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_StatisticCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StatisticUserCountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	invo := invocation.NewRPCInvocation("StatisticCount", args, nil)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/usercenter.User/StatisticCount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).StatisticCount(ctx, req.(*StatisticUserCountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -593,6 +628,10 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateProfile",
 			Handler:    _User_UpdateProfile_Handler,
+		},
+		{
+			MethodName: "StatisticCount",
+			Handler:    _User_StatisticCount_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -289,7 +289,7 @@ func UpdateUser(user *User) error {
 			}
 		}
 
-		duplication, err := dbClient.UpdateWithCheckDuplicationAndOmit(user, []string{"password", "can_del","created_at","wechat_union_id","wechat_open_id"}, "id <> ? and (user_name = ? or mobile = ?)", user.ID, user.UserName, user.Mobile)
+		duplication, err := dbClient.UpdateWithCheckDuplicationAndOmit(user, []string{"password", "can_del", "created_at", "wechat_union_id", "wechat_open_id"}, "id <> ? and (user_name = ? or mobile = ?)", user.ID, user.UserName, user.Mobile)
 		if err != nil {
 			return err
 		}
@@ -331,7 +331,7 @@ func UpdatePwd(id string, oldPwd, newPwd string) error {
 func UpdateProfile(m *User) error {
 	return dbClient.DB().Model(m).Select("gender", "country",
 		"province", "city", "county", "birthday", "nickname", "description",
-		"eid", "avatar", "mobile", "email", "real_name","`group`","title","`type`").Where("id=?", m.ID).Updates(m).Error
+		"eid", "avatar", "mobile", "email", "real_name", "`group`", "title", "`type`").Where("id=?", m.ID).Updates(m).Error
 }
 
 func Login(req *apipb.LoginRequest, resp *apipb.LoginResponse) {
@@ -560,4 +560,20 @@ func GetUserProfile(id string) (*UserProfile, error) {
 		User:  user,
 		Menus: result,
 	}, nil
+}
+
+func StatisticUserCount(t int, tenantID, group string) (int64, error) {
+	db := dbClient.DB().Model(&User{})
+	if tenantID != "" {
+		db = db.Where("tenant_id = ?", tenantID)
+	}
+	if group != "" {
+		db = db.Where("`group` = ?", group)
+	}
+	if t > 0 {
+		db = db.Where("`type` = ?", t)
+	}
+	var count int64
+	err := db.Count(&count).Error
+	return count, err
 }

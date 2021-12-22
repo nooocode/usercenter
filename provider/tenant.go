@@ -111,3 +111,17 @@ func (u *TenantProvider) GetDetail(ctx context.Context, in *apipb.GetDetailReque
 	resp.Data = model.TenantToPB(tenant)
 	return resp, nil
 }
+
+func (u *TenantProvider) StatisticCount(ctx context.Context, in *apipb.StatisticTenantCountRequest) (*apipb.StatisticCountResponse, error) {
+	resp := &apipb.StatisticCountResponse{
+		Code: commonmodel.Success,
+	}
+	count, err := model.StatisticTenantCount()
+	if err != nil {
+		resp.Code = apipb.Code_InternalServerError
+		resp.Message = err.Error()
+	} else {
+		resp.Count = int32(count)
+	}
+	return resp, nil
+}

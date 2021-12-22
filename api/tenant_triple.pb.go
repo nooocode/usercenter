@@ -34,6 +34,7 @@ type TenantClient interface {
 	Enable(ctx context.Context, in *EnableRequest, opts ...grpc.CallOption) (*CommonResponse, common.ErrorWithAttachment)
 	GetAll(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*GetAllTenantResponse, common.ErrorWithAttachment)
 	GetDetail(ctx context.Context, in *GetDetailRequest, opts ...grpc.CallOption) (*GetTenantDetailResponse, common.ErrorWithAttachment)
+	StatisticCount(ctx context.Context, in *StatisticTenantCountRequest, opts ...grpc.CallOption) (*StatisticCountResponse, common.ErrorWithAttachment)
 }
 
 type tenantClient struct {
@@ -41,13 +42,14 @@ type tenantClient struct {
 }
 
 type TenantClientImpl struct {
-	Add       func(ctx context.Context, in *TenantInfo) (*CommonResponse, error)
-	Update    func(ctx context.Context, in *TenantInfo) (*CommonResponse, error)
-	Delete    func(ctx context.Context, in *DelRequest) (*CommonResponse, error)
-	Query     func(ctx context.Context, in *QueryTenantRequest) (*QueryTenantResponse, error)
-	Enable    func(ctx context.Context, in *EnableRequest) (*CommonResponse, error)
-	GetAll    func(ctx context.Context, in *GetAllRequest) (*GetAllTenantResponse, error)
-	GetDetail func(ctx context.Context, in *GetDetailRequest) (*GetTenantDetailResponse, error)
+	Add            func(ctx context.Context, in *TenantInfo) (*CommonResponse, error)
+	Update         func(ctx context.Context, in *TenantInfo) (*CommonResponse, error)
+	Delete         func(ctx context.Context, in *DelRequest) (*CommonResponse, error)
+	Query          func(ctx context.Context, in *QueryTenantRequest) (*QueryTenantResponse, error)
+	Enable         func(ctx context.Context, in *EnableRequest) (*CommonResponse, error)
+	GetAll         func(ctx context.Context, in *GetAllRequest) (*GetAllTenantResponse, error)
+	GetDetail      func(ctx context.Context, in *GetDetailRequest) (*GetTenantDetailResponse, error)
+	StatisticCount func(ctx context.Context, in *StatisticTenantCountRequest) (*StatisticCountResponse, error)
 }
 
 func (c *TenantClientImpl) GetDubboStub(cc *triple.TripleConn) TenantClient {
@@ -100,6 +102,12 @@ func (c *tenantClient) GetDetail(ctx context.Context, in *GetDetailRequest, opts
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetDetail", in, out)
 }
 
+func (c *tenantClient) StatisticCount(ctx context.Context, in *StatisticTenantCountRequest, opts ...grpc.CallOption) (*StatisticCountResponse, common.ErrorWithAttachment) {
+	out := new(StatisticCountResponse)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/StatisticCount", in, out)
+}
+
 // TenantServer is the server API for Tenant service.
 // All implementations must embed UnimplementedTenantServer
 // for forward compatibility
@@ -111,6 +119,7 @@ type TenantServer interface {
 	Enable(context.Context, *EnableRequest) (*CommonResponse, error)
 	GetAll(context.Context, *GetAllRequest) (*GetAllTenantResponse, error)
 	GetDetail(context.Context, *GetDetailRequest) (*GetTenantDetailResponse, error)
+	StatisticCount(context.Context, *StatisticTenantCountRequest) (*StatisticCountResponse, error)
 	mustEmbedUnimplementedTenantServer()
 }
 
@@ -139,6 +148,9 @@ func (UnimplementedTenantServer) GetAll(context.Context, *GetAllRequest) (*GetAl
 }
 func (UnimplementedTenantServer) GetDetail(context.Context, *GetDetailRequest) (*GetTenantDetailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDetail not implemented")
+}
+func (UnimplementedTenantServer) StatisticCount(context.Context, *StatisticTenantCountRequest) (*StatisticCountResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StatisticCount not implemented")
 }
 func (s *UnimplementedTenantServer) XXX_SetProxyImpl(impl protocol.Invoker) {
 	s.proxyImpl = impl
@@ -325,6 +337,29 @@ func _Tenant_GetDetail_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Tenant_StatisticCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StatisticTenantCountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	invo := invocation.NewRPCInvocation("StatisticCount", args, nil)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/usercenter.Tenant/StatisticCount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TenantServer).StatisticCount(ctx, req.(*StatisticTenantCountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Tenant_ServiceDesc is the grpc.ServiceDesc for Tenant service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -359,6 +394,10 @@ var Tenant_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetDetail",
 			Handler:    _Tenant_GetDetail_Handler,
+		},
+		{
+			MethodName: "StatisticCount",
+			Handler:    _Tenant_StatisticCount_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

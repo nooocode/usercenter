@@ -18,6 +18,13 @@ service User{
     rpc ChangePwd(ChangePwdRequest)returns(CommonResponse){}
     rpc Logout(LogoutRequest)returns(CommonResponse){}
     rpc UpdateProfile(UserInfo)returns(CommonResponse){}
+    rpc StatisticCount(StatisticUserCountRequest)returns(StatisticCountResponse){}
+}
+
+message StatisticUserCountRequest{
+    string tenantID=1;
+    int32 type=2;
+    string group=3;
 }
 
 message LoginRequest{

@@ -33,6 +33,7 @@ type RoleClient interface {
 	Query(ctx context.Context, in *QueryRoleRequest, opts ...grpc.CallOption) (*QueryRoleResponse, common.ErrorWithAttachment)
 	GetAll(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*GetAllRoleResponse, common.ErrorWithAttachment)
 	GetDetail(ctx context.Context, in *GetDetailRequest, opts ...grpc.CallOption) (*GetRoleDetailResponse, common.ErrorWithAttachment)
+	StatisticCount(ctx context.Context, in *StatisticRoleCountRequest, opts ...grpc.CallOption) (*StatisticCountResponse, common.ErrorWithAttachment)
 }
 
 type roleClient struct {
@@ -40,12 +41,13 @@ type roleClient struct {
 }
 
 type RoleClientImpl struct {
-	Add       func(ctx context.Context, in *RoleInfo) (*CommonResponse, error)
-	Update    func(ctx context.Context, in *RoleInfo) (*CommonResponse, error)
-	Delete    func(ctx context.Context, in *DelRequest) (*CommonResponse, error)
-	Query     func(ctx context.Context, in *QueryRoleRequest) (*QueryRoleResponse, error)
-	GetAll    func(ctx context.Context, in *GetAllRequest) (*GetAllRoleResponse, error)
-	GetDetail func(ctx context.Context, in *GetDetailRequest) (*GetRoleDetailResponse, error)
+	Add            func(ctx context.Context, in *RoleInfo) (*CommonResponse, error)
+	Update         func(ctx context.Context, in *RoleInfo) (*CommonResponse, error)
+	Delete         func(ctx context.Context, in *DelRequest) (*CommonResponse, error)
+	Query          func(ctx context.Context, in *QueryRoleRequest) (*QueryRoleResponse, error)
+	GetAll         func(ctx context.Context, in *GetAllRequest) (*GetAllRoleResponse, error)
+	GetDetail      func(ctx context.Context, in *GetDetailRequest) (*GetRoleDetailResponse, error)
+	StatisticCount func(ctx context.Context, in *StatisticRoleCountRequest) (*StatisticCountResponse, error)
 }
 
 func (c *RoleClientImpl) GetDubboStub(cc *triple.TripleConn) RoleClient {
@@ -92,6 +94,12 @@ func (c *roleClient) GetDetail(ctx context.Context, in *GetDetailRequest, opts .
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetDetail", in, out)
 }
 
+func (c *roleClient) StatisticCount(ctx context.Context, in *StatisticRoleCountRequest, opts ...grpc.CallOption) (*StatisticCountResponse, common.ErrorWithAttachment) {
+	out := new(StatisticCountResponse)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/StatisticCount", in, out)
+}
+
 // RoleServer is the server API for Role service.
 // All implementations must embed UnimplementedRoleServer
 // for forward compatibility
@@ -102,6 +110,7 @@ type RoleServer interface {
 	Query(context.Context, *QueryRoleRequest) (*QueryRoleResponse, error)
 	GetAll(context.Context, *GetAllRequest) (*GetAllRoleResponse, error)
 	GetDetail(context.Context, *GetDetailRequest) (*GetRoleDetailResponse, error)
+	StatisticCount(context.Context, *StatisticRoleCountRequest) (*StatisticCountResponse, error)
 	mustEmbedUnimplementedRoleServer()
 }
 
@@ -127,6 +136,9 @@ func (UnimplementedRoleServer) GetAll(context.Context, *GetAllRequest) (*GetAllR
 }
 func (UnimplementedRoleServer) GetDetail(context.Context, *GetDetailRequest) (*GetRoleDetailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDetail not implemented")
+}
+func (UnimplementedRoleServer) StatisticCount(context.Context, *StatisticRoleCountRequest) (*StatisticCountResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StatisticCount not implemented")
 }
 func (s *UnimplementedRoleServer) XXX_SetProxyImpl(impl protocol.Invoker) {
 	s.proxyImpl = impl
@@ -290,6 +302,29 @@ func _Role_GetDetail_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Role_StatisticCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StatisticRoleCountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	invo := invocation.NewRPCInvocation("StatisticCount", args, nil)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/usercenter.Role/StatisticCount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RoleServer).StatisticCount(ctx, req.(*StatisticRoleCountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Role_ServiceDesc is the grpc.ServiceDesc for Role service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -320,6 +355,10 @@ var Role_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetDetail",
 			Handler:    _Role_GetDetail_Handler,
+		},
+		{
+			MethodName: "StatisticCount",
+			Handler:    _Role_StatisticCount_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

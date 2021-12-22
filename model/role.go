@@ -433,3 +433,13 @@ func GetAllRole(tenantID string) (roles []*Role, err error) {
 	}
 	return
 }
+
+func StatisticRoleCount(tenantID string) (int64, error) {
+	db := dbClient.DB().Model(&Role{})
+	if tenantID != "" {
+		db = db.Where("tenant_id = ?", tenantID)
+	}
+	var count int64
+	err := db.Count(&count).Error
+	return count, err
+}

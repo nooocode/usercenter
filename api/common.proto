@@ -30,6 +30,12 @@ message GetDetailRequest{
     string tenantID=2;
 }
 
+message StatisticCountResponse{
+    Code code=1;
+    string message=2;
+    int32 count=3;
+}
+
 enum Code{
     None=0;
     //成功

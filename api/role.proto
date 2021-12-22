@@ -12,6 +12,11 @@ service Role{
     rpc Query(QueryRoleRequest)returns(QueryRoleResponse){}
     rpc GetAll(GetAllRequest)returns(GetAllRoleResponse){}
     rpc GetDetail(GetDetailRequest)returns(GetRoleDetailResponse){}
+    rpc StatisticCount(StatisticRoleCountRequest)returns(StatisticCountResponse){}
+}
+
+message StatisticRoleCountRequest{
+    string tenantID=1;
 }
 
 message RoleInfo{

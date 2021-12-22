@@ -385,6 +385,69 @@ func (x *GetDetailRequest) GetTenantID() string {
 	return ""
 }
 
+type StatisticCountResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    Code   `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code,omitempty"`
+	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Count   int32  `protobuf:"varint,3,opt,name=count,proto3" json:"count,omitempty"`
+}
+
+func (x *StatisticCountResponse) Reset() {
+	*x = StatisticCountResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_common_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *StatisticCountResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StatisticCountResponse) ProtoMessage() {}
+
+func (x *StatisticCountResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_common_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StatisticCountResponse.ProtoReflect.Descriptor instead.
+func (*StatisticCountResponse) Descriptor() ([]byte, []int) {
+	return file_common_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *StatisticCountResponse) GetCode() Code {
+	if x != nil {
+		return x.Code
+	}
+	return Code_None
+}
+
+func (x *StatisticCountResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *StatisticCountResponse) GetCount() int32 {
+	if x != nil {
+		return x.Count
+	}
+	return 0
+}
+
 var File_common_proto protoreflect.FileDescriptor
 
 var file_common_proto_rawDesc = []byte{
@@ -410,7 +473,14 @@ var file_common_proto_rawDesc = []byte{
 	0x65, 0x74, 0x61, 0x69, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02,
 	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x1a, 0x0a, 0x08,
 	0x74, 0x65, 0x6e, 0x61, 0x6e, 0x74, 0x49, 0x44, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08,
-	0x74, 0x65, 0x6e, 0x61, 0x6e, 0x74, 0x49, 0x44, 0x2a, 0x80, 0x02, 0x0a, 0x04, 0x43, 0x6f, 0x64,
+	0x74, 0x65, 0x6e, 0x61, 0x6e, 0x74, 0x49, 0x44, 0x22, 0x6e, 0x0a, 0x16, 0x53, 0x74, 0x61, 0x74,
+	0x69, 0x73, 0x74, 0x69, 0x63, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x12, 0x24, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e,
+	0x32, 0x10, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x63, 0x65, 0x6e, 0x74, 0x65, 0x72, 0x2e, 0x43, 0x6f,
+	0x64, 0x65, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73,
+	0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61,
+	0x67, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x2a, 0x80, 0x02, 0x0a, 0x04, 0x43, 0x6f, 0x64,
 	0x65, 0x12, 0x08, 0x0a, 0x04, 0x4e, 0x6f, 0x6e, 0x65, 0x10, 0x00, 0x12, 0x0d, 0x0a, 0x07, 0x53,
 	0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x10, 0xa0, 0x9c, 0x01, 0x12, 0x19, 0x0a, 0x13, 0x49, 0x6e,
 	0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x45, 0x72, 0x72, 0x6f,
@@ -444,22 +514,24 @@ func file_common_proto_rawDescGZIP() []byte {
 }
 
 var file_common_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_common_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_common_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_common_proto_goTypes = []interface{}{
-	(Code)(0),                // 0: usercenter.Code
-	(*CommonResponse)(nil),   // 1: usercenter.CommonResponse
-	(*DelRequest)(nil),       // 2: usercenter.DelRequest
-	(*EnableRequest)(nil),    // 3: usercenter.EnableRequest
-	(*GetAllRequest)(nil),    // 4: usercenter.GetAllRequest
-	(*GetDetailRequest)(nil), // 5: usercenter.GetDetailRequest
+	(Code)(0),                      // 0: usercenter.Code
+	(*CommonResponse)(nil),         // 1: usercenter.CommonResponse
+	(*DelRequest)(nil),             // 2: usercenter.DelRequest
+	(*EnableRequest)(nil),          // 3: usercenter.EnableRequest
+	(*GetAllRequest)(nil),          // 4: usercenter.GetAllRequest
+	(*GetDetailRequest)(nil),       // 5: usercenter.GetDetailRequest
+	(*StatisticCountResponse)(nil), // 6: usercenter.StatisticCountResponse
 }
 var file_common_proto_depIdxs = []int32{
 	0, // 0: usercenter.CommonResponse.code:type_name -> usercenter.Code
-	1, // [1:1] is the sub-list for method output_type
-	1, // [1:1] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	0, // 1: usercenter.StatisticCountResponse.code:type_name -> usercenter.Code
+	2, // [2:2] is the sub-list for method output_type
+	2, // [2:2] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_common_proto_init() }
@@ -528,6 +600,18 @@ func file_common_proto_init() {
 				return nil
 			}
 		}
+		file_common_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*StatisticCountResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -535,7 +619,7 @@ func file_common_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_common_proto_rawDesc,
 			NumEnums:      1,
-			NumMessages:   5,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

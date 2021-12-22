@@ -12,7 +12,10 @@ service Tenant{
     rpc Enable(EnableRequest)returns(CommonResponse){}
     rpc GetAll(GetAllRequest)returns(GetAllTenantResponse){}
     rpc GetDetail(GetDetailRequest)returns(GetTenantDetailResponse){}
+    rpc StatisticCount(StatisticTenantCountRequest)returns(StatisticCountResponse){}
 }
+
+message StatisticTenantCountRequest{}
 
 message TenantInfo{
     string id=1;
