@@ -289,7 +289,7 @@ func UpdateUser(user *User) error {
 			}
 		}
 
-		duplication, err := dbClient.UpdateWithCheckDuplicationAndOmit(user, []string{"password", "can_del"}, "id <> ? and (user_name = ? or mobile = ?)", user.ID, user.UserName, user.Mobile)
+		duplication, err := dbClient.UpdateWithCheckDuplicationAndOmit(user, []string{"password", "can_del","created_at","wechat_union_id","wechat_open_id"}, "id <> ? and (user_name = ? or mobile = ?)", user.ID, user.UserName, user.Mobile)
 		if err != nil {
 			return err
 		}
@@ -331,7 +331,7 @@ func UpdatePwd(id string, oldPwd, newPwd string) error {
 func UpdateProfile(m *User) error {
 	return dbClient.DB().Model(m).Select("gender", "country",
 		"province", "city", "county", "birthday", "nickname", "description",
-		"eid", "avatar", "mobile", "email", "real_name").Where("id=?", m.ID).Updates(m).Error
+		"eid", "avatar", "mobile", "email", "real_name","`group`","title","`type`").Where("id=?", m.ID).Updates(m).Error
 }
 
 func Login(req *apipb.LoginRequest, resp *apipb.LoginResponse) {
