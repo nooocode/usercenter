@@ -80,6 +80,19 @@ func (u *UserProvider) GetProfile(ctx context.Context, in *apipb.GetDetailReques
 	return resp, nil
 }
 
+func (u *UserProvider) UpdateProfile(ctx context.Context, in *apipb.UserInfo) (*apipb.CommonResponse, error) {
+	resp := &apipb.CommonResponse{
+		Code: commonmodel.Success,
+	}
+	err := model.UpdateProfile(model.PBToUser(in))
+	if err != nil {
+		resp.Code = apipb.Code_InternalServerError
+		resp.Message = err.Error()
+	}
+	return resp, nil
+}
+
+
 func (u *UserProvider) Enable(ctx context.Context, in *apipb.EnableRequest) (*apipb.CommonResponse, error) {
 	resp := &apipb.CommonResponse{
 		Code: commonmodel.Success,

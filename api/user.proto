@@ -17,6 +17,7 @@ service User{
     rpc ResetPwd(GetDetailRequest)returns(CommonResponse){}
     rpc ChangePwd(ChangePwdRequest)returns(CommonResponse){}
     rpc Logout(LogoutRequest)returns(CommonResponse){}
+    rpc UpdateProfile(UserInfo)returns(CommonResponse){}
 }
 
 message LoginRequest{

@@ -9,6 +9,7 @@ func RegisterAuthRouter(r *gin.Engine) {
 	userGroup.POST("login", Login)
 	userGroup.POST("logout", Logout)
 	userGroup.GET("profile", Profile)
+	userGroup.PUT("profile", UpdateProfile)
 	userGroup.POST("add", AddUser)
 	userGroup.PUT("update", UpdateUser)
 	userGroup.GET("query", QueryUser)

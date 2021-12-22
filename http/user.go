@@ -55,6 +55,21 @@ func Profile(c *gin.Context) {
 	})
 }
 
+func UpdateProfile(c *gin.Context) {
+	req := &ucmodel.User{}
+	err := ucmodel.UpdateProfile(req)
+	if err != nil {
+		c.JSON(http.StatusOK, map[string]interface{}{
+			"code":    model.InternalServerError,
+			"message": err.Error(),
+		})
+		return
+	}
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"code": model.Success,
+	})
+}
+
 func AddUser(c *gin.Context) {
 	transID := middleware.GetTransID(c)
 	req := &ucmodel.User{}
