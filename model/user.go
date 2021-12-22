@@ -164,41 +164,41 @@ func QueryUser(req *apipb.QueryUserRequest, resp *apipb.QueryUserResponse) {
 	db := dbClient.DB().Model(&User{})
 
 	if req.UserName != "" {
-		db = db.Where("user_name LIKE ?", "%"+req.UserName+"%")
+		db = db.Where("`user_name` LIKE ?", "%"+req.UserName+"%")
 	} else if len(req.UserNames) > 0 {
-		db = db.Where("user_name in ?", strings.Split(req.UserNames, ","))
+		db = db.Where("`user_name` in ?", strings.Split(req.UserNames, ","))
 	}
 
 	if req.Nickname != "" {
-		db = db.Where("nickname LIKE ?", "%"+req.Nickname+"%")
+		db = db.Where("`nickname` LIKE ?", "%"+req.Nickname+"%")
 	}
 
 	if req.IdCard != "" {
-		db = db.Where("id_card = ?", req.IdCard)
+		db = db.Where("`id_card` = ?", req.IdCard)
 	}
 
 	if req.TenantID != "" {
-		db = db.Where("tenant_id = ?", req.TenantID)
+		db = db.Where("`tenant_id` = ?", req.TenantID)
 	}
 
 	if req.Mobile != "" {
-		db = db.Where("mobile LIKE ?", "%"+req.Mobile+"%")
+		db = db.Where("`mobile` LIKE ?", "%"+req.Mobile+"%")
 	}
 
 	if req.WechatID != "" {
-		db = db.Where("wechat_id = ?", req.WechatID)
+		db = db.Where("`wechat_id` = ?", req.WechatID)
 	}
 
 	if req.Title != "" {
-		db = db.Where("title LIKE ?", "%"+req.Title+"%")
+		db = db.Where("`title` LIKE ?", "%"+req.Title+"%")
 	}
 
 	if req.Type > 0 {
-		db = db.Where("type = ?", req.Type)
+		db = db.Where("`type` = ?", req.Type)
 	}
 
 	if req.Group != "" {
-		db = db.Where("group = ?", req.Group)
+		db = db.Where("`group` = ?", req.Group)
 	}
 
 	OrderStr := "`user_name`"
@@ -228,14 +228,14 @@ func QueryUser(req *apipb.QueryUserRequest, resp *apipb.QueryUserResponse) {
 func GetAllUsers(req *apipb.GetAllUsersRequest) (users []*User, err error) {
 	db := dbClient.DB().Model(&User{})
 	if req.TenantID != "" {
-		db = db.Where("tenant_id = ?", req.TenantID)
+		db = db.Where("`tenant_id` = ?", req.TenantID)
 	}
 	if req.Type > 0 {
-		db = db.Where("type = ?", req.Type)
+		db = db.Where("`type` = ?", req.Type)
 	}
 
 	if req.Group != "" {
-		db = db.Where("group = ?", req.Group)
+		db = db.Where("`group` = ?", req.Group)
 	}
 	err = db.Find(&users).Error
 
