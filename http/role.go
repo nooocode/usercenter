@@ -13,10 +13,20 @@ import (
 	"github.com/nooocode/usercenter/utils/middleware"
 )
 
+// AddRole
+// @Summary 新增角色
+// @Description 新增角色
+// @Tags 角色管理
+// @Accept  json
+// @Produce  json
+// @Param authorization header string true "jwt token"
+// @Param account body apipb.RoleInfo true "请求参数"
+// @Success 200 {object} apipb.CommonResponse
+// @Router /api/core/auth/role/add [post]
 func AddRole(c *gin.Context) {
 	transID := middleware.GetTransID(c)
-	req := &ucmodel.Role{}
-	resp := &model.CommonResponse{
+	req := &apipb.RoleInfo{}
+	resp := &apipb.CommonResponse{
 		Code: model.Success,
 	}
 	err := c.BindJSON(req)
@@ -39,7 +49,7 @@ func AddRole(c *gin.Context) {
 	if tenantID != constants.PlatformTenantID {
 		req.TenantID = tenantID
 	}
-	err = ucmodel.CreateRole(req)
+	err = ucmodel.CreateRole(ucmodel.PBToRole(req))
 	if err != nil {
 		resp.Code = model.InternalServerError
 		resp.Message = err.Error()
@@ -47,10 +57,20 @@ func AddRole(c *gin.Context) {
 	c.JSON(http.StatusOK, resp)
 }
 
+// UpdateRole
+// @Summary 更新角色
+// @Description 更新角色
+// @Tags 角色管理
+// @Accept  json
+// @Produce  json
+// @Param authorization header string true "jwt token"
+// @Param account body apipb.RoleInfo true "请求参数"
+// @Success 200 {object} apipb.CommonResponse
+// @Router /api/core/auth/role/update [put]
 func UpdateRole(c *gin.Context) {
 	transID := middleware.GetTransID(c)
-	req := &ucmodel.Role{}
-	resp := &model.CommonResponse{
+	req := &apipb.RoleInfo{}
+	resp := &apipb.CommonResponse{
 		Code: model.Success,
 	}
 	err := c.BindJSON(req)
@@ -73,7 +93,7 @@ func UpdateRole(c *gin.Context) {
 	if tenantID != constants.PlatformTenantID {
 		req.TenantID = tenantID
 	}
-	err = ucmodel.UpdateRole(req)
+	err = ucmodel.UpdateRole(ucmodel.PBToRole(req))
 	if err != nil {
 		resp.Code = model.InternalServerError
 		resp.Message = err.Error()
@@ -81,10 +101,20 @@ func UpdateRole(c *gin.Context) {
 	c.JSON(http.StatusOK, resp)
 }
 
+// DeleteRole
+// @Summary 删除角色
+// @Description 软删除角色
+// @Tags 角色管理
+// @Accept  json
+// @Produce  json
+// @Param authorization header string true "jwt token"
+// @Param account body apipb.DelRequest true "请求参数"
+// @Success 200 {object} apipb.CommonResponse
+// @Router /api/core/auth/role/delete [delete]
 func DeleteRole(c *gin.Context) {
 	transID := middleware.GetTransID(c)
-	req := &ucmodel.Role{}
-	resp := &model.CommonResponse{
+	req := &apipb.DelRequest{}
+	resp := &apipb.CommonResponse{
 		Code: model.Success,
 	}
 	err := c.BindJSON(req)
@@ -95,7 +125,7 @@ func DeleteRole(c *gin.Context) {
 		log.Warnf(context.Background(), "TransID:%s,新建Role请求参数无效:%v", transID, err)
 		return
 	}
-	err = ucmodel.DeleteRole(req.ID)
+	err = ucmodel.DeleteRole(req.Id)
 	if err != nil {
 		resp.Code = model.InternalServerError
 		resp.Message = err.Error()
@@ -103,6 +133,21 @@ func DeleteRole(c *gin.Context) {
 	c.JSON(http.StatusOK, resp)
 }
 
+// QueryRole
+// @Summary 分页查询
+// @Description 分页查询
+// @Tags 角色管理
+// @Accept  json
+// @Produce  json
+// @Param authorization header string true "jwt token"
+// @Param pageIndex query int false "从1开始"
+// @Param pageSize query int false "默认每页10条"
+// @Param orderField query string false "排序字段"
+// @Param desc query bool false "是否倒序排序"
+// @Param tenantID query string false "租户ID"
+// @Param name query string false "名称"
+// @Success 200 {object} apipb.QueryRoleResponse
+// @Router /api/core/auth/role/query [get]
 func QueryRole(c *gin.Context) {
 	req := &apipb.QueryRoleRequest{}
 	resp := &apipb.QueryRoleResponse{
@@ -125,11 +170,19 @@ func QueryRole(c *gin.Context) {
 	c.JSON(http.StatusOK, resp)
 }
 
+// GetRoleDetail
+// @Summary 查询明细
+// @Description 查询明细
+// @Tags 角色管理
+// @Accept  json
+// @Produce  json
+// @Param id query string true "ID"
+// @Param authorization header string true "jwt token"
+// @Success 200 {object} apipb.GetRoleDetailResponse
+// @Router /api/core/auth/role/detail [get]
 func GetRoleDetail(c *gin.Context) {
-	resp := model.CommonDetailResponse{
-		CommonResponse: model.CommonResponse{
-			Code: model.Success,
-		},
+	resp := &apipb.GetRoleDetailResponse{
+		Code: model.Success,
 	}
 	idStr := c.Query("id")
 	if idStr == "" {
@@ -139,14 +192,25 @@ func GetRoleDetail(c *gin.Context) {
 	}
 	var err error
 
-	resp.Data, err = ucmodel.GetRoleByID(idStr)
+	data, err := ucmodel.GetRoleByID(idStr)
 	if err != nil {
 		resp.Code = model.InternalServerError
 		resp.Message = err.Error()
+	} else {
+		resp.Data = ucmodel.RoleToPB(data)
 	}
 	c.JSON(http.StatusOK, resp)
 }
 
+// GetAllRole
+// @Summary 查询所有角色
+// @Description 查询所有角色
+// @Tags 角色管理
+// @Accept  json
+// @Produce  json
+// @Param authorization header string true "jwt token"
+// @Success 200 {object} apipb.QueryRoleResponse
+// @Router /api/core/auth/role/all [get]
 func GetAllRole(c *gin.Context) {
 	resp := &apipb.QueryRoleResponse{
 		Code: model.Success,
