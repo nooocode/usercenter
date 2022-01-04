@@ -867,6 +867,309 @@
                 }
             }
         },
+        "/api/core/auth/tenant/add": {
+            "post": {
+                "description": "新增租户",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "租户管理"
+                ],
+                "summary": "新增租户",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "jwt token",
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "account",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/usercenter.TenantInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/usercenter.CommonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/core/auth/tenant/all": {
+            "get": {
+                "description": "查询所有租户",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "租户管理"
+                ],
+                "summary": "查询所有租户",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "jwt token",
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/usercenter.QueryTenantResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/core/auth/tenant/delete": {
+            "delete": {
+                "description": "软删除租户",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "租户管理"
+                ],
+                "summary": "删除租户",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "jwt token",
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "account",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/usercenter.DelRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/usercenter.CommonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/core/auth/tenant/detail": {
+            "get": {
+                "description": "查询明细",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "租户管理"
+                ],
+                "summary": "查询明细",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "jwt token",
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/usercenter.GetTenantDetailResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/core/auth/tenant/enable": {
+            "post": {
+                "description": "禁用/启用租户",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "租户管理"
+                ],
+                "summary": "禁用/启用租户",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "jwt token",
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "account",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/usercenter.EnableRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/usercenter.CommonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/core/auth/tenant/query": {
+            "get": {
+                "description": "分页查询",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "租户管理"
+                ],
+                "summary": "分页查询",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "jwt token",
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "从1开始",
+                        "name": "pageIndex",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "默认每页10条",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "排序字段",
+                        "name": "orderField",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否倒序排序",
+                        "name": "desc",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "租户ID",
+                        "name": "tenantID",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "名称",
+                        "name": "name",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/usercenter.QueryTenantResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/core/auth/tenant/update": {
+            "put": {
+                "description": "更新租户",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "租户管理"
+                ],
+                "summary": "更新租户",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "jwt token",
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "account",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/usercenter.TenantInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/usercenter.CommonResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/core/auth/user/add": {
             "post": {
                 "description": "新增用户",
@@ -1659,6 +1962,20 @@
                 }
             }
         },
+        "usercenter.GetTenantDetailResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "$ref": "#/definitions/usercenter.TenantInfo"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
         "usercenter.GetUserDetailResponse": {
             "type": "object",
             "properties": {
@@ -1915,6 +2232,32 @@
                 }
             }
         },
+        "usercenter.QueryTenantResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/usercenter.TenantInfo"
+                    }
+                },
+                "message": {
+                    "type": "string"
+                },
+                "pages": {
+                    "type": "integer"
+                },
+                "records": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
         "usercenter.QueryUserResponse": {
             "type": "object",
             "properties": {
@@ -2003,6 +2346,42 @@
                 },
                 "roleID": {
                     "type": "string"
+                }
+            }
+        },
+        "usercenter.TenantInfo": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "areaCovered": {
+                    "type": "string"
+                },
+                "businessScope": {
+                    "type": "string"
+                },
+                "cellPhone": {
+                    "type": "string"
+                },
+                "contact": {
+                    "type": "string"
+                },
+                "enable": {
+                    "type": "boolean"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "description": "@inject_tag: validate:\"required\"",
+                    "type": "string"
+                },
+                "staffSize": {
+                    "type": "integer"
                 }
             }
         },

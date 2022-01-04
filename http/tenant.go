@@ -13,10 +13,20 @@ import (
 	"github.com/nooocode/usercenter/utils/middleware"
 )
 
+// AddTenant
+// @Summary 新增租户
+// @Description 新增租户
+// @Tags 租户管理
+// @Accept  json
+// @Produce  json
+// @Param authorization header string true "jwt token"
+// @Param account body apipb.TenantInfo true "请求参数"
+// @Success 200 {object} apipb.CommonResponse
+// @Router /api/core/auth/tenant/add [post]
 func AddTenant(c *gin.Context) {
 	transID := middleware.GetTransID(c)
-	req := &ucmodel.Tenant{}
-	resp := &model.CommonResponse{
+	req := &apipb.TenantInfo{}
+	resp := &apipb.CommonResponse{
 		Code: model.Success,
 	}
 	err := c.BindJSON(req)
@@ -34,7 +44,7 @@ func AddTenant(c *gin.Context) {
 		c.JSON(http.StatusOK, resp)
 		return
 	}
-	err = ucmodel.CreateTenant(req)
+	err = ucmodel.CreateTenant(ucmodel.PBToTenant(req))
 	if err != nil {
 		resp.Code = model.InternalServerError
 		resp.Message = err.Error()
@@ -42,10 +52,20 @@ func AddTenant(c *gin.Context) {
 	c.JSON(http.StatusOK, resp)
 }
 
+// UpdateTenant
+// @Summary 更新租户
+// @Description 更新租户
+// @Tags 租户管理
+// @Accept  json
+// @Produce  json
+// @Param authorization header string true "jwt token"
+// @Param account body apipb.TenantInfo true "请求参数"
+// @Success 200 {object} apipb.CommonResponse
+// @Router /api/core/auth/tenant/update [put]
 func UpdateTenant(c *gin.Context) {
 	transID := middleware.GetTransID(c)
-	req := &ucmodel.Tenant{}
-	resp := &model.CommonResponse{
+	req := &apipb.TenantInfo{}
+	resp := &apipb.CommonResponse{
 		Code: model.Success,
 	}
 	err := c.BindJSON(req)
@@ -63,13 +83,13 @@ func UpdateTenant(c *gin.Context) {
 		c.JSON(http.StatusOK, resp)
 		return
 	}
-	if req.ID == constants.PlatformTenantID {
+	if req.Id == constants.PlatformTenantID {
 		resp.Code = model.BadRequest
 		resp.Message = "平台租户不允许更新"
 		c.JSON(http.StatusOK, resp)
 		return
 	}
-	err = ucmodel.UpdateTenant(req)
+	err = ucmodel.UpdateTenant(ucmodel.PBToTenant(req))
 	if err != nil {
 		resp.Code = model.InternalServerError
 		resp.Message = err.Error()
@@ -77,10 +97,20 @@ func UpdateTenant(c *gin.Context) {
 	c.JSON(http.StatusOK, resp)
 }
 
+// DeleteTenant
+// @Summary 删除租户
+// @Description 软删除租户
+// @Tags 租户管理
+// @Accept  json
+// @Produce  json
+// @Param authorization header string true "jwt token"
+// @Param account body apipb.DelRequest true "请求参数"
+// @Success 200 {object} apipb.CommonResponse
+// @Router /api/core/auth/tenant/delete [delete]
 func DeleteTenant(c *gin.Context) {
 	transID := middleware.GetTransID(c)
-	req := &ucmodel.Tenant{}
-	resp := &model.CommonResponse{
+	req := &apipb.DelRequest{}
+	resp := &apipb.CommonResponse{
 		Code: model.Success,
 	}
 	err := c.BindJSON(req)
@@ -92,19 +122,19 @@ func DeleteTenant(c *gin.Context) {
 		return
 	}
 
-	if req.ID == "" {
+	if req.Id == "" {
 		resp.Code = model.BadRequest
 		resp.Message = err.Error()
 		c.JSON(http.StatusOK, resp)
 		return
 	}
-	if req.ID == constants.PlatformTenantID {
+	if req.Id == constants.PlatformTenantID {
 		resp.Code = model.BadRequest
 		resp.Message = "平台租户不允许删除"
 		c.JSON(http.StatusOK, resp)
 		return
 	}
-	err = ucmodel.DeleteTenant(req.ID)
+	err = ucmodel.DeleteTenant(req.Id)
 	if err != nil {
 		resp.Code = model.InternalServerError
 		resp.Message = err.Error()
@@ -112,10 +142,20 @@ func DeleteTenant(c *gin.Context) {
 	c.JSON(http.StatusOK, resp)
 }
 
+// EnableTenant
+// @Summary 禁用/启用租户
+// @Description 禁用/启用租户
+// @Tags 租户管理
+// @Accept  json
+// @Produce  json
+// @Param authorization header string true "jwt token"
+// @Param account body apipb.EnableRequest true "请求参数"
+// @Success 200 {object} apipb.CommonResponse
+// @Router /api/core/auth/tenant/enable [post]
 func EnableTenant(c *gin.Context) {
 	transID := middleware.GetTransID(c)
-	req := &ucmodel.Tenant{}
-	resp := &model.CommonResponse{
+	req := &apipb.EnableRequest{}
+	resp := &apipb.CommonResponse{
 		Code: model.Success,
 	}
 	err := c.BindJSON(req)
@@ -126,7 +166,7 @@ func EnableTenant(c *gin.Context) {
 		log.Warnf(context.Background(), "TransID:%s,新建租户请求参数无效:%v", transID, err)
 		return
 	}
-	if req.ID == constants.PlatformTenantID {
+	if req.Id == constants.PlatformTenantID {
 		resp.Code = model.BadRequest
 		resp.Message = "平台租户不允许更新"
 		c.JSON(http.StatusOK, resp)
@@ -139,7 +179,7 @@ func EnableTenant(c *gin.Context) {
 		c.JSON(http.StatusOK, resp)
 		return
 	}
-	err = ucmodel.EnableTenant(req.ID, req.Enable)
+	err = ucmodel.EnableTenant(req.Id, req.Enable)
 	if err != nil {
 		resp.Code = model.InternalServerError
 		resp.Message = err.Error()
@@ -147,6 +187,21 @@ func EnableTenant(c *gin.Context) {
 	c.JSON(http.StatusOK, resp)
 }
 
+// QueryTenant
+// @Summary 分页查询
+// @Description 分页查询
+// @Tags 租户管理
+// @Accept  json
+// @Produce  json
+// @Param authorization header string true "jwt token"
+// @Param pageIndex query int false "从1开始"
+// @Param pageSize query int false "默认每页10条"
+// @Param orderField query string false "排序字段"
+// @Param desc query bool false "是否倒序排序"
+// @Param tenantID query string false "租户ID"
+// @Param name query string false "名称"
+// @Success 200 {object} apipb.QueryTenantResponse
+// @Router /api/core/auth/tenant/query [get]
 func QueryTenant(c *gin.Context) {
 	req := &apipb.QueryTenantRequest{}
 	resp := &apipb.QueryTenantResponse{
@@ -164,30 +219,43 @@ func QueryTenant(c *gin.Context) {
 	c.JSON(http.StatusOK, resp)
 }
 
+// GetAllTenant
+// @Summary 查询所有租户
+// @Description 查询所有租户
+// @Tags 租户管理
+// @Accept  json
+// @Produce  json
+// @Param authorization header string true "jwt token"
+// @Success 200 {object} apipb.QueryTenantResponse
+// @Router /api/core/auth/tenant/all [get]
 func GetAllTenant(c *gin.Context) {
-	resp := &ucmodel.QueryTenantResponse{
-		CommonResponse: model.CommonResponse{
-			Code: model.Success,
-		},
+	resp := &apipb.GetAllTenantResponse{
+		Code: model.Success,
 	}
-	apis, err := ucmodel.GetAllTenant()
+	data, err := ucmodel.GetAllTenant()
 	if err != nil {
 		resp.Code = model.InternalServerError
 		resp.Message = err.Error()
 		c.JSON(http.StatusOK, resp)
 		return
 	}
-	resp.Data = apis
-	resp.Records = int64(len(apis))
-	resp.Pages = 1
+	resp.Data = ucmodel.TenantsToPB(data)
 	c.JSON(http.StatusOK, resp)
 }
 
+// GetTenantDetail
+// @Summary 查询明细
+// @Description 查询明细
+// @Tags 租户管理
+// @Accept  json
+// @Produce  json
+// @Param id query string true "ID"
+// @Param authorization header string true "jwt token"
+// @Success 200 {object} apipb.GetTenantDetailResponse
+// @Router /api/core/auth/tenant/detail [get]
 func GetTenantDetail(c *gin.Context) {
-	resp := model.CommonDetailResponse{
-		CommonResponse: model.CommonResponse{
-			Code: model.Success,
-		},
+	resp := &apipb.GetTenantDetailResponse{
+		Code: model.Success,
 	}
 	idStr := c.Query("id")
 	if idStr == "" {
@@ -197,16 +265,30 @@ func GetTenantDetail(c *gin.Context) {
 	}
 	var err error
 
-	resp.Data, err = ucmodel.GetTenantByID(idStr)
+	data, err := ucmodel.GetTenantByID(idStr)
 	if err != nil {
 		resp.Code = model.InternalServerError
 		resp.Message = err.Error()
+	} else {
+		resp.Data = ucmodel.TenantToPB(data)
 	}
 	c.JSON(http.StatusOK, resp)
 }
 
+// CopyTenant
+// @Summary 禁用/启用租户
+// @Description 禁用/启用租户
+// @Tags 租户管理
+// @Accept  json
+// @Produce  json
+// @Param authorization header string true "jwt token"
+// @Param account body apipb.EnableRequest true "请求参数"
+// @Success 200 {object} apipb.CommonResponse
+// @Router /api/core/auth/tenant/enable [post]
 func CopyTenant(c *gin.Context) {
-	resp := model.CommonResponse{}
+	resp := &apipb.CommonResponse{
+		Code: model.Success,
+	}
 	idStr := c.Query("id")
 	if idStr == "" {
 		resp.Code = model.BadRequest
