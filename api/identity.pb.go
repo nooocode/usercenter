@@ -25,10 +25,13 @@ type AuthenticateRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Token     string `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
-	Url       string `protobuf:"bytes,2,opt,name=url,proto3" json:"url,omitempty"`
+	// @inject_tag: validate:"required"
+	Token string `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty" validate:"required"`
+	// @inject_tag: validate:"required"
+	Url       string `protobuf:"bytes,2,opt,name=url,proto3" json:"url,omitempty" validate:"required"`
 	CheckAuth bool   `protobuf:"varint,3,opt,name=checkAuth,proto3" json:"checkAuth,omitempty"`
-	Method    string `protobuf:"bytes,4,opt,name=method,proto3" json:"method,omitempty"`
+	// @inject_tag: validate:"required"
+	Method string `protobuf:"bytes,4,opt,name=method,proto3" json:"method,omitempty" validate:"required"`
 }
 
 func (x *AuthenticateRequest) Reset() {

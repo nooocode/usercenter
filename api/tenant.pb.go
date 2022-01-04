@@ -63,8 +63,9 @@ type TenantInfo struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id            string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name          string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// @inject_tag: validate:"required"
+	Name          string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty" validate:"required"`
 	Contact       string `protobuf:"bytes,3,opt,name=contact,proto3" json:"contact,omitempty"`
 	CellPhone     string `protobuf:"bytes,4,opt,name=cellPhone,proto3" json:"cellPhone,omitempty"`
 	Address       string `protobuf:"bytes,5,opt,name=address,proto3" json:"address,omitempty"`

@@ -19,6 +19,7 @@ message MenuInfo{
     uint32 level=2;
     string parentID=3;
     string path=4;
+    // @inject_tag: validate:"required"
     string name=5;
     bool hidden=6;
     string component=7;

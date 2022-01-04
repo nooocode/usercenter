@@ -18,10 +18,12 @@ message APIInfo{
     //UUID
     string id=1;
     //路径
+    // @inject_tag: validate:"required"
     string path=2;
     //分组
     string group=3;
     //方法 GET POST PUT 等等
+    // @inject_tag: validate:"required"
     string method=4;
     //描述
     string description=5;

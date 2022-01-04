@@ -28,11 +28,13 @@ type APIInfo struct {
 	//UUID
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	//路径
-	Path string `protobuf:"bytes,2,opt,name=path,proto3" json:"path,omitempty"`
+	// @inject_tag: validate:"required"
+	Path string `protobuf:"bytes,2,opt,name=path,proto3" json:"path,omitempty" validate:"required"`
 	//分组
 	Group string `protobuf:"bytes,3,opt,name=group,proto3" json:"group,omitempty"`
 	//方法 GET POST PUT 等等
-	Method string `protobuf:"bytes,4,opt,name=method,proto3" json:"method,omitempty"`
+	// @inject_tag: validate:"required"
+	Method string `protobuf:"bytes,4,opt,name=method,proto3" json:"method,omitempty" validate:"required"`
 	//描述
 	Description string `protobuf:"bytes,5,opt,name=description,proto3" json:"description,omitempty"`
 	//是否启用

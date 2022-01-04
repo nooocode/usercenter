@@ -72,9 +72,10 @@ type RoleInfo struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id            string      `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	TenantID      string      `protobuf:"bytes,2,opt,name=tenantID,proto3" json:"tenantID,omitempty"`
-	Name          string      `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	Id       string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	TenantID string `protobuf:"bytes,2,opt,name=tenantID,proto3" json:"tenantID,omitempty"`
+	// @inject_tag: validate:"required"
+	Name          string      `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty" validate:"required"`
 	ParentID      string      `protobuf:"bytes,4,opt,name=parentID,proto3" json:"parentID,omitempty"`
 	Children      []*RoleInfo `protobuf:"bytes,5,rep,name=children,proto3" json:"children,omitempty"`
 	RoleMenus     []*RoleMenu `protobuf:"bytes,6,rep,name=roleMenus,proto3" json:"roleMenus,omitempty"`

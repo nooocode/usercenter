@@ -8,11 +8,13 @@ message CommonResponse{
 }
 
 message DelRequest{
+    // @inject_tag: validate:"required"
     string id=1;
     string tenantID=2;
 }
 
 message EnableRequest{
+    // @inject_tag: validate:"required"
     string id=1;
     string tenantID=2;
     bool enable=3;
@@ -24,7 +26,7 @@ message GetAllRequest{
 }
 
 message GetDetailRequest{
-    // @inject_tag: uri:"id" form:"id"
+    // @inject_tag: uri:"id" form:"id" validate:"required"
     string id=1;
     // @inject_tag: uri:"tenantID" form:"tenantID"
     string tenantID=2;

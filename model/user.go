@@ -331,7 +331,7 @@ func UpdatePwd(id string, oldPwd, newPwd string) error {
 func UpdateProfile(m *User) error {
 	return dbClient.DB().Model(m).Select("gender", "country",
 		"province", "city", "county", "birthday", "nickname", "description",
-		"eid", "avatar", "mobile", "email", "real_name", "`group`", "title", "`type`").Where("id=?", m.ID).Updates(m).Error
+		"eid", "avatar", "mobile", "email", "real_name", "`group`", "title", "`type`", "id_card").Where("id=?", m.ID).Updates(m).Error
 }
 
 func Login(req *apipb.LoginRequest, resp *apipb.LoginResponse) {
@@ -467,11 +467,11 @@ func Logout(t string) error {
 }
 
 type UserProfile struct {
-	*User
+	apipb.UserProfile
 	Menus []*Menu `json:"menus"`
 }
 
-func GetUserProfile(id string) (*UserProfile, error) {
+func GetUserProfile(id string) (*apipb.UserProfile, error) {
 	var user = &User{}
 	err := dbClient.DB().Preload("UserRoles.Role.RoleMenus").Preload(clause.Associations).Where("id = ?", id).First(&user).Error
 	if err != nil {
@@ -556,9 +556,18 @@ func GetUserProfile(id string) (*UserProfile, error) {
 		return result[i].Sort < result[j].Sort
 	})
 
-	return &UserProfile{
-		User:  user,
-		Menus: result,
+	return &apipb.UserProfile{
+		Id:       user.ID,
+		Nickname: user.Nickname,
+		Email:    user.Email,
+		Mobile:   user.Mobile,
+		IdCard:   user.IDCard,
+		Avatar:   user.Avatar,
+		RealName: user.RealName,
+		Gender:   user.Gender,
+		Type:     user.Type,
+		Group:    user.Group,
+		Menus:    MenusToPB(result),
 	}, nil
 }
 

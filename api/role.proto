@@ -22,6 +22,7 @@ message StatisticRoleCountRequest{
 message RoleInfo{
     string id=1;
     string tenantID=2;
+    // @inject_tag: validate:"required"
     string name=3;
     string parentID=4;
     repeated RoleInfo children=5;

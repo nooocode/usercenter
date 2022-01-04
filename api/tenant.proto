@@ -19,6 +19,7 @@ message StatisticTenantCountRequest{}
 
 message TenantInfo{
     string id=1;
+    // @inject_tag: validate:"required"
     string name=2;
     string contact=3;
     string cellPhone=4;

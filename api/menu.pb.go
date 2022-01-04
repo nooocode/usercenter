@@ -25,11 +25,12 @@ type MenuInfo struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id          string           `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Level       uint32           `protobuf:"varint,2,opt,name=level,proto3" json:"level,omitempty"`
-	ParentID    string           `protobuf:"bytes,3,opt,name=parentID,proto3" json:"parentID,omitempty"`
-	Path        string           `protobuf:"bytes,4,opt,name=path,proto3" json:"path,omitempty"`
-	Name        string           `protobuf:"bytes,5,opt,name=name,proto3" json:"name,omitempty"`
+	Id       string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Level    uint32 `protobuf:"varint,2,opt,name=level,proto3" json:"level,omitempty"`
+	ParentID string `protobuf:"bytes,3,opt,name=parentID,proto3" json:"parentID,omitempty"`
+	Path     string `protobuf:"bytes,4,opt,name=path,proto3" json:"path,omitempty"`
+	// @inject_tag: validate:"required"
+	Name        string           `protobuf:"bytes,5,opt,name=name,proto3" json:"name,omitempty" validate:"required"`
 	Hidden      bool             `protobuf:"varint,6,opt,name=hidden,proto3" json:"hidden,omitempty"`
 	Component   string           `protobuf:"bytes,7,opt,name=component,proto3" json:"component,omitempty"`
 	Sort        int32            `protobuf:"varint,8,opt,name=sort,proto3" json:"sort,omitempty"`

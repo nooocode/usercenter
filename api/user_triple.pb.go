@@ -40,7 +40,7 @@ type UserClient interface {
 	ResetPwd(ctx context.Context, in *GetDetailRequest, opts ...grpc_go.CallOption) (*CommonResponse, common.ErrorWithAttachment)
 	ChangePwd(ctx context.Context, in *ChangePwdRequest, opts ...grpc_go.CallOption) (*CommonResponse, common.ErrorWithAttachment)
 	Logout(ctx context.Context, in *LogoutRequest, opts ...grpc_go.CallOption) (*CommonResponse, common.ErrorWithAttachment)
-	UpdateProfile(ctx context.Context, in *UserInfo, opts ...grpc_go.CallOption) (*CommonResponse, common.ErrorWithAttachment)
+	UpdateProfile(ctx context.Context, in *UserProfile, opts ...grpc_go.CallOption) (*CommonResponse, common.ErrorWithAttachment)
 	StatisticCount(ctx context.Context, in *StatisticUserCountRequest, opts ...grpc_go.CallOption) (*StatisticCountResponse, common.ErrorWithAttachment)
 }
 
@@ -61,7 +61,7 @@ type UserClientImpl struct {
 	ResetPwd       func(ctx context.Context, in *GetDetailRequest) (*CommonResponse, error)
 	ChangePwd      func(ctx context.Context, in *ChangePwdRequest) (*CommonResponse, error)
 	Logout         func(ctx context.Context, in *LogoutRequest) (*CommonResponse, error)
-	UpdateProfile  func(ctx context.Context, in *UserInfo) (*CommonResponse, error)
+	UpdateProfile  func(ctx context.Context, in *UserProfile) (*CommonResponse, error)
 	StatisticCount func(ctx context.Context, in *StatisticUserCountRequest) (*StatisticCountResponse, error)
 }
 
@@ -149,7 +149,7 @@ func (c *userClient) Logout(ctx context.Context, in *LogoutRequest, opts ...grpc
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/Logout", in, out)
 }
 
-func (c *userClient) UpdateProfile(ctx context.Context, in *UserInfo, opts ...grpc_go.CallOption) (*CommonResponse, common.ErrorWithAttachment) {
+func (c *userClient) UpdateProfile(ctx context.Context, in *UserProfile, opts ...grpc_go.CallOption) (*CommonResponse, common.ErrorWithAttachment) {
 	out := new(CommonResponse)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/UpdateProfile", in, out)
@@ -177,7 +177,7 @@ type UserServer interface {
 	ResetPwd(context.Context, *GetDetailRequest) (*CommonResponse, error)
 	ChangePwd(context.Context, *ChangePwdRequest) (*CommonResponse, error)
 	Logout(context.Context, *LogoutRequest) (*CommonResponse, error)
-	UpdateProfile(context.Context, *UserInfo) (*CommonResponse, error)
+	UpdateProfile(context.Context, *UserProfile) (*CommonResponse, error)
 	StatisticCount(context.Context, *StatisticUserCountRequest) (*StatisticCountResponse, error)
 	mustEmbedUnimplementedUserServer()
 }
@@ -223,7 +223,7 @@ func (UnimplementedUserServer) ChangePwd(context.Context, *ChangePwdRequest) (*C
 func (UnimplementedUserServer) Logout(context.Context, *LogoutRequest) (*CommonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Logout not implemented")
 }
-func (UnimplementedUserServer) UpdateProfile(context.Context, *UserInfo) (*CommonResponse, error) {
+func (UnimplementedUserServer) UpdateProfile(context.Context, *UserProfile) (*CommonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateProfile not implemented")
 }
 func (UnimplementedUserServer) StatisticCount(context.Context, *StatisticUserCountRequest) (*StatisticCountResponse, error) {
@@ -606,7 +606,7 @@ func _User_Logout_Handler(srv interface{}, ctx context.Context, dec func(interfa
 }
 
 func _User_UpdateProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UserInfo)
+	in := new(UserProfile)
 	if err := dec(in); err != nil {
 		return nil, err
 	}

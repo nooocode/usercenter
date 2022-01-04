@@ -9,9 +9,12 @@ service Identity{
 }
 
 message AuthenticateRequest{
+    // @inject_tag: validate:"required"
     string token=1;
+    // @inject_tag: validate:"required"
     string url=2;
     bool checkAuth=3;
+    // @inject_tag: validate:"required"
     string method=4;
 }
 

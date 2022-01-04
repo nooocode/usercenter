@@ -45,7 +45,7 @@ func Start(port int) {
 	docs.SwaggerInfo.Title = "User Center API"
 	docs.SwaggerInfo.Description = "This is a User Center server."
 	docs.SwaggerInfo.Version = "1.0"
-	docs.SwaggerInfo.Host = "noocode.cn"
+	docs.SwaggerInfo.Host = "lowcode.world"
 	docs.SwaggerInfo.BasePath = "/"
 	docs.SwaggerInfo.Schemes = []string{"http", "https"}
 

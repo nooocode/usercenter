@@ -167,7 +167,8 @@ type DelRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id       string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// @inject_tag: validate:"required"
+	Id       string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty" validate:"required"`
 	TenantID string `protobuf:"bytes,2,opt,name=tenantID,proto3" json:"tenantID,omitempty"`
 }
 
@@ -222,7 +223,8 @@ type EnableRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id       string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// @inject_tag: validate:"required"
+	Id       string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty" validate:"required"`
 	TenantID string `protobuf:"bytes,2,opt,name=tenantID,proto3" json:"tenantID,omitempty"`
 	Enable   bool   `protobuf:"varint,3,opt,name=enable,proto3" json:"enable,omitempty"`
 }
@@ -333,8 +335,8 @@ type GetDetailRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// @inject_tag: uri:"id" form:"id"
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty" uri:"id" form:"id"`
+	// @inject_tag: uri:"id" form:"id" validate:"required"
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty" uri:"id" form:"id" validate:"required"`
 	// @inject_tag: uri:"tenantID" form:"tenantID"
 	TenantID string `protobuf:"bytes,2,opt,name=tenantID,proto3" json:"tenantID,omitempty" uri:"tenantID" form:"tenantID"`
 }

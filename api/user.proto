@@ -3,6 +3,7 @@ package usercenter;
 option go_package = "./;usercenter";
 
 import "common.proto";
+import "menu.proto";
 
 service User{
     rpc Login(LoginRequest)returns(LoginResponse){}
@@ -17,20 +18,49 @@ service User{
     rpc ResetPwd(GetDetailRequest)returns(CommonResponse){}
     rpc ChangePwd(ChangePwdRequest)returns(CommonResponse){}
     rpc Logout(LogoutRequest)returns(CommonResponse){}
-    rpc UpdateProfile(UserInfo)returns(CommonResponse){}
+    rpc UpdateProfile(UserProfile)returns(CommonResponse){}
     rpc StatisticCount(StatisticUserCountRequest)returns(StatisticCountResponse){}
+}
+
+message UserProfile{
+    string id=1;
+    //昵称
+    // @inject_tag: validate:"required"
+    string nickname=2;
+    //邮箱
+    string email=3;
+    //手机号
+    // @inject_tag: validate:"required"
+    string mobile=4;
+    //身份证号码
+    string idCard=5;
+    //头像
+    string avatar=6;
+    //姓名
+    string realName=7;
+    //性别
+    bool gender=8;
+    //用户类型
+    int32 type=9;
+    string group=10;
+    repeated MenuInfo menus=11;
 }
 
 message StatisticUserCountRequest{
     string tenantID=1;
+    //用户类型
     int32 type=2;
     string group=3;
 }
 
 message LoginRequest{
+    //用户名
     string userName=1;
+    //密码
     string password=2;
+    //微信Union ID
     string wechatUnionID=3;
+    //微信OpenID
     string wechatOpenID=4;
 }
 
@@ -43,12 +73,15 @@ message LoginResponse{
 message UserInfo{
     string id=1;
     string tenantID=2;
+    // @inject_tag: validate:"required"
     string userName=3;
+    // @inject_tag: validate:"required"
     string nickname=4;
     repeated UserRole userRoles=5;
     repeated string roleIDs=6;
     bool enable=7;
     string email=8;
+    // @inject_tag: validate:"required"
     string mobile=9;
     string idCard=10;
     string avatar=11;
@@ -140,10 +173,15 @@ message GetUserDetailResponse{
 }
 
 message ChangePwdRequest{
+    // @inject_tag: validate:"required"
     string id=1;
     string tenantID=2;
+    // @inject_tag: validate:"required"
     string newPwd=3;
+    // @inject_tag: validate:"required"
     string oldPwd=4;
+    // @inject_tag: validate:"required"
+    string newConfirmPwd=5;
 }
 
 message LogoutRequest{
