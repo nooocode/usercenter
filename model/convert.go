@@ -152,6 +152,9 @@ func PBToMenu(in *apipb.MenuInfo) *Menu {
 }
 
 func MenuToPB(in *Menu) *apipb.MenuInfo {
+	if in == nil {
+		return nil
+	}
 	var children []*apipb.MenuInfo
 	//递归退出条件
 	if len(in.Children) > 0 {
