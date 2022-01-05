@@ -25,6 +25,7 @@ service User{
 
 message UserProfile{
     string id=1;
+    string tenantID=20;
     //昵称
     // @inject_tag: validate:"required"
     string nickname=2;

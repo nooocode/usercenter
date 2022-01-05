@@ -561,17 +561,26 @@ func GetUserProfile(id string) (*apipb.UserProfile, error) {
 	})
 
 	return &apipb.UserProfile{
-		Id:       user.ID,
-		Nickname: user.Nickname,
-		Email:    user.Email,
-		Mobile:   user.Mobile,
-		IdCard:   user.IDCard,
-		Avatar:   user.Avatar,
-		RealName: user.RealName,
-		Gender:   user.Gender,
-		Type:     user.Type,
-		Group:    user.Group,
-		Menus:    MenusToPB(result),
+		Id:          user.ID,
+		TenantID:    user.TenantID,
+		UserName:    user.UserName,
+		Nickname:    user.Nickname,
+		Email:       user.Email,
+		Mobile:      user.Mobile,
+		IdCard:      user.IDCard,
+		Avatar:      user.Avatar,
+		RealName:    user.RealName,
+		Gender:      user.Gender,
+		Type:        user.Type,
+		Group:       user.Group,
+		Menus:       MenusToPB(result),
+		Country:     user.Country,
+		Province:    user.Province,
+		City:        user.City,
+		County:      user.County,
+		Eid:         user.EID,
+		Description: user.Description,
+		Birthday:    user.Birthday,
 	}, nil
 }
 
