@@ -328,10 +328,14 @@ func UpdatePwd(id string, oldPwd, newPwd string) error {
 }
 
 //UpdateProfile 更新个人信息
-func UpdateProfile(m *User) error {
-	return dbClient.DB().Model(m).Select("gender", "country",
+func UpdateProfile(m *User, updateUserName bool) error {
+	fields := []string{"gender", "country",
 		"province", "city", "county", "birthday", "nickname", "description",
-		"eid", "avatar", "mobile", "email", "real_name", "`group`", "title", "`type`", "id_card").Where("id=?", m.ID).Updates(m).Error
+		"eid", "avatar", "mobile", "email", "real_name", "title", "id_card"}
+	if updateUserName {
+		fields = append(fields, "user_name")
+	}
+	return dbClient.DB().Model(m).Select(fields).Where("id=?", m.ID).Updates(m).Error
 }
 
 func Login(req *apipb.LoginRequest, resp *apipb.LoginResponse) {
