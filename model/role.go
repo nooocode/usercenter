@@ -1,26 +1,30 @@
 package model
 
 import (
+	"context"
+	"database/sql"
 	"errors"
 	"fmt"
 	"strings"
 
 	"github.com/nooocode/pkg/model"
+	"github.com/nooocode/pkg/utils/log"
 	apipb "github.com/nooocode/usercenter/api"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 )
 
 type Role struct {
-	model.TenantModel
-	Name          string      `json:"name" gorm:"size:100;comment:角色名"`
-	ParentID      string      `json:"parentID" gorm:"comment:父角色ID"`
-	Children      []*Role     `json:"children" gorm:"-"`
-	RoleMenus     []*RoleMenu `json:"roleMenus"`
-	DefaultRouter string      `json:"defaultRouter" gorm:"size:100;comment:默认菜单;default:dashboard"`
-	Description   string      `json:"description" gorm:"size:200;"`
-	CanDel        bool        `json:"canDel" gorm:"default:1"`
-	Tenant        *Tenant     `json:"tenant"`
+	model.Model
+	TenantID      sql.NullString `json:"tenantID" gorm:"index;size:36"`
+	Name          string         `json:"name" gorm:"size:100;comment:角色名"`
+	ParentID      string         `json:"parentID" gorm:"comment:父角色ID"`
+	Children      []*Role        `json:"children" gorm:"-"`
+	RoleMenus     []*RoleMenu    `json:"roleMenus"`
+	DefaultRouter string         `json:"defaultRouter" gorm:"size:100;comment:默认菜单;default:dashboard"`
+	Description   string         `json:"description" gorm:"size:200;"`
+	CanDel        bool           `json:"canDel" gorm:"default:1"`
+	Tenant        *Tenant        `json:"tenant"`
 }
 
 type RoleMenu struct {
@@ -167,7 +171,7 @@ func CopyRole(copyInfo RoleCopyResponse) (*Role, error) {
 //@param: newRole Role
 //@return:err error, role Role
 func UpdateRole(newRole *Role) error {
-	return dbClient.DB().Transaction(func(tx *gorm.DB) error {
+	err := dbClient.DB().Transaction(func(tx *gorm.DB) error {
 		oldRole := &Role{}
 		err := tx.Preload("RoleMenus").Preload(clause.Associations).Where("id = ?", newRole.ID).First(oldRole).Error
 		if err != nil {
@@ -204,9 +208,16 @@ func UpdateRole(newRole *Role) error {
 			return err
 		}
 
-		err = updateRoleAuth(newRole.ID)
 		return err
 	})
+	if err != nil {
+		return err
+	}
+	err = updateRoleAuth(newRole.ID)
+	if err != nil {
+		log.Errorf(context.Background(), "更新角色权限失败:%v", err)
+	}
+	return nil
 }
 
 //@author: [guoxf](https://github.com/guoxf)

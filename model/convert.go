@@ -1,12 +1,17 @@
 package model
 
 import (
+	"database/sql"
+
 	commonmodel "github.com/nooocode/pkg/model"
 	apipb "github.com/nooocode/usercenter/api"
 	"gorm.io/gorm"
 )
 
 func PBToUser(in *apipb.UserInfo) *User {
+	if in == nil {
+		return nil
+	}
 	return &User{
 		TenantModel: commonmodel.TenantModel{
 			Model: commonmodel.Model{
@@ -34,6 +39,9 @@ func PBToUser(in *apipb.UserInfo) *User {
 }
 
 func UserToPB(in *User) *apipb.UserInfo {
+	if in == nil {
+		return nil
+	}
 	user := &apipb.UserInfo{
 		Id:          in.ID,
 		TenantID:    in.TenantID,
@@ -95,6 +103,9 @@ func UserRolesToPB(userRoles []*UserRole) []*apipb.UserRole {
 }
 
 func PBToAPI(in *apipb.APIInfo) *API {
+	if in == nil {
+		return nil
+	}
 	return &API{
 		Model: commonmodel.Model{
 			ID: in.Id,
@@ -110,6 +121,9 @@ func PBToAPI(in *apipb.APIInfo) *API {
 }
 
 func APIToPB(in *API) *apipb.APIInfo {
+	if in == nil {
+		return nil
+	}
 	return &apipb.APIInfo{
 		Id:          in.ID,
 		Path:        in.Path,
@@ -131,6 +145,9 @@ func APIsToPB(in []API) []*apipb.APIInfo {
 }
 
 func PBToMenu(in *apipb.MenuInfo) *Menu {
+	if in == nil {
+		return nil
+	}
 	return &Menu{
 		Model: commonmodel.Model{
 			ID: in.Id,
@@ -278,13 +295,18 @@ func MenuFuncApisToPB(params []MenuFuncApi) []*apipb.MenuFuncApi {
 }
 
 func PBToRole(in *apipb.RoleInfo) *Role {
+	if in == nil {
+		return nil
+	}
+	tenantID := sql.NullString{
+		String: in.TenantID,
+		Valid:  in.TenantID != "",
+	}
 	return &Role{
-		TenantModel: commonmodel.TenantModel{
-			Model: commonmodel.Model{
-				ID: in.Id,
-			},
-			TenantID: in.TenantID,
+		Model: commonmodel.Model{
+			ID: in.Id,
 		},
+		TenantID:      tenantID,
 		Name:          in.Name,
 		ParentID:      in.ParentID,
 		DefaultRouter: in.DefaultRouter,
@@ -295,6 +317,9 @@ func PBToRole(in *apipb.RoleInfo) *Role {
 }
 
 func RoleToPB(in *Role) *apipb.RoleInfo {
+	if in == nil {
+		return nil
+	}
 	var children []*apipb.RoleInfo
 	//递归退出条件
 	if len(in.Children) > 0 {
@@ -302,7 +327,7 @@ func RoleToPB(in *Role) *apipb.RoleInfo {
 	}
 	role := &apipb.RoleInfo{
 		Id:            in.ID,
-		TenantID:      in.TenantID,
+		TenantID:      in.TenantID.String,
 		Name:          in.Name,
 		ParentID:      in.ParentID,
 		DefaultRouter: in.DefaultRouter,
@@ -356,6 +381,9 @@ func RoleMenusToPB(roleMenus []*RoleMenu) []*apipb.RoleMenu {
 }
 
 func PBToTenant(in *apipb.TenantInfo) *Tenant {
+	if in == nil {
+		return nil
+	}
 	return &Tenant{
 		Model: commonmodel.Model{
 			ID: in.Id,
@@ -372,6 +400,9 @@ func PBToTenant(in *apipb.TenantInfo) *Tenant {
 }
 
 func TenantToPB(in *Tenant) *apipb.TenantInfo {
+	if in == nil {
+		return nil
+	}
 	return &apipb.TenantInfo{
 		Id:            in.ID,
 		Name:          in.Name,
@@ -394,6 +425,9 @@ func TenantsToPB(in []*Tenant) []*apipb.TenantInfo {
 }
 
 func UserProfileToUser(in *apipb.UserProfile) *User {
+	if in == nil {
+		return nil
+	}
 	return &User{
 		TenantModel: commonmodel.TenantModel{
 			Model: commonmodel.Model{
