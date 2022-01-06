@@ -685,6 +685,18 @@ var doc = `{
                         "name": "authorization",
                         "in": "header",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "租户ID",
+                        "name": "tenantID",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否包含公共角色",
+                        "name": "containerComm",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -2495,6 +2507,24 @@ var doc = `{
                     "description": "头像",
                     "type": "string"
                 },
+                "birthday": {
+                    "type": "integer"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "county": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "eid": {
+                    "type": "string"
+                },
                 "email": {
                     "description": "邮箱",
                     "type": "string"
@@ -2527,13 +2557,23 @@ var doc = `{
                     "description": "昵称\n@inject_tag: validate:\"required\"",
                     "type": "string"
                 },
+                "province": {
+                    "type": "string"
+                },
                 "realName": {
                     "description": "姓名",
                     "type": "string"
                 },
+                "tenantID": {
+                    "type": "string"
+                },
                 "type": {
-                    "description": "用户类型",
+                    "description": "下面数据只有查询的时候用到，更新的时候不需要传\n用户类型",
                     "type": "integer"
+                },
+                "userName": {
+                    "description": "只有调用UpdateProfileAndUserName接口时需要",
+                    "type": "string"
                 }
             }
         },

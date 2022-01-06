@@ -483,6 +483,18 @@ definitions:
       avatar:
         description: 头像
         type: string
+      birthday:
+        type: integer
+      city:
+        type: string
+      country:
+        type: string
+      county:
+        type: string
+      description:
+        type: string
+      eid:
+        type: string
       email:
         description: 邮箱
         type: string
@@ -510,12 +522,21 @@ definitions:
           昵称
           @inject_tag: validate:"required"
         type: string
+      province:
+        type: string
       realName:
         description: 姓名
         type: string
+      tenantID:
+        type: string
       type:
-        description: 用户类型
+        description: |-
+          下面数据只有查询的时候用到，更新的时候不需要传
+          用户类型
         type: integer
+      userName:
+        description: 只有调用UpdateProfileAndUserName接口时需要
+        type: string
     required:
     - mobile
     - nickname
@@ -967,6 +988,14 @@ paths:
         name: authorization
         required: true
         type: string
+      - description: 租户ID
+        in: query
+        name: tenantID
+        type: string
+      - description: 是否包含公共角色
+        in: query
+        name: containerComm
+        type: boolean
       produces:
       - application/json
       responses:
