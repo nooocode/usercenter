@@ -106,20 +106,7 @@ func UpdateProfile(c *gin.Context) {
 		return
 	}
 
-	err = ucmodel.UpdateProfile(&ucmodel.User{
-		TenantModel: model.TenantModel{
-			Model: model.Model{
-				ID: req.Id,
-			},
-		},
-		Nickname: req.Nickname,
-		Email:    req.Email,
-		Mobile:   req.Mobile,
-		IDCard:   req.IdCard,
-		Avatar:   req.Avatar,
-		RealName: req.RealName,
-		Gender:   req.Gender,
-	})
+	err = ucmodel.UpdateProfile(ucmodel.UserProfileToUser(req), false)
 	if err != nil {
 		resp.Code = model.InternalServerError
 		resp.Message = err.Error()

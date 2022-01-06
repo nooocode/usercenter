@@ -392,3 +392,28 @@ func TenantsToPB(in []*Tenant) []*apipb.TenantInfo {
 	}
 	return list
 }
+
+func UserProfileToUser(in *apipb.UserProfile) *User {
+	return &User{
+		TenantModel: commonmodel.TenantModel{
+			Model: commonmodel.Model{
+				ID: in.Id,
+			},
+		},
+		Nickname:    in.Nickname,
+		Email:       in.Email,
+		Mobile:      in.Mobile,
+		IDCard:      in.IdCard,
+		Avatar:      in.Avatar,
+		RealName:    in.RealName,
+		Gender:      in.Gender,
+		Country:     in.Country,
+		Province:    in.Province,
+		City:        in.City,
+		County:      in.County,
+		EID:         in.Eid,
+		Birthday:    in.Birthday,
+		Description: in.Description,
+		UserName:    in.UserName,
+	}
+}
