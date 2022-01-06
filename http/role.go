@@ -209,13 +209,15 @@ func GetRoleDetail(c *gin.Context) {
 // @Accept  json
 // @Produce  json
 // @Param authorization header string true "jwt token"
+// @Param tenantID query string false "租户ID"
+// @Param containerComm query bool false "是否包含公共角色"
 // @Success 200 {object} apipb.QueryRoleResponse
 // @Router /api/core/auth/role/all [get]
 func GetAllRole(c *gin.Context) {
 	resp := &apipb.QueryRoleResponse{
 		Code: model.Success,
 	}
-	req := &apipb.GetAllRequest{}
+	req := &apipb.GetAllRoleRequest{}
 	err := c.BindQuery(req)
 	if err != nil {
 		resp.Code = model.BadRequest
@@ -228,7 +230,7 @@ func GetAllRole(c *gin.Context) {
 	if tenantID != constants.PlatformTenantID {
 		req.TenantID = tenantID
 	}
-	roles, err := ucmodel.GetAllRole(req.TenantID)
+	roles, err := ucmodel.GetAllRole(req.TenantID, req.ContainerComm)
 	if err != nil {
 		resp.Code = model.InternalServerError
 		resp.Message = err.Error()

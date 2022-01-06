@@ -56,11 +56,11 @@ func (u *RoleProvider) Query(ctx context.Context, in *apipb.QueryRoleRequest) (*
 	return resp, nil
 }
 
-func (u *RoleProvider) GetAll(ctx context.Context, in *apipb.GetAllRequest) (*apipb.GetAllRoleResponse, error) {
+func (u *RoleProvider) GetAll(ctx context.Context, in *apipb.GetAllRoleRequest) (*apipb.GetAllRoleResponse, error) {
 	resp := &apipb.GetAllRoleResponse{
 		Code: commonmodel.Success,
 	}
-	roles, err := model.GetAllRole(in.TenantID)
+	roles, err := model.GetAllRole(in.TenantID, in.ContainerComm)
 	if err != nil {
 		resp.Code = apipb.Code_InternalServerError
 		resp.Message = err.Error()

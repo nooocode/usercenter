@@ -425,12 +425,18 @@ func GetFullRoleByID(id string) (*Role, error) {
 	return role, err
 }
 
-func GetAllRole(tenantID string) (roles []*Role, err error) {
+//GetAllRole 获取所有用户
+//containerCommon true-包含公共角色 false-不包含公共角色
+//公共角色定义：不设置租户的角色
+func GetAllRole(tenantID string, containerCommon bool) (roles []*Role, err error) {
+	db := dbClient.DB()
 	if tenantID != "" {
-		err = dbClient.DB().Find(&roles, "tenant_id=?", tenantID).Error
-	} else {
-		err = dbClient.DB().Find(&roles).Error
+		db = db.Where("tenant_id=?", tenantID)
 	}
+	if containerCommon {
+		db = db.Or("tenant_id='' or tenant_id is null")
+	}
+	err = db.Find(&roles).Error
 	return
 }
 

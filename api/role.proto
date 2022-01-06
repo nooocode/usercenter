@@ -10,7 +10,7 @@ service Role{
     rpc Update(RoleInfo)returns(CommonResponse){}
     rpc Delete(DelRequest)returns(CommonResponse){}
     rpc Query(QueryRoleRequest)returns(QueryRoleResponse){}
-    rpc GetAll(GetAllRequest)returns(GetAllRoleResponse){}
+    rpc GetAll(GetAllRoleRequest)returns(GetAllRoleResponse){}
     rpc GetDetail(GetDetailRequest)returns(GetRoleDetailResponse){}
     rpc StatisticCount(StatisticRoleCountRequest)returns(StatisticCountResponse){}
 }
@@ -55,6 +55,9 @@ message QueryRoleRequest{
     //租户ID
     // @inject_tag: uri:"tenantID" form:"tenantID"
     string tenantID=6;
+    // true-包含公共角色 false-不包含公共角色
+    //公共角色定义：不设置租户的角色
+    bool containerComm=7;
 }
 
 message QueryRoleResponse{
@@ -70,6 +73,14 @@ message GetAllRoleResponse{
     Code code=1;
     string message=2;
     repeated RoleInfo data=3;
+}
+
+message GetAllRoleRequest{
+    // @inject_tag: uri:"tenantID" form:"tenantID"
+    string tenantID=1;
+    // true-包含公共角色 false-不包含公共角色
+    //公共角色定义：不设置租户的角色
+    bool containerComm=2;
 }
 
 message GetRoleDetailResponse{

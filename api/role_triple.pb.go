@@ -32,7 +32,7 @@ type RoleClient interface {
 	Update(ctx context.Context, in *RoleInfo, opts ...grpc_go.CallOption) (*CommonResponse, common.ErrorWithAttachment)
 	Delete(ctx context.Context, in *DelRequest, opts ...grpc_go.CallOption) (*CommonResponse, common.ErrorWithAttachment)
 	Query(ctx context.Context, in *QueryRoleRequest, opts ...grpc_go.CallOption) (*QueryRoleResponse, common.ErrorWithAttachment)
-	GetAll(ctx context.Context, in *GetAllRequest, opts ...grpc_go.CallOption) (*GetAllRoleResponse, common.ErrorWithAttachment)
+	GetAll(ctx context.Context, in *GetAllRoleRequest, opts ...grpc_go.CallOption) (*GetAllRoleResponse, common.ErrorWithAttachment)
 	GetDetail(ctx context.Context, in *GetDetailRequest, opts ...grpc_go.CallOption) (*GetRoleDetailResponse, common.ErrorWithAttachment)
 	StatisticCount(ctx context.Context, in *StatisticRoleCountRequest, opts ...grpc_go.CallOption) (*StatisticCountResponse, common.ErrorWithAttachment)
 }
@@ -46,7 +46,7 @@ type RoleClientImpl struct {
 	Update         func(ctx context.Context, in *RoleInfo) (*CommonResponse, error)
 	Delete         func(ctx context.Context, in *DelRequest) (*CommonResponse, error)
 	Query          func(ctx context.Context, in *QueryRoleRequest) (*QueryRoleResponse, error)
-	GetAll         func(ctx context.Context, in *GetAllRequest) (*GetAllRoleResponse, error)
+	GetAll         func(ctx context.Context, in *GetAllRoleRequest) (*GetAllRoleResponse, error)
 	GetDetail      func(ctx context.Context, in *GetDetailRequest) (*GetRoleDetailResponse, error)
 	StatisticCount func(ctx context.Context, in *StatisticRoleCountRequest) (*StatisticCountResponse, error)
 }
@@ -87,7 +87,7 @@ func (c *roleClient) Query(ctx context.Context, in *QueryRoleRequest, opts ...gr
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/Query", in, out)
 }
 
-func (c *roleClient) GetAll(ctx context.Context, in *GetAllRequest, opts ...grpc_go.CallOption) (*GetAllRoleResponse, common.ErrorWithAttachment) {
+func (c *roleClient) GetAll(ctx context.Context, in *GetAllRoleRequest, opts ...grpc_go.CallOption) (*GetAllRoleResponse, common.ErrorWithAttachment) {
 	out := new(GetAllRoleResponse)
 	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/GetAll", in, out)
@@ -113,7 +113,7 @@ type RoleServer interface {
 	Update(context.Context, *RoleInfo) (*CommonResponse, error)
 	Delete(context.Context, *DelRequest) (*CommonResponse, error)
 	Query(context.Context, *QueryRoleRequest) (*QueryRoleResponse, error)
-	GetAll(context.Context, *GetAllRequest) (*GetAllRoleResponse, error)
+	GetAll(context.Context, *GetAllRoleRequest) (*GetAllRoleResponse, error)
 	GetDetail(context.Context, *GetDetailRequest) (*GetRoleDetailResponse, error)
 	StatisticCount(context.Context, *StatisticRoleCountRequest) (*StatisticCountResponse, error)
 	mustEmbedUnimplementedRoleServer()
@@ -136,7 +136,7 @@ func (UnimplementedRoleServer) Delete(context.Context, *DelRequest) (*CommonResp
 func (UnimplementedRoleServer) Query(context.Context, *QueryRoleRequest) (*QueryRoleResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Query not implemented")
 }
-func (UnimplementedRoleServer) GetAll(context.Context, *GetAllRequest) (*GetAllRoleResponse, error) {
+func (UnimplementedRoleServer) GetAll(context.Context, *GetAllRoleRequest) (*GetAllRoleResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAll not implemented")
 }
 func (UnimplementedRoleServer) GetDetail(context.Context, *GetDetailRequest) (*GetRoleDetailResponse, error) {
@@ -290,7 +290,7 @@ func _Role_Query_Handler(srv interface{}, ctx context.Context, dec func(interfac
 }
 
 func _Role_GetAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetAllRequest)
+	in := new(GetAllRoleRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}

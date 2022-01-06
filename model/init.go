@@ -14,7 +14,7 @@ func Init(connStr string, debug bool) {
 		AutoMigrate()
 	}
 	InitCasbin()
-	roles, err := GetAllRole("")
+	roles, err := GetAllRole("", true)
 	if err != nil {
 		panic(err)
 	}
