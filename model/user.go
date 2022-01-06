@@ -334,6 +334,12 @@ func UpdateProfile(m *User) error {
 		"eid", "avatar", "mobile", "email", "real_name", "`group`", "title", "`type`", "id_card").Where("id=?", m.ID).Updates(m).Error
 }
 
+func UpdateProfileAndUserName(m *User) error {
+	return dbClient.DB().Model(m).Select("gender", "country",
+		"province", "city", "county", "birthday", "nickname", "description",
+		"eid", "avatar", "mobile", "email", "real_name", "`group`", "title", "`type`", "id_card").Where("id=?", m.ID).Updates(m).Error
+}
+
 func Login(req *apipb.LoginRequest, resp *apipb.LoginResponse) {
 	req.UserName = strings.ToLower(req.UserName)
 	user := &User{}

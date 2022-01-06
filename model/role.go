@@ -199,7 +199,7 @@ func UpdateRole(newRole *Role) error {
 			}
 		}
 
-		err = tx.Session(&gorm.Session{FullSaveAssociations: false}).Omit("can_del").Updates(newRole).Error
+		err = tx.Session(&gorm.Session{FullSaveAssociations: false}).Omit("can_del", "created_at").Updates(newRole).Error
 		if err != nil {
 			return err
 		}

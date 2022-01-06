@@ -121,7 +121,7 @@ func UpdateAPP(md *APP) error {
 			}
 		}
 
-		duplication, err := dbClient.UpdateWithCheckDuplication2(tx.Session(&gorm.Session{FullSaveAssociations: true}), md, "id <> ? and name = ?", md.ID, md.Name)
+		duplication, err := dbClient.UpdateWithCheckDuplicationAndOmit2(tx.Session(&gorm.Session{FullSaveAssociations: true}), md, []string{"created_at"}, "id <> ? and name = ?", md.ID, md.Name)
 		if err != nil {
 			return err
 		}

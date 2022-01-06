@@ -166,7 +166,7 @@ func UpdateAPI(api *API) error {
 		}
 	}
 
-	duplication, err := dbClient.UpdateWithCheckDuplication(api, "id <> ? and path = ? AND method = ?", api.ID, api.Path, api.Method)
+	duplication, err := dbClient.UpdateWithCheckDuplicationAndOmit(api, []string{"created_at"}, "id <> ? and path = ? AND method = ?", api.ID, api.Path, api.Method)
 	if err != nil {
 		return err
 	}

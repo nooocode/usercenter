@@ -221,7 +221,7 @@ func UpdateMenu(menu *Menu) (err error) {
 				return err
 			}
 		}
-		return tx.Session(&gorm.Session{FullSaveAssociations: true}).Save(menu).Error
+		return tx.Session(&gorm.Session{FullSaveAssociations: true}).Omit("created_at").Save(menu).Error
 	})
 	return err
 }

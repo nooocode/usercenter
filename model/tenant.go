@@ -43,7 +43,7 @@ func CreateTenant(m *Tenant) error {
 
 func UpdateTenant(m *Tenant) error {
 	return dbClient.DB().Transaction(func(tx *gorm.DB) error {
-		duplication, err := dbClient.UpdateWithCheckDuplication2(tx.Session(&gorm.Session{FullSaveAssociations: true}), m, "id != ?  and  name =? ", m.ID, m.Name)
+		duplication, err := dbClient.UpdateWithCheckDuplicationAndOmit2(tx.Session(&gorm.Session{FullSaveAssociations: true}), m, []string{"created_at"}, "id != ?  and  name =? ", m.ID, m.Name)
 		if err != nil {
 			return err
 		}

@@ -754,8 +754,8 @@ github.com/nats-io/nkeys v0.1.0/go.mod h1:xpnFELMwJABBLVhffcfd1MZx6VsNRFpEugbxzi
 github.com/nats-io/nkeys v0.1.3/go.mod h1:xpnFELMwJABBLVhffcfd1MZx6VsNRFpEugbxziKVo7w=
 github.com/nats-io/nuid v1.0.1/go.mod h1:19wcPz3Ph3q0Jbyiqsd0kePYG7A95tJPxeL+1OSON2c=
 github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e/go.mod h1:zD1mROLANZcx1PVRCS0qkT7pwLkGfwJo4zjcN/Tysno=
-github.com/nooocode/pkg v1.0.3 h1:ZYRCKGhKKg39DIzbmGVo+1QRdQ7AKOF5MTo9OVm4G7E=
-github.com/nooocode/pkg v1.0.3/go.mod h1:kRNLzJBUWWy5lgBhJ+mEtenwfcNdVqcDr1qmd6yD+AE=
+github.com/nooocode/pkg v1.0.5 h1:TR31jObtaAcmkarBBtcIOIekaByo/JI6M6wowagOe4I=
+github.com/nooocode/pkg v1.0.5/go.mod h1:kRNLzJBUWWy5lgBhJ+mEtenwfcNdVqcDr1qmd6yD+AE=
 github.com/npillmayer/nestext v0.1.3/go.mod h1:h2lrijH8jpicr25dFY+oAJLyzlya6jhnuG+zWp9L0Uk=
 github.com/nxadm/tail v1.4.4/go.mod h1:kenIhsEOeOJmVchQTgglprH7qJGnHDVpk1VPCcaMI8A=
 github.com/nxadm/tail v1.4.8 h1:nPr65rt6Y5JFSKQO7qToXr7pePgD6Gwiw05lkbyAQTE=

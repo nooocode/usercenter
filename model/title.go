@@ -78,7 +78,7 @@ func GetTitleById(id string) (title Title, err error) {
 }
 
 func UpdateTitle(title *Title) error {
-	duplication, err := dbClient.UpdateWithCheckDuplication(title, "id <> ? and name = ?", title.ID, title.Name)
+	duplication, err := dbClient.UpdateWithCheckDuplicationAndOmit(title, []string{"created_at"}, "id <> ? and name = ?", title.ID, title.Name)
 	if err != nil {
 		return err
 	}
