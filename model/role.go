@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/nooocode/pkg/model"
 	"github.com/nooocode/pkg/utils/log"
@@ -16,15 +17,15 @@ import (
 
 type Role struct {
 	model.Model
-	TenantID      sql.NullString `json:"tenantID" gorm:"index;size:36"`
-	Name          string         `json:"name" gorm:"size:100;comment:角色名"`
-	ParentID      string         `json:"parentID" gorm:"comment:父角色ID"`
-	Children      []*Role        `json:"children" gorm:"-"`
-	RoleMenus     []*RoleMenu    `json:"roleMenus"`
-	DefaultRouter string         `json:"defaultRouter" gorm:"size:100;comment:默认菜单;default:dashboard"`
-	Description   string         `json:"description" gorm:"size:200;"`
-	CanDel        bool           `json:"canDel" gorm:"default:1"`
-	Tenant        *Tenant        `json:"tenant"`
+	TenantID      *sql.NullString `json:"tenantID" gorm:"index;size:36"`
+	Name          string          `json:"name" gorm:"size:100;comment:角色名"`
+	ParentID      string          `json:"parentID" gorm:"comment:父角色ID"`
+	Children      []*Role         `json:"children" gorm:"-"`
+	RoleMenus     []*RoleMenu     `json:"roleMenus"`
+	DefaultRouter string          `json:"defaultRouter" gorm:"size:100;comment:默认菜单;default:dashboard"`
+	Description   string          `json:"description" gorm:"size:200;"`
+	CanDel        bool            `json:"canDel" gorm:"default:1"`
+	Tenant        *Tenant         `json:"tenant"`
 }
 
 type RoleMenu struct {
@@ -197,13 +198,17 @@ func UpdateRole(newRole *Role) error {
 		}
 		for _, m := range newRole.RoleMenus {
 			m.RoleID = newRole.ID
-			err = tx.Save(m).Error
+			err = tx.Omit("created_at").Save(m).Error
 			if err != nil {
 				return err
 			}
 		}
+		if newRole.TenantID == nil {
+			err = tx.Exec("update roles set tenant_id=NULL,name=?,parent_id=?,description=?,default_router=?,updated_at=? where id=?", newRole.Name, newRole.ParentID, newRole.Description, newRole.DefaultRouter, time.Now(), newRole.ID).Error
+		} else {
+			err = tx.Exec("update roles set tenant_id=?,name=?,parent_id=?,description=?,default_router=?,updated_at=? where id=?", newRole.TenantID, newRole.Name, newRole.ParentID, newRole.Description, newRole.DefaultRouter, time.Now(), newRole.ID).Error
+		}
 
-		err = tx.Session(&gorm.Session{FullSaveAssociations: false}).Omit("can_del", "created_at").Updates(newRole).Error
 		if err != nil {
 			return err
 		}

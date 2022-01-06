@@ -298,9 +298,12 @@ func PBToRole(in *apipb.RoleInfo) *Role {
 	if in == nil {
 		return nil
 	}
-	tenantID := sql.NullString{
-		String: in.TenantID,
-		Valid:  in.TenantID != "",
+	var tenantID *sql.NullString
+	if in.TenantID != "" {
+		tenantID = &sql.NullString{
+			String: in.TenantID,
+			Valid:  in.TenantID != "",
+		}
 	}
 	return &Role{
 		Model: commonmodel.Model{
@@ -325,9 +328,13 @@ func RoleToPB(in *Role) *apipb.RoleInfo {
 	if len(in.Children) > 0 {
 		children = RolesToPB(in.Children)
 	}
+	tenantID := ""
+	if in.TenantID != nil && in.TenantID.Valid {
+		tenantID = in.TenantID.String
+	}
 	role := &apipb.RoleInfo{
 		Id:            in.ID,
-		TenantID:      in.TenantID.String,
+		TenantID:      tenantID,
 		Name:          in.Name,
 		ParentID:      in.ParentID,
 		DefaultRouter: in.DefaultRouter,
