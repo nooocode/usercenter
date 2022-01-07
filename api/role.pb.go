@@ -286,7 +286,8 @@ type QueryRoleRequest struct {
 	TenantID string `protobuf:"bytes,6,opt,name=tenantID,proto3" json:"tenantID,omitempty" uri:"tenantID" form:"tenantID"`
 	// true-包含公共角色 false-不包含公共角色
 	//公共角色定义：不设置租户的角色
-	ContainerComm bool `protobuf:"varint,7,opt,name=containerComm,proto3" json:"containerComm,omitempty"`
+	// @inject_tag: uri:"containerComm" form:"containerComm"
+	ContainerComm bool `protobuf:"varint,7,opt,name=containerComm,proto3" json:"containerComm,omitempty" uri:"containerComm" form:"containerComm"`
 }
 
 func (x *QueryRoleRequest) Reset() {
@@ -529,7 +530,8 @@ type GetAllRoleRequest struct {
 	TenantID string `protobuf:"bytes,1,opt,name=tenantID,proto3" json:"tenantID,omitempty" uri:"tenantID" form:"tenantID"`
 	// true-包含公共角色 false-不包含公共角色
 	//公共角色定义：不设置租户的角色
-	ContainerComm bool `protobuf:"varint,2,opt,name=containerComm,proto3" json:"containerComm,omitempty"`
+	// @inject_tag: uri:"containerComm" form:"containerComm"
+	ContainerComm bool `protobuf:"varint,2,opt,name=containerComm,proto3" json:"containerComm,omitempty" uri:"containerComm" form:"containerComm"`
 }
 
 func (x *GetAllRoleRequest) Reset() {

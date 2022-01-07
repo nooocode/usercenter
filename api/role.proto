@@ -57,6 +57,7 @@ message QueryRoleRequest{
     string tenantID=6;
     // true-包含公共角色 false-不包含公共角色
     //公共角色定义：不设置租户的角色
+    // @inject_tag: uri:"containerComm" form:"containerComm"
     bool containerComm=7;
 }
 
@@ -80,6 +81,7 @@ message GetAllRoleRequest{
     string tenantID=1;
     // true-包含公共角色 false-不包含公共角色
     //公共角色定义：不设置租户的角色
+    // @inject_tag: uri:"containerComm" form:"containerComm"
     bool containerComm=2;
 }
 
