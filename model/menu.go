@@ -49,7 +49,7 @@ type MenuFuncApi struct {
 	model.Model
 	MenuFuncID string `json:"menuFuncID" gorm:"index"`
 	APIID      string `json:"apiID" gorm:"column:api_id"`
-	API        API    `json:"apiInfo"`
+	API        *API   `json:"apiInfo"`
 }
 
 //@author: [guoxf](https://github.com/guoxf)

@@ -268,14 +268,18 @@ func MenuFuncsToPB(params []*MenuFunc) []*apipb.MenuFunc {
 func PBToMenuFuncApis(params []*apipb.MenuFuncApi) []MenuFuncApi {
 	var list []MenuFuncApi
 	for _, param := range params {
-		list = append(list, MenuFuncApi{
+		apiInfo := MenuFuncApi{
 			Model: commonmodel.Model{
 				ID: param.Id,
 			},
 			MenuFuncID: param.MenuFuncID,
 			APIID:      param.ApiID,
-			API:        *PBToAPI(param.ApiInfo),
-		})
+		}
+		if param.ApiInfo != nil {
+			apiInfo.API = PBToAPI(param.ApiInfo)
+		}
+		list = append(list, apiInfo)
+
 	}
 	return list
 }
@@ -287,7 +291,7 @@ func MenuFuncApisToPB(params []MenuFuncApi) []*apipb.MenuFuncApi {
 			Id:         param.ID,
 			MenuFuncID: param.MenuFuncID,
 			ApiID:      param.APIID,
-			ApiInfo:    APIToPB(&param.API),
+			ApiInfo:    APIToPB(param.API),
 		})
 	}
 	return list
