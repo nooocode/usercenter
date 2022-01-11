@@ -5,7 +5,6 @@ import (
 
 	commonmodel "github.com/nooocode/pkg/model"
 	apipb "github.com/nooocode/usercenter/api"
-	"gorm.io/gorm"
 )
 
 func PBToUser(in *apipb.UserInfo) *User {
@@ -208,8 +207,8 @@ func PBToMenuParameters(params []*apipb.MenuParameter) []*MenuParameter {
 	var list []*MenuParameter
 	for _, param := range params {
 		list = append(list, &MenuParameter{
-			Model: gorm.Model{
-				ID: uint(param.Id),
+			Model: commonmodel.Model{
+				ID: param.Id,
 			},
 			MenuID: param.MenuID,
 			Type:   param.Type,
@@ -224,7 +223,7 @@ func MenuParametersToPB(params []*MenuParameter) []*apipb.MenuParameter {
 	var list []*apipb.MenuParameter
 	for _, param := range params {
 		list = append(list, &apipb.MenuParameter{
-			Id:     uint32(param.ID),
+			Id:     param.ID,
 			MenuID: param.MenuID,
 			Type:   param.Type,
 			Key:    param.Key,
@@ -238,8 +237,8 @@ func PBToMenuFuncs(params []*apipb.MenuFunc) []*MenuFunc {
 	var list []*MenuFunc
 	for _, param := range params {
 		list = append(list, &MenuFunc{
-			Model: gorm.Model{
-				ID: uint(param.Id),
+			Model: commonmodel.Model{
+				ID: param.Id,
 			},
 			MenuID:       param.MenuID,
 			Name:         param.Name,
@@ -255,7 +254,7 @@ func MenuFuncsToPB(params []*MenuFunc) []*apipb.MenuFunc {
 	var list []*apipb.MenuFunc
 	for _, param := range params {
 		list = append(list, &apipb.MenuFunc{
-			Id:           uint32(param.ID),
+			Id:           param.ID,
 			MenuID:       param.MenuID,
 			Name:         param.Name,
 			Title:        param.Title,
@@ -270,8 +269,8 @@ func PBToMenuFuncApis(params []*apipb.MenuFuncApi) []MenuFuncApi {
 	var list []MenuFuncApi
 	for _, param := range params {
 		list = append(list, MenuFuncApi{
-			Model: gorm.Model{
-				ID: uint(param.Id),
+			Model: commonmodel.Model{
+				ID: param.Id,
 			},
 			MenuFuncID: param.MenuFuncID,
 			APIID:      param.ApiID,
@@ -285,7 +284,7 @@ func MenuFuncApisToPB(params []MenuFuncApi) []*apipb.MenuFuncApi {
 	var list []*apipb.MenuFuncApi
 	for _, param := range params {
 		list = append(list, &apipb.MenuFuncApi{
-			Id:         uint32(param.ID),
+			Id:         param.ID,
 			MenuFuncID: param.MenuFuncID,
 			ApiID:      param.APIID,
 			ApiInfo:    APIToPB(&param.API),

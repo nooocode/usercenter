@@ -29,7 +29,7 @@ type Menu struct {
 }
 
 type MenuParameter struct {
-	gorm.Model
+	model.Model
 	MenuID string `json:"menuID" gorm:"index"`
 	Type   string `json:"type" gorm:"size:50;comment:地址栏携带参数为params还是query"`
 	Key    string `json:"key" gorm:"size:100;comment:地址栏携带参数的key"`
@@ -37,7 +37,7 @@ type MenuParameter struct {
 }
 
 type MenuFunc struct {
-	gorm.Model
+	model.Model
 	MenuID       string        `json:"menuID" gorm:"index"`
 	Name         string        `json:"name" gorm:"size:100;comment:功能名称"`
 	Title        string        `json:"title" gorm:"size:100;comment:显示名称"`
@@ -46,7 +46,7 @@ type MenuFunc struct {
 }
 
 type MenuFuncApi struct {
-	gorm.Model
+	model.Model
 	MenuFuncID string `json:"menuFuncID" gorm:"index"`
 	APIID      string `json:"apiID" gorm:"column:api_id"`
 	API        API    `json:"apiInfo"`
@@ -109,7 +109,7 @@ func DeleteMenu(id string) (err error) {
 			return err
 		}
 
-		var menuFuncIDs []uint
+		var menuFuncIDs []string
 		for _, menuFunc := range menu.MenuFuncs {
 			menuFuncIDs = append(menuFuncIDs, menuFunc.ID)
 		}
@@ -162,9 +162,9 @@ func UpdateMenu(menu *Menu) (err error) {
 		if err != nil {
 			return err
 		}
-		var deleteAPIs []uint
-		var deleteMenuFuncs []uint
-		var deleteParams []uint
+		var deleteAPIs []string
+		var deleteMenuFuncs []string
+		var deleteParams []string
 		for _, oldMenuFunc := range oldMenu.MenuFuncs {
 			flag := false
 			for _, newMenuFunc := range menu.MenuFuncs {
