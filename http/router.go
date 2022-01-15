@@ -62,4 +62,5 @@ func RegisterAuthRouter(r *gin.Engine) {
 	apiGroup.GET("detail", GetAPIDetail)
 
 	RegisterTenantRouter(r)
+	RegisterWechatRouter(r)
 }
