@@ -34,7 +34,7 @@ func main() {
 	params := config.GetRootConfig().ConfigCenter.Params
 	fmt.Println(params)
 	model.Init(params["mysql"], params["debug"] == "true")
-	tokenExpiredStr := params["redis-pwd"]
+	tokenExpiredStr := params["redis-expired"]
 	tokenExpired := 120
 	if tokenExpiredStr != "" {
 		var err error
