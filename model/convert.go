@@ -39,6 +39,7 @@ func PBToUser(in *apipb.UserInfo) *User {
 		City:          in.City,
 		Country:       in.Country,
 		Province:      in.Province,
+		Password:      in.Password,
 	}
 }
 
