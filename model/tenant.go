@@ -100,7 +100,23 @@ func GetTenantByID(id string) (*Tenant, error) {
 }
 
 func DeleteTenant(id string) (err error) {
-	return dbClient.DB().Unscoped().Delete(&Tenant{}, "id=?", id).Error
+	//判断是否还存在关联的用户和角色未删除
+	userCount, err := StatisticUserCount(0, id, "")
+	if err != nil {
+		return err
+	}
+	if userCount > 0 {
+		return errors.New("请先删除关联的用户")
+	}
+
+	roleCount, err := StatisticRoleCount(id)
+	if err != nil {
+		return err
+	}
+	if roleCount > 0 {
+		return errors.New("请先删除关联的角色")
+	}
+	return dbClient.DB().Delete(&Tenant{}, "id=?", id).Error
 }
 
 func CopyTenant(id string) error {
