@@ -6,6 +6,7 @@ import "common.proto";
 
 service Identity{
     rpc Authenticate(AuthenticateRequest)returns(AuthenticateResponse){}
+    rpc DecodeToken(DecodeTokenRequest)returns(AuthenticateResponse){}
 }
 
 message AuthenticateRequest{
@@ -22,6 +23,10 @@ message AuthenticateResponse{
     Code code=1;
     string message=2;
     CurrentUser currentUser=3;
+}
+message DecodeTokenRequest{
+    // @inject_tag: validate:"required"
+    string token=1;
 }
 
 message CurrentUser{

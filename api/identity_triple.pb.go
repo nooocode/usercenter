@@ -29,6 +29,7 @@ const _ = grpc_go.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type IdentityClient interface {
 	Authenticate(ctx context.Context, in *AuthenticateRequest, opts ...grpc_go.CallOption) (*AuthenticateResponse, common.ErrorWithAttachment)
+	DecodeToken(ctx context.Context, in *DecodeTokenRequest, opts ...grpc_go.CallOption) (*AuthenticateResponse, common.ErrorWithAttachment)
 }
 
 type identityClient struct {
@@ -37,6 +38,7 @@ type identityClient struct {
 
 type IdentityClientImpl struct {
 	Authenticate func(ctx context.Context, in *AuthenticateRequest) (*AuthenticateResponse, error)
+	DecodeToken  func(ctx context.Context, in *DecodeTokenRequest) (*AuthenticateResponse, error)
 }
 
 func (c *IdentityClientImpl) GetDubboStub(cc *triple.TripleConn) IdentityClient {
@@ -57,11 +59,18 @@ func (c *identityClient) Authenticate(ctx context.Context, in *AuthenticateReque
 	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/Authenticate", in, out)
 }
 
+func (c *identityClient) DecodeToken(ctx context.Context, in *DecodeTokenRequest, opts ...grpc_go.CallOption) (*AuthenticateResponse, common.ErrorWithAttachment) {
+	out := new(AuthenticateResponse)
+	interfaceKey := ctx.Value(constant.InterfaceKey).(string)
+	return out, c.cc.Invoke(ctx, "/"+interfaceKey+"/DecodeToken", in, out)
+}
+
 // IdentityServer is the server API for Identity service.
 // All implementations must embed UnimplementedIdentityServer
 // for forward compatibility
 type IdentityServer interface {
 	Authenticate(context.Context, *AuthenticateRequest) (*AuthenticateResponse, error)
+	DecodeToken(context.Context, *DecodeTokenRequest) (*AuthenticateResponse, error)
 	mustEmbedUnimplementedIdentityServer()
 }
 
@@ -72,6 +81,9 @@ type UnimplementedIdentityServer struct {
 
 func (UnimplementedIdentityServer) Authenticate(context.Context, *AuthenticateRequest) (*AuthenticateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Authenticate not implemented")
+}
+func (UnimplementedIdentityServer) DecodeToken(context.Context, *DecodeTokenRequest) (*AuthenticateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DecodeToken not implemented")
 }
 func (s *UnimplementedIdentityServer) XXX_SetProxyImpl(impl protocol.Invoker) {
 	s.proxyImpl = impl
@@ -130,6 +142,35 @@ func _Identity_Authenticate_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Identity_DecodeToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc_go.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DecodeTokenRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	base := srv.(dubbo3.Dubbo3GrpcService)
+	args := []interface{}{}
+	args = append(args, in)
+	md, _ := metadata.FromIncomingContext(ctx)
+	invAttachment := make(map[string]interface{}, len(md))
+	for k, v := range md {
+		invAttachment[k] = v
+	}
+	invo := invocation.NewRPCInvocation("DecodeToken", args, invAttachment)
+	if interceptor == nil {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	info := &grpc_go.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ctx.Value("XXX_TRIPLE_GO_INTERFACE_NAME").(string),
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		result := base.XXX_GetProxyImpl().Invoke(ctx, invo)
+		return result, result.Error()
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Identity_ServiceDesc is the grpc_go.ServiceDesc for Identity service.
 // It's only intended for direct use with grpc_go.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -140,6 +181,10 @@ var Identity_ServiceDesc = grpc_go.ServiceDesc{
 		{
 			MethodName: "Authenticate",
 			Handler:    _Identity_Authenticate_Handler,
+		},
+		{
+			MethodName: "DecodeToken",
+			Handler:    _Identity_DecodeToken_Handler,
 		},
 	},
 	Streams:  []grpc_go.StreamDesc{},
