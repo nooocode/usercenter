@@ -42,4 +42,5 @@ message CurrentUser{
     string clientIP=10;
     //用户类型
     int32 type=11;
+    string group=12;
 }
