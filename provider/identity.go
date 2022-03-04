@@ -18,9 +18,11 @@ func (u *IdentityProvider) Authenticate(ctx context.Context, in *apipb.Authentic
 		Code: commonmodel.Success,
 	}
 	currentUser, code, err := model.Authenticate(in.Token, in.Method, in.Url, in.CheckAuth)
-	if err != nil {
-		resp.Code = apipb.Code_InternalServerError
-		resp.Message = err.Error()
+	if code != int(apipb.Code_Success) {
+		resp.Code = apipb.Code(code)
+		if err != nil {
+			resp.Message = err.Error()
+		}
 	} else {
 		resp.CurrentUser = currentUser
 		resp.Code = apipb.Code(code)
