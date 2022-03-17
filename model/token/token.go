@@ -10,7 +10,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 
-	"github.com/dgrijalva/jwt-go/v4"
+	"github.com/golang-jwt/jwt/v4"
 	apipb "github.com/nooocode/usercenter/api"
 )
 
@@ -107,8 +107,7 @@ func DecodeToken(t string) (*apipb.CurrentUser, error) {
 	}
 
 	//刷新token用
-	var expErr *jwt.TokenExpiredError
-	if errors.As(err, &expErr) {
+	if errors.As(err, &jwt.ErrTokenExpired) {
 		return ExtractorCurrentUser(token), err
 	}
 

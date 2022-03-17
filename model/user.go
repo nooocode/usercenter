@@ -7,8 +7,8 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/dgrijalva/jwt-go/v4"
 	scrypt "github.com/elithrar/simple-scrypt"
+	"github.com/golang-jwt/jwt/v4"
 	"github.com/nooocode/pkg/model"
 	"github.com/nooocode/pkg/utils/log"
 	apipb "github.com/nooocode/usercenter/api"
@@ -460,8 +460,7 @@ func CheckRegisterWithWechat(unionID, openID string, resp *CheckRegisterWithWech
 func Logout(t string) error {
 	currentUser, err := token.DecodeToken(t)
 	if err != nil {
-		var expErr *jwt.TokenExpiredError
-		if errors.As(err, &expErr) {
+		if errors.As(err, &jwt.ErrTokenExpired) {
 			log.Error(context.Background(), err)
 			return nil
 		}

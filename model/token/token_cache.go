@@ -9,8 +9,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/dgrijalva/jwt-go/v4"
 	"github.com/go-redis/redis/v8"
+	"github.com/golang-jwt/jwt/v4"
 	"github.com/nooocode/pkg/utils/log"
 	"github.com/patrickmn/go-cache"
 )
@@ -344,8 +344,7 @@ func NewMemory(expired int) TokenCache {
 		token := t.(string)
 		currentUser, err := DecodeToken(token)
 		if err != nil {
-			var expErr *jwt.TokenExpiredError
-			if !errors.As(err, &expErr) {
+			if !errors.As(err, &jwt.ErrTokenExpired) {
 				return
 			}
 		}

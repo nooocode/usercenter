@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/dgrijalva/jwt-go/v4"
+	"github.com/golang-jwt/jwt/v4"
 	"github.com/nooocode/pkg/model"
 	apipb "github.com/nooocode/usercenter/api"
 	"github.com/nooocode/usercenter/model/token"
@@ -29,8 +29,7 @@ func Authenticate(t, method, url string, checkAuth bool) (*apipb.CurrentUser, in
 
 	currentUser, err := token.DecodeToken(t)
 	if err != nil {
-		var expErr *jwt.TokenExpiredError
-		if errors.As(err, &expErr) {
+		if errors.As(err, &jwt.ErrTokenExpired) {
 			return nil, model.TokenExpired, errors.New("token is expired")
 		} else {
 			return nil, model.TokenInvalid, err
