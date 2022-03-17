@@ -5,7 +5,6 @@ import (
 
 	commonmodel "github.com/nooocode/pkg/model"
 	apipb "github.com/nooocode/usercenter/api"
-	"gorm.io/gorm"
 )
 
 func PBToUser(in *apipb.UserInfo) *User {
@@ -19,22 +18,28 @@ func PBToUser(in *apipb.UserInfo) *User {
 			},
 			TenantID: in.TenantID,
 		},
-		UserName:    in.UserName,
-		Nickname:    in.Nickname,
-		UserRoles:   PBToUserRoles(in.UserRoles),
-		RoleIDs:     in.RoleIDs,
-		Enable:      in.Enable,
-		Email:       in.Email,
-		Mobile:      in.Mobile,
-		IDCard:      in.IdCard,
-		Avatar:      in.Avatar,
-		EID:         in.Eid,
-		Title:       in.Title,
-		Description: in.Description,
-		RealName:    in.RealName,
-		Gender:      in.Gender,
-		Type:        in.Type,
-		Group:       in.Group,
+		UserName:      in.UserName,
+		Nickname:      in.Nickname,
+		UserRoles:     PBToUserRoles(in.UserRoles),
+		RoleIDs:       in.RoleIDs,
+		Enable:        in.Enable,
+		Email:         in.Email,
+		Mobile:        in.Mobile,
+		IDCard:        in.IdCard,
+		Avatar:        in.Avatar,
+		EID:           in.Eid,
+		Title:         in.Title,
+		Description:   in.Description,
+		RealName:      in.RealName,
+		Gender:        in.Gender,
+		Type:          in.Type,
+		Group:         in.Group,
+		WechatUnionID: in.WechatUnionID,
+		WechatOpenID:  in.WechatOpenID,
+		City:          in.City,
+		Country:       in.Country,
+		Province:      in.Province,
+		Password:      in.Password,
 	}
 }
 
@@ -61,6 +66,9 @@ func UserToPB(in *User) *apipb.UserInfo {
 		Gender:      in.Gender,
 		Type:        in.Type,
 		Group:       in.Group,
+		City:        in.City,
+		Country:     in.Country,
+		Province:    in.Province,
 	}
 	if in.Tenant != nil {
 		user.TenantName = in.Tenant.Name
@@ -208,8 +216,8 @@ func PBToMenuParameters(params []*apipb.MenuParameter) []*MenuParameter {
 	var list []*MenuParameter
 	for _, param := range params {
 		list = append(list, &MenuParameter{
-			Model: gorm.Model{
-				ID: uint(param.Id),
+			Model: commonmodel.Model{
+				ID: param.Id,
 			},
 			MenuID: param.MenuID,
 			Type:   param.Type,
@@ -224,7 +232,7 @@ func MenuParametersToPB(params []*MenuParameter) []*apipb.MenuParameter {
 	var list []*apipb.MenuParameter
 	for _, param := range params {
 		list = append(list, &apipb.MenuParameter{
-			Id:     uint32(param.ID),
+			Id:     param.ID,
 			MenuID: param.MenuID,
 			Type:   param.Type,
 			Key:    param.Key,
@@ -238,8 +246,8 @@ func PBToMenuFuncs(params []*apipb.MenuFunc) []*MenuFunc {
 	var list []*MenuFunc
 	for _, param := range params {
 		list = append(list, &MenuFunc{
-			Model: gorm.Model{
-				ID: uint(param.Id),
+			Model: commonmodel.Model{
+				ID: param.Id,
 			},
 			MenuID:       param.MenuID,
 			Name:         param.Name,
@@ -255,7 +263,7 @@ func MenuFuncsToPB(params []*MenuFunc) []*apipb.MenuFunc {
 	var list []*apipb.MenuFunc
 	for _, param := range params {
 		list = append(list, &apipb.MenuFunc{
-			Id:           uint32(param.ID),
+			Id:           param.ID,
 			MenuID:       param.MenuID,
 			Name:         param.Name,
 			Title:        param.Title,
@@ -269,14 +277,18 @@ func MenuFuncsToPB(params []*MenuFunc) []*apipb.MenuFunc {
 func PBToMenuFuncApis(params []*apipb.MenuFuncApi) []MenuFuncApi {
 	var list []MenuFuncApi
 	for _, param := range params {
-		list = append(list, MenuFuncApi{
-			Model: gorm.Model{
-				ID: uint(param.Id),
+		apiInfo := MenuFuncApi{
+			Model: commonmodel.Model{
+				ID: param.Id,
 			},
 			MenuFuncID: param.MenuFuncID,
 			APIID:      param.ApiID,
-			API:        *PBToAPI(param.ApiInfo),
-		})
+		}
+		if param.ApiInfo != nil {
+			apiInfo.API = PBToAPI(param.ApiInfo)
+		}
+		list = append(list, apiInfo)
+
 	}
 	return list
 }
@@ -285,10 +297,10 @@ func MenuFuncApisToPB(params []MenuFuncApi) []*apipb.MenuFuncApi {
 	var list []*apipb.MenuFuncApi
 	for _, param := range params {
 		list = append(list, &apipb.MenuFuncApi{
-			Id:         uint32(param.ID),
+			Id:         param.ID,
 			MenuFuncID: param.MenuFuncID,
 			ApiID:      param.APIID,
-			ApiInfo:    APIToPB(&param.API),
+			ApiInfo:    APIToPB(param.API),
 		})
 	}
 	return list

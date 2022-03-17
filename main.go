@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 
 	"dubbo.apache.org/dubbo-go/v3/config"
 	_ "dubbo.apache.org/dubbo-go/v3/imports"
@@ -33,7 +34,16 @@ func main() {
 	params := config.GetRootConfig().ConfigCenter.Params
 	fmt.Println(params)
 	model.Init(params["mysql"], params["debug"] == "true")
-	token.InitTokenCache(params["token-key"], params["redis-addr"], params["redis-user-name"], params["redis-pwd"], 120)
+	tokenExpiredStr := params["redis-expired"]
+	tokenExpired := 120
+	if tokenExpiredStr != "" {
+		var err error
+		tokenExpired, err = strconv.Atoi(tokenExpiredStr)
+		if err != nil {
+			panic(err)
+		}
+	}
+	token.InitTokenCache(params["token-key"], params["redis-addr"], params["redis-user-name"], params["redis-pwd"], tokenExpired)
 	constants.SetPlatformTenantID(params["platformTenantID"])
 	constants.SetSuperAdminRoleID(params["superAdminRoleID"])
 	fmt.Println("started server")

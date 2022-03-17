@@ -134,6 +134,7 @@ func DeleteTenant(c *gin.Context) {
 		c.JSON(http.StatusOK, resp)
 		return
 	}
+
 	err = ucmodel.DeleteTenant(req.Id)
 	if err != nil {
 		resp.Code = model.InternalServerError

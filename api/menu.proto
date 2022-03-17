@@ -34,14 +34,14 @@ message MenuInfo{
     repeated MenuFunc menuFuncs=16;
 }
 message MenuParameter{
-    uint32 id=1;
+    string id=1;
     string menuID=2;
     string type=3;
     string key=4;
     string value=5;
 }
 message MenuFunc{
-    uint32 id=1;
+    string id=1;
     string menuID=2;
     string name=3;
     string title=4;
@@ -50,7 +50,7 @@ message MenuFunc{
 }
 
 message MenuFuncApi{
-    uint32 id=1;
+    string id=1;
     string menuFuncID=2;
     string apiID=3;
     APIInfo apiInfo=4;

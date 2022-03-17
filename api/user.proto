@@ -107,6 +107,11 @@ message UserInfo{
     string tenantName=19;
     //分组，例如属于某个组织的，或者某个个人
     string group=20;
+    string wechatUnionID=21;
+    string wechatOpenID=22;
+    string city=23;
+    string country=24;
+    string province=25;
 }
 
 message UserRole{
