@@ -1,4 +1,4 @@
-FROM guoxf/golang-build:1.17.0-alpine3.14 as builder
+FROM guoxf/golang-build:1.18.0-alpine3.15 as builder
 
 ENV GO111MODULE=on
 ENV GOPROXY=https://goproxy.cn,direct
