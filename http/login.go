@@ -7,6 +7,7 @@ import (
 
 	"dubbo.apache.org/dubbo-go/v3/config"
 	"github.com/gin-gonic/gin"
+	"github.com/nooocode/pkg/constants"
 	"github.com/nooocode/pkg/model"
 	"github.com/nooocode/pkg/utils/log"
 	"github.com/nooocode/pkg/utils/middleware"
@@ -94,7 +95,7 @@ func wechatMiniLogin(c *gin.Context) {
 		user.Mobile = plainData.PhoneNumber
 		user.Enable = true
 		user.UserRoles = []*apipb.UserRole{
-			{RoleID: "9afecaae-2f6a-418e-892d-ce83ae013a42"},
+			{RoleID: constants.DefaultRoleID},
 		}
 		if plainData.PhoneNumber != "" {
 			user.UserName = plainData.PhoneNumber
