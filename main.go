@@ -46,6 +46,7 @@ func main() {
 	token.InitTokenCache(params["token-key"], params["redis-addr"], params["redis-user-name"], params["redis-pwd"], tokenExpired)
 	constants.SetPlatformTenantID(params["platformTenantID"])
 	constants.SetSuperAdminRoleID(params["superAdminRoleID"])
+	constants.SetEnabelTenant(params["enableTenat"] == "true")
 	fmt.Println("started server")
 	Start(48080)
 }

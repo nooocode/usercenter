@@ -9,6 +9,7 @@ import (
 
 	scrypt "github.com/elithrar/simple-scrypt"
 	"github.com/golang-jwt/jwt/v4"
+	"github.com/nooocode/pkg/constants"
 	"github.com/nooocode/pkg/model"
 	"github.com/nooocode/pkg/utils/log"
 	apipb "github.com/nooocode/usercenter/api"
@@ -402,6 +403,9 @@ func LoginByWechat(register bool, req *User, resp *apipb.LoginResponse) {
 		if register {
 			//TODO 随机生成默认密码
 			req.Password = DefaultPwd
+			if !constants.EnabelTenant {
+				req.TenantID = constants.PlatformTenantID
+			}
 			err = CreateUser(req, true)
 			if err != nil && err != gorm.ErrRecordNotFound {
 				resp.Code = model.InternalServerError
