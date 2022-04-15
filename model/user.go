@@ -393,7 +393,16 @@ func Login(req *apipb.LoginRequest, resp *apipb.LoginResponse) {
 
 func LoginByWechat(register bool, req *User, resp *apipb.LoginResponse) {
 	user := &User{}
-	err := dbClient.DB().Model(user).Preload("UserRoles").First(user, "wechat_union_id=? and wechat_open_id=?", req.WechatUnionID, req.WechatOpenID).Error
+	whereSql := ""
+	value := ""
+	if user.WechatUnionID != "" {
+		whereSql = "wechat_union_id=?"
+		value = user.WechatUnionID
+	} else {
+		whereSql = "wechat_open_id=?"
+		value = user.WechatOpenID
+	}
+	err := dbClient.DB().Model(user).Preload("UserRoles").First(user, whereSql, value).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
 		resp.Code = model.InternalServerError
 		resp.Message = err.Error()
@@ -607,4 +616,8 @@ func StatisticUserCount(t int, tenantID, group string) (int64, error) {
 	var count int64
 	err := db.Count(&count).Error
 	return count, err
+}
+
+func BindPhone(userID string, phoneNuber string) error {
+	return dbClient.DB().Model(&User{}).Where("id=?", userID).Update("mobile", phoneNuber).Error
 }

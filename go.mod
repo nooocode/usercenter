@@ -17,7 +17,7 @@ require (
 	github.com/jinzhu/copier v0.3.2
 	github.com/nooocode/pkg v1.1.1
 	github.com/patrickmn/go-cache v2.1.0+incompatible
-	github.com/silenceper/wechat/v2 v2.0.9
+	github.com/silenceper/wechat/v2 v2.1.2
 	github.com/swaggo/gin-swagger v1.3.3
 	github.com/swaggo/swag v1.7.4
 	go.uber.org/zap v1.19.1
