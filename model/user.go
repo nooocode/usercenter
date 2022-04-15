@@ -399,12 +399,12 @@ func LoginByWechat(register bool, req *User, resp *apipb.LoginResponse) {
 	user := &User{}
 	whereSql := ""
 	value := ""
-	if user.WechatUnionID != "" {
+	if req.WechatUnionID != "" {
 		whereSql = "wechat_union_id=?"
-		value = user.WechatUnionID
+		value = req.WechatUnionID
 	} else {
 		whereSql = "wechat_open_id=?"
-		value = user.WechatOpenID
+		value = req.WechatOpenID
 	}
 	err := dbClient.DB().Model(user).Preload("UserRoles").Where(whereSql, value).First(user).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
