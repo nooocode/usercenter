@@ -406,7 +406,7 @@ func LoginByWechat(register bool, req *User, resp *apipb.LoginResponse) {
 		whereSql = "wechat_open_id=?"
 		value = user.WechatOpenID
 	}
-	err := dbClient.DB().Model(user).Preload("UserRoles").First(user, whereSql, value).Error
+	err := dbClient.DB().Model(user).Preload("UserRoles").Where(whereSql, value).First(user).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
 		resp.Code = model.InternalServerError
 		resp.Message = err.Error()
