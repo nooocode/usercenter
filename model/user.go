@@ -392,6 +392,10 @@ func Login(req *apipb.LoginRequest, resp *apipb.LoginResponse) {
 }
 
 func LoginByWechat(register bool, req *User, resp *apipb.LoginResponse) {
+	if req.WechatOpenID == "" && req.WechatUnionID == "" {
+		resp.Code = model.UserIsNotExist
+		return
+	}
 	user := &User{}
 	whereSql := ""
 	value := ""
