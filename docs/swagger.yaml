@@ -1764,7 +1764,7 @@ paths:
       summary: 更新用户
       tags:
       - 用户管理
-  /api/wechat/mini/login:
+  /api/phone/bind:
     post:
       consumes:
       - application/json
@@ -1789,6 +1789,33 @@ paths:
           schema:
             $ref: '#/definitions/usercenter.LoginResponse'
       summary: 绑定手机号
+      tags:
+      - 微信
+  /api/wechat/mini/login:
+    post:
+      consumes:
+      - application/json
+      description: 微信登录
+      parameters:
+      - description: Bearer+空格+Token
+        in: header
+        name: authorization
+        required: true
+        type: string
+      - description: 登录参数
+        in: body
+        name: product
+        required: true
+        schema:
+          $ref: '#/definitions/http.MiniLoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/usercenter.LoginResponse'
+      summary: 微信登录
       tags:
       - 微信
   /api/wechat/mini/register/check:

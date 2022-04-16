@@ -178,7 +178,7 @@ func wechatMiniCheckRegister(c *gin.Context) {
 // @Param authorization header string true "Bearer+空格+Token"
 // @Param product body MiniLoginRequest true "请求参数"
 // @Success 200 {object} apipb.LoginResponse
-// @Router /api/wechat/mini/login [post]
+// @Router /api/phone/bind [post]
 func bindPhone(c *gin.Context) {
 	transID := middleware.GetTransID(c)
 	req := &MiniLoginRequest{}

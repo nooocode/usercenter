@@ -1777,7 +1777,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/wechat/mini/login": {
+        "/api/phone/bind": {
             "post": {
                 "description": "绑定手机号",
                 "consumes": [
@@ -1800,6 +1800,47 @@ const docTemplate = `{
                     },
                     {
                         "description": "请求参数",
+                        "name": "product",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/http.MiniLoginRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/usercenter.LoginResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/wechat/mini/login": {
+            "post": {
+                "description": "微信登录",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "微信"
+                ],
+                "summary": "微信登录",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer+空格+Token",
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "登录参数",
                         "name": "product",
                         "in": "body",
                         "required": true,
