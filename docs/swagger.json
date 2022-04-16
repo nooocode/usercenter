@@ -1764,9 +1764,149 @@
                     }
                 }
             }
+        },
+        "/api/wechat/mini/login": {
+            "post": {
+                "description": "绑定手机号",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "微信"
+                ],
+                "summary": "绑定手机号",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer+空格+Token",
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "product",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/http.MiniLoginRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/usercenter.LoginResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/wechat/mini/register/check": {
+            "post": {
+                "description": "检查是否注册过",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "微信"
+                ],
+                "summary": "检查是否注册过",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer+空格+Token",
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "product",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/http.MiniLoginRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.CheckRegisterWithWechatResp"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "http.MiniLoginRequest": {
+            "type": "object",
+            "properties": {
+                "encryptedData": {
+                    "type": "string"
+                },
+                "iv": {
+                    "type": "string"
+                },
+                "jsCode": {
+                    "type": "string"
+                },
+                "phoneNumberCode": {
+                    "type": "string"
+                },
+                "register": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "model.CheckRegisterWithWechatResp": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "current": {
+                    "type": "integer"
+                },
+                "data": {
+                    "type": "boolean"
+                },
+                "desc": {
+                    "type": "boolean"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "orderField": {
+                    "type": "string"
+                },
+                "pageIndex": {
+                    "type": "integer"
+                },
+                "pageSize": {
+                    "type": "integer"
+                },
+                "pages": {
+                    "type": "integer"
+                },
+                "records": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
         "usercenter.APIInfo": {
             "type": "object",
             "required": [
@@ -2044,7 +2184,7 @@
                     "type": "boolean"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "menuFuncApis": {
                     "type": "array",
@@ -2073,7 +2213,7 @@
                     "$ref": "#/definitions/usercenter.APIInfo"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "menuFuncID": {
                     "type": "string"
@@ -2150,7 +2290,7 @@
             "type": "object",
             "properties": {
                 "id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "key": {
                     "type": "string"
@@ -2408,6 +2548,12 @@
                 "avatar": {
                     "type": "string"
                 },
+                "city": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                },
                 "description": {
                     "type": "string"
                 },
@@ -2444,6 +2590,9 @@
                 "password": {
                     "type": "string"
                 },
+                "province": {
+                    "type": "string"
+                },
                 "realName": {
                     "type": "string"
                 },
@@ -2474,6 +2623,12 @@
                     "items": {
                         "$ref": "#/definitions/usercenter.UserRole"
                     }
+                },
+                "wechatOpenID": {
+                    "type": "string"
+                },
+                "wechatUnionID": {
+                    "type": "string"
                 }
             }
         },

@@ -47,6 +47,16 @@ type MiniLoginRequest struct {
 	Register        bool   `json:"register"`
 }
 
+// wechatMiniLogin
+// @Summary 微信登录
+// @Description 微信登录
+// @Tags 微信
+// @Accept  json
+// @Produce  json
+// @Param authorization header string true "Bearer+空格+Token"
+// @Param product body MiniLoginRequest true "登录参数"
+// @Success 200 {object} apipb.LoginResponse
+// @Router /api/wechat/mini/login [post]
 func wechatMiniLogin(c *gin.Context) {
 	transID := middleware.GetTransID(c)
 	req := &MiniLoginRequest{}
@@ -120,6 +130,16 @@ func wechatMiniLogin(c *gin.Context) {
 	c.JSON(http.StatusOK, resp)
 }
 
+// wechatMiniLogin
+// @Summary 检查是否注册过
+// @Description 检查是否注册过
+// @Tags 微信
+// @Accept  json
+// @Produce  json
+// @Param authorization header string true "Bearer+空格+Token"
+// @Param product body MiniLoginRequest true "请求参数"
+// @Success 200 {object} ucmodel.CheckRegisterWithWechatResp
+// @Router /api/wechat/mini/register/check [post]
 func wechatMiniCheckRegister(c *gin.Context) {
 	transID := middleware.GetTransID(c)
 	req := &MiniLoginRequest{}
@@ -149,6 +169,16 @@ func wechatMiniCheckRegister(c *gin.Context) {
 	c.JSON(http.StatusOK, resp)
 }
 
+// wechatMiniLogin
+// @Summary 绑定手机号
+// @Description 绑定手机号
+// @Tags 微信
+// @Accept  json
+// @Produce  json
+// @Param authorization header string true "Bearer+空格+Token"
+// @Param product body MiniLoginRequest true "请求参数"
+// @Success 200 {object} apipb.LoginResponse
+// @Router /api/wechat/mini/login [post]
 func bindPhone(c *gin.Context) {
 	transID := middleware.GetTransID(c)
 	req := &MiniLoginRequest{}

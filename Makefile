@@ -10,4 +10,4 @@ test-image:
 push-image:
 	sudo docker push ${IMAGE}
 gen-doc:
-	swag init --parseDependency --parseInternal --parseDepth 1
+	swag init --parseDependency --parseInternal --parseDepth 2

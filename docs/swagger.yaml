@@ -1,4 +1,42 @@
 definitions:
+  http.MiniLoginRequest:
+    properties:
+      encryptedData:
+        type: string
+      iv:
+        type: string
+      jsCode:
+        type: string
+      phoneNumberCode:
+        type: string
+      register:
+        type: boolean
+    type: object
+  model.CheckRegisterWithWechatResp:
+    properties:
+      code:
+        type: integer
+      current:
+        type: integer
+      data:
+        type: boolean
+      desc:
+        type: boolean
+      message:
+        type: string
+      orderField:
+        type: string
+      pageIndex:
+        type: integer
+      pageSize:
+        type: integer
+      pages:
+        type: integer
+      records:
+        type: integer
+      total:
+        type: integer
+    type: object
   usercenter.APIInfo:
     properties:
       checkAuth:
@@ -191,7 +229,7 @@ definitions:
       hidden:
         type: boolean
       id:
-        type: integer
+        type: string
       menuFuncApis:
         items:
           $ref: '#/definitions/usercenter.MenuFuncApi'
@@ -210,7 +248,7 @@ definitions:
       apiInfo:
         $ref: '#/definitions/usercenter.APIInfo'
       id:
-        type: integer
+        type: string
       menuFuncID:
         type: string
     type: object
@@ -261,7 +299,7 @@ definitions:
   usercenter.MenuParameter:
     properties:
       id:
-        type: integer
+        type: string
       key:
         type: string
       menuID:
@@ -427,6 +465,10 @@ definitions:
     properties:
       avatar:
         type: string
+      city:
+        type: string
+      country:
+        type: string
       description:
         type: string
       eid:
@@ -452,6 +494,8 @@ definitions:
         type: string
       password:
         type: string
+      province:
+        type: string
       realName:
         type: string
       roleIDs:
@@ -473,6 +517,10 @@ definitions:
         items:
           $ref: '#/definitions/usercenter.UserRole'
         type: array
+      wechatOpenID:
+        type: string
+      wechatUnionID:
+        type: string
     required:
     - mobile
     - nickname
@@ -1716,4 +1764,58 @@ paths:
       summary: 更新用户
       tags:
       - 用户管理
+  /api/wechat/mini/login:
+    post:
+      consumes:
+      - application/json
+      description: 绑定手机号
+      parameters:
+      - description: Bearer+空格+Token
+        in: header
+        name: authorization
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: product
+        required: true
+        schema:
+          $ref: '#/definitions/http.MiniLoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/usercenter.LoginResponse'
+      summary: 绑定手机号
+      tags:
+      - 微信
+  /api/wechat/mini/register/check:
+    post:
+      consumes:
+      - application/json
+      description: 检查是否注册过
+      parameters:
+      - description: Bearer+空格+Token
+        in: header
+        name: authorization
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: product
+        required: true
+        schema:
+          $ref: '#/definitions/http.MiniLoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.CheckRegisterWithWechatResp'
+      summary: 检查是否注册过
+      tags:
+      - 微信
 swagger: "2.0"
