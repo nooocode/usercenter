@@ -19,7 +19,7 @@ require (
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/silenceper/wechat/v2 v2.1.2
 	github.com/swaggo/gin-swagger v1.3.3
-	github.com/swaggo/swag v1.7.4
+	github.com/swaggo/swag v1.8.1
 	go.uber.org/zap v1.19.1
 	google.golang.org/protobuf v1.27.1
 	gorm.io/gorm v1.22.2
