@@ -43,4 +43,7 @@ message CurrentUser{
     //用户类型
     int32 type=11;
     string group=12;
+    //昵称
+    string nickname=13;
+    string avatar=14;
 }

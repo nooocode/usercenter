@@ -6,7 +6,6 @@ require (
 	dubbo.apache.org/dubbo-go/v3 v3.0.0
 	github.com/casbin/casbin/v2 v2.28.3
 	github.com/casbin/gorm-adapter/v3 v3.2.12
-	github.com/dubbogo/grpc-go v1.42.6-triple
 	github.com/dubbogo/triple v1.1.6
 	github.com/elithrar/simple-scrypt v1.3.0
 	github.com/gin-gonic/gin v1.7.4
@@ -21,6 +20,7 @@ require (
 	github.com/swaggo/gin-swagger v1.3.3
 	github.com/swaggo/swag v1.8.1
 	go.uber.org/zap v1.19.1
+	google.golang.org/grpc v1.42.0
 	google.golang.org/protobuf v1.27.1
 	gorm.io/gorm v1.22.2
 )

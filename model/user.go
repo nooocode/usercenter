@@ -381,6 +381,8 @@ func Login(req *apipb.LoginRequest, resp *apipb.LoginResponse) {
 		Gender:   user.Gender,
 		RoleIDs:  user.GetRoleIDs(),
 		TenantID: user.TenantID,
+		Nickname: user.Nickname,
+		Avatar:   user.Avatar,
 	}
 	t, err := token.EncodeToken(currentUser)
 	if err != nil {
@@ -444,6 +446,8 @@ func LoginByWechat(register bool, req *User, resp *apipb.LoginResponse) {
 		Gender:   user.Gender,
 		RoleIDs:  user.GetRoleIDs(),
 		TenantID: user.TenantID,
+		Nickname: user.Nickname,
+		Avatar:   user.Avatar,
 	}
 	t, err := token.EncodeToken(currentUser)
 	if err != nil {
