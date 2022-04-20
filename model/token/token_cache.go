@@ -2,7 +2,6 @@ package token
 
 import (
 	"context"
-	"crypto/tls"
 	"errors"
 	"fmt"
 	"strings"
@@ -20,7 +19,7 @@ var DefaultTokenCache TokenCache
 func InitTokenCache(key, redisAddr, redisUserName, redisPWD string, expired int) {
 	SetSecretKey(key)
 	if expired < 1 {
-		expired = 1
+		expired = 120
 	}
 	if redisAddr != "" {
 		DefaultTokenCache = NewRedis(redisAddr, redisUserName, redisPWD, expired)
@@ -56,9 +55,9 @@ func NewRedis(addr, userName, pwd string, expired int) TokenCache {
 			Password: pwd,
 			Username: userName,
 			DB:       0,
-			TLSConfig: &tls.Config{
-				InsecureSkipVerify: true,
-			},
+			// TLSConfig: &tls.Config{
+			// 	InsecureSkipVerify: true,
+			// },
 		}),
 		tokenExpired: expired,
 	}
