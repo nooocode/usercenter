@@ -79,9 +79,9 @@ func generatePasswd(length int, pwdStrength PwdStrength) string {
 	case PwdStrengthOnliyChar:
 		sourceStr = fmt.Sprintf("%s%s", NUmStr, CharStr)
 	case PwdStrengthMix:
-		sourceStr = fmt.Sprintf("%s%s%s", NUmStr, CharStr, SpecStr)
+		sourceStr = fmt.Sprintf("%s%s", NUmStr, CharStr)
 	default:
-
+		sourceStr = fmt.Sprintf("%s%s%s", NUmStr, CharStr, SpecStr)
 	}
 
 	//遍历，生成一个随机index索引,
