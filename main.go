@@ -48,6 +48,7 @@ func main() {
 	constants.SetSuperAdminRoleID(params["superAdminRoleID"])
 	constants.SetDefaultRoleID(params["defaultRoleID"])
 	constants.SetEnabelTenant(params["enableTenat"] == "true")
+	model.SetDefaultPwd(params["defaultPwd"])
 	fmt.Println("started server")
 	Start(48080)
 }

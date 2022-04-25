@@ -416,8 +416,8 @@ func LoginByWechat(register bool, req *User, resp *apipb.LoginResponse) {
 	}
 	if err == gorm.ErrRecordNotFound {
 		if register {
-			//TODO 随机生成默认密码
-			req.Password = DefaultPwd
+			// 随机生成默认密码
+			req.Password = generatePasswd(16, PwdStrengthAdvance)
 			if !constants.EnabelTenant {
 				req.TenantID = constants.PlatformTenantID
 			}

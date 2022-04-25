@@ -36,5 +36,7 @@ var Logger *zap.Logger
 var DefaultPwd = "ABC123def"
 
 func SetDefaultPwd(defaultPwd string) {
-	DefaultPwd = defaultPwd
+	if defaultPwd != "" {
+		DefaultPwd = defaultPwd
+	}
 }
