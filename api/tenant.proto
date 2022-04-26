@@ -28,6 +28,14 @@ message TenantInfo{
     string areaCovered=7;
     int32 staffSize=8;
     bool enable=9;
+    //省份
+    string province=10;
+    //城市
+    string city=11;
+    //区/县
+    string area=12;
+    //街道/镇
+    string town=13;
 }
 
 message QueryTenantRequest{
@@ -41,6 +49,18 @@ message QueryTenantRequest{
    bool desc=4;
    // @inject_tag: uri:"name" form:"name"
     string name=5;
+     //省份
+    // @inject_tag: uri:"province" form:"province"
+    string province=6;
+    //城市
+    // @inject_tag: uri:"city" form:"city"
+    string city=7;
+    //区/县
+    // @inject_tag: uri:"area" form:"area"
+    string area=8;
+    //街道/镇
+    // @inject_tag: uri:"town" form:"town"
+    string town=9;
 }
 
 message QueryTenantResponse{

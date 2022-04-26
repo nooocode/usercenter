@@ -415,6 +415,10 @@ func PBToTenant(in *apipb.TenantInfo) *Tenant {
 		AreaCovered:   in.AreaCovered,
 		StaffSize:     in.StaffSize,
 		Enable:        in.Enable,
+		Province:      in.Province,
+		City:          in.City,
+		Area:          in.Area,
+		Town:          in.Town,
 	}
 }
 
@@ -432,6 +436,10 @@ func TenantToPB(in *Tenant) *apipb.TenantInfo {
 		AreaCovered:   in.AreaCovered,
 		StaffSize:     in.StaffSize,
 		Enable:        in.Enable,
+		Province:      in.Province,
+		City:          in.City,
+		Area:          in.Area,
+		Town:          in.Town,
 	}
 }
 

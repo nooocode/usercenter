@@ -28,6 +28,14 @@ type Tenant struct {
 	// 人员规模
 	StaffSize int32 `json:"staffSize"`
 	Enable    bool  `json:"enable" gorm:"index"`
+	//省份
+	Province string `gorm:"index;size:12"`
+	//城市
+	City string `gorm:"index;size:12"`
+	//区/县
+	Area string `gorm:"index;size:12"`
+	//街道/镇
+	Town string `gorm:"index;size:12"`
 }
 
 func CreateTenant(m *Tenant) error {
@@ -69,6 +77,21 @@ func QueryTenant(req *apipb.QueryTenantRequest, resp *apipb.QueryTenantResponse)
 	db := dbClient.DB().Model(&Tenant{})
 	if req.Name != "" {
 		db = db.Where("name LIKE ?", "%"+req.Name+"%")
+	}
+	if req.Province != "" {
+		db = db.Where("province = ?", req.Province)
+	}
+
+	if req.City != "" {
+		db = db.Where("city = ?", req.City)
+	}
+
+	if req.Area != "" {
+		db = db.Where("area = ?", req.Area)
+	}
+
+	if req.Town != "" {
+		db = db.Where("town = ?", req.Town)
 	}
 
 	OrderStr := "`created_at`"

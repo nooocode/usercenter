@@ -2563,6 +2563,10 @@ const docTemplate = `{
                 "address": {
                     "type": "string"
                 },
+                "area": {
+                    "description": "区/县",
+                    "type": "string"
+                },
                 "areaCovered": {
                     "type": "string"
                 },
@@ -2570,6 +2574,10 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "cellPhone": {
+                    "type": "string"
+                },
+                "city": {
+                    "description": "城市",
                     "type": "string"
                 },
                 "contact": {
@@ -2585,8 +2593,16 @@ const docTemplate = `{
                     "description": "@inject_tag: validate:\"required\"",
                     "type": "string"
                 },
+                "province": {
+                    "description": "省份",
+                    "type": "string"
+                },
                 "staffSize": {
                     "type": "integer"
+                },
+                "town": {
+                    "description": "街道/镇",
+                    "type": "string"
                 }
             }
         },

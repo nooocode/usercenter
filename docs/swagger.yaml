@@ -441,11 +441,17 @@ definitions:
     properties:
       address:
         type: string
+      area:
+        description: 区/县
+        type: string
       areaCovered:
         type: string
       businessScope:
         type: string
       cellPhone:
+        type: string
+      city:
+        description: 城市
         type: string
       contact:
         type: string
@@ -456,8 +462,14 @@ definitions:
       name:
         description: '@inject_tag: validate:"required"'
         type: string
+      province:
+        description: 省份
+        type: string
       staffSize:
         type: integer
+      town:
+        description: 街道/镇
+        type: string
     required:
     - name
     type: object
