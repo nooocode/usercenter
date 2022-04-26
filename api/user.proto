@@ -112,6 +112,8 @@ message UserInfo{
     string city=23;
     string country=24;
     string province=25;
+    //注册时间
+    string createdAt=26;
 }
 
 message UserRole{

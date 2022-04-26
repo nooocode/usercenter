@@ -2623,6 +2623,10 @@ const docTemplate = `{
                 "country": {
                     "type": "string"
                 },
+                "createdAt": {
+                    "description": "注册时间",
+                    "type": "string"
+                },
                 "description": {
                     "type": "string"
                 },

@@ -69,6 +69,7 @@ func UserToPB(in *User) *apipb.UserInfo {
 		City:        in.City,
 		Country:     in.Country,
 		Province:    in.Province,
+		CreatedAt:   in.CreatedAt.Format("2006-01-02 15:04:05"),
 	}
 	if in.Tenant != nil {
 		user.TenantName = in.Tenant.Name
