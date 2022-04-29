@@ -79,7 +79,7 @@ func updateRoleAuth(id string) error {
 				continue
 			}
 			for _, api := range fn.MenuFuncApis {
-				if !api.API.Enable {
+				if api.API == nil || !api.API.Enable {
 					continue
 				}
 				checkAuth := "true"
