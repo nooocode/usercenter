@@ -26,12 +26,12 @@ type AuthenticateRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: validate:"required"
-	Token string `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty" validate:"required"`
+	Token string `protobuf:"bytes,1,opt,name=token,proto3" json:"token" validate:"required"`
 	// @inject_tag: validate:"required"
-	Url       string `protobuf:"bytes,2,opt,name=url,proto3" json:"url,omitempty" validate:"required"`
-	CheckAuth bool   `protobuf:"varint,3,opt,name=checkAuth,proto3" json:"checkAuth,omitempty"`
+	Url       string `protobuf:"bytes,2,opt,name=url,proto3" json:"url" validate:"required"`
+	CheckAuth bool   `protobuf:"varint,3,opt,name=checkAuth,proto3" json:"checkAuth"`
 	// @inject_tag: validate:"required"
-	Method string `protobuf:"bytes,4,opt,name=method,proto3" json:"method,omitempty" validate:"required"`
+	Method string `protobuf:"bytes,4,opt,name=method,proto3" json:"method" validate:"required"`
 }
 
 func (x *AuthenticateRequest) Reset() {
@@ -99,9 +99,9 @@ type AuthenticateResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Code        Code         `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code,omitempty"`
-	Message     string       `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	CurrentUser *CurrentUser `protobuf:"bytes,3,opt,name=currentUser,proto3" json:"currentUser,omitempty"`
+	Code        Code         `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code"`
+	Message     string       `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	CurrentUser *CurrentUser `protobuf:"bytes,3,opt,name=currentUser,proto3" json:"currentUser"`
 }
 
 func (x *AuthenticateResponse) Reset() {
@@ -163,7 +163,7 @@ type DecodeTokenRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: validate:"required"
-	Token string `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty" validate:"required"`
+	Token string `protobuf:"bytes,1,opt,name=token,proto3" json:"token" validate:"required"`
 }
 
 func (x *DecodeTokenRequest) Reset() {
@@ -210,22 +210,22 @@ type CurrentUser struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id         string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	UserName   string   `protobuf:"bytes,2,opt,name=userName,proto3" json:"userName,omitempty"`
-	Gender     bool     `protobuf:"varint,3,opt,name=gender,proto3" json:"gender,omitempty"`
-	DeviceType int32    `protobuf:"varint,4,opt,name=deviceType,proto3" json:"deviceType,omitempty"`
-	Domain     string   `protobuf:"bytes,5,opt,name=domain,proto3" json:"domain,omitempty"`
-	SessionID  string   `protobuf:"bytes,6,opt,name=sessionID,proto3" json:"sessionID,omitempty"`
-	Key        string   `protobuf:"bytes,7,opt,name=key,proto3" json:"key,omitempty"`
-	RoleIDs    []string `protobuf:"bytes,8,rep,name=roleIDs,proto3" json:"roleIDs,omitempty"`
-	TenantID   string   `protobuf:"bytes,9,opt,name=tenantID,proto3" json:"tenantID,omitempty"`
-	ClientIP   string   `protobuf:"bytes,10,opt,name=clientIP,proto3" json:"clientIP,omitempty"`
+	Id         string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
+	UserName   string   `protobuf:"bytes,2,opt,name=userName,proto3" json:"userName"`
+	Gender     bool     `protobuf:"varint,3,opt,name=gender,proto3" json:"gender"`
+	DeviceType int32    `protobuf:"varint,4,opt,name=deviceType,proto3" json:"deviceType"`
+	Domain     string   `protobuf:"bytes,5,opt,name=domain,proto3" json:"domain"`
+	SessionID  string   `protobuf:"bytes,6,opt,name=sessionID,proto3" json:"sessionID"`
+	Key        string   `protobuf:"bytes,7,opt,name=key,proto3" json:"key"`
+	RoleIDs    []string `protobuf:"bytes,8,rep,name=roleIDs,proto3" json:"roleIDs"`
+	TenantID   string   `protobuf:"bytes,9,opt,name=tenantID,proto3" json:"tenantID"`
+	ClientIP   string   `protobuf:"bytes,10,opt,name=clientIP,proto3" json:"clientIP"`
 	//用户类型
-	Type  int32  `protobuf:"varint,11,opt,name=type,proto3" json:"type,omitempty"`
-	Group string `protobuf:"bytes,12,opt,name=group,proto3" json:"group,omitempty"`
+	Type  int32  `protobuf:"varint,11,opt,name=type,proto3" json:"type"`
+	Group string `protobuf:"bytes,12,opt,name=group,proto3" json:"group"`
 	//昵称
-	Nickname string `protobuf:"bytes,13,opt,name=nickname,proto3" json:"nickname,omitempty"`
-	Avatar   string `protobuf:"bytes,14,opt,name=avatar,proto3" json:"avatar,omitempty"`
+	Nickname string `protobuf:"bytes,13,opt,name=nickname,proto3" json:"nickname"`
+	Avatar   string `protobuf:"bytes,14,opt,name=avatar,proto3" json:"avatar"`
 }
 
 func (x *CurrentUser) Reset() {

@@ -1905,6 +1905,9 @@ const docTemplate = `{
         "http.MiniLoginRequest": {
             "type": "object",
             "properties": {
+                "app": {
+                    "type": "string"
+                },
                 "encryptedData": {
                     "type": "string"
                 },

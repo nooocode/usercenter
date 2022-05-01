@@ -25,23 +25,23 @@ type MenuInfo struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id       string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Level    uint32 `protobuf:"varint,2,opt,name=level,proto3" json:"level,omitempty"`
-	ParentID string `protobuf:"bytes,3,opt,name=parentID,proto3" json:"parentID,omitempty"`
-	Path     string `protobuf:"bytes,4,opt,name=path,proto3" json:"path,omitempty"`
+	Id       string `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
+	Level    uint32 `protobuf:"varint,2,opt,name=level,proto3" json:"level"`
+	ParentID string `protobuf:"bytes,3,opt,name=parentID,proto3" json:"parentID"`
+	Path     string `protobuf:"bytes,4,opt,name=path,proto3" json:"path"`
 	// @inject_tag: validate:"required"
-	Name        string           `protobuf:"bytes,5,opt,name=name,proto3" json:"name,omitempty" validate:"required"`
-	Hidden      bool             `protobuf:"varint,6,opt,name=hidden,proto3" json:"hidden,omitempty"`
-	Component   string           `protobuf:"bytes,7,opt,name=component,proto3" json:"component,omitempty"`
-	Sort        int32            `protobuf:"varint,8,opt,name=sort,proto3" json:"sort,omitempty"`
-	Cache       bool             `protobuf:"varint,9,opt,name=cache,proto3" json:"cache,omitempty"`
-	DefaultMenu bool             `protobuf:"varint,10,opt,name=defaultMenu,proto3" json:"defaultMenu,omitempty"`
-	Title       string           `protobuf:"bytes,11,opt,name=title,proto3" json:"title,omitempty"`
-	Icon        string           `protobuf:"bytes,12,opt,name=icon,proto3" json:"icon,omitempty"`
-	CloseTab    bool             `protobuf:"varint,13,opt,name=closeTab,proto3" json:"closeTab,omitempty"`
-	Children    []*MenuInfo      `protobuf:"bytes,14,rep,name=children,proto3" json:"children,omitempty"`
-	Parameters  []*MenuParameter `protobuf:"bytes,15,rep,name=parameters,proto3" json:"parameters,omitempty"`
-	MenuFuncs   []*MenuFunc      `protobuf:"bytes,16,rep,name=menuFuncs,proto3" json:"menuFuncs,omitempty"`
+	Name        string           `protobuf:"bytes,5,opt,name=name,proto3" json:"name" validate:"required"`
+	Hidden      bool             `protobuf:"varint,6,opt,name=hidden,proto3" json:"hidden"`
+	Component   string           `protobuf:"bytes,7,opt,name=component,proto3" json:"component"`
+	Sort        int32            `protobuf:"varint,8,opt,name=sort,proto3" json:"sort"`
+	Cache       bool             `protobuf:"varint,9,opt,name=cache,proto3" json:"cache"`
+	DefaultMenu bool             `protobuf:"varint,10,opt,name=defaultMenu,proto3" json:"defaultMenu"`
+	Title       string           `protobuf:"bytes,11,opt,name=title,proto3" json:"title"`
+	Icon        string           `protobuf:"bytes,12,opt,name=icon,proto3" json:"icon"`
+	CloseTab    bool             `protobuf:"varint,13,opt,name=closeTab,proto3" json:"closeTab"`
+	Children    []*MenuInfo      `protobuf:"bytes,14,rep,name=children,proto3" json:"children"`
+	Parameters  []*MenuParameter `protobuf:"bytes,15,rep,name=parameters,proto3" json:"parameters"`
+	MenuFuncs   []*MenuFunc      `protobuf:"bytes,16,rep,name=menuFuncs,proto3" json:"menuFuncs"`
 }
 
 func (x *MenuInfo) Reset() {
@@ -193,11 +193,11 @@ type MenuParameter struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id     string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	MenuID string `protobuf:"bytes,2,opt,name=menuID,proto3" json:"menuID,omitempty"`
-	Type   string `protobuf:"bytes,3,opt,name=type,proto3" json:"type,omitempty"`
-	Key    string `protobuf:"bytes,4,opt,name=key,proto3" json:"key,omitempty"`
-	Value  string `protobuf:"bytes,5,opt,name=value,proto3" json:"value,omitempty"`
+	Id     string `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
+	MenuID string `protobuf:"bytes,2,opt,name=menuID,proto3" json:"menuID"`
+	Type   string `protobuf:"bytes,3,opt,name=type,proto3" json:"type"`
+	Key    string `protobuf:"bytes,4,opt,name=key,proto3" json:"key"`
+	Value  string `protobuf:"bytes,5,opt,name=value,proto3" json:"value"`
 }
 
 func (x *MenuParameter) Reset() {
@@ -272,12 +272,12 @@ type MenuFunc struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id           string         `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	MenuID       string         `protobuf:"bytes,2,opt,name=menuID,proto3" json:"menuID,omitempty"`
-	Name         string         `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
-	Title        string         `protobuf:"bytes,4,opt,name=title,proto3" json:"title,omitempty"`
-	Hidden       bool           `protobuf:"varint,5,opt,name=hidden,proto3" json:"hidden,omitempty"`
-	MenuFuncApis []*MenuFuncApi `protobuf:"bytes,6,rep,name=menuFuncApis,proto3" json:"menuFuncApis,omitempty"`
+	Id           string         `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
+	MenuID       string         `protobuf:"bytes,2,opt,name=menuID,proto3" json:"menuID"`
+	Name         string         `protobuf:"bytes,3,opt,name=name,proto3" json:"name"`
+	Title        string         `protobuf:"bytes,4,opt,name=title,proto3" json:"title"`
+	Hidden       bool           `protobuf:"varint,5,opt,name=hidden,proto3" json:"hidden"`
+	MenuFuncApis []*MenuFuncApi `protobuf:"bytes,6,rep,name=menuFuncApis,proto3" json:"menuFuncApis"`
 }
 
 func (x *MenuFunc) Reset() {
@@ -359,10 +359,10 @@ type MenuFuncApi struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id         string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	MenuFuncID string   `protobuf:"bytes,2,opt,name=menuFuncID,proto3" json:"menuFuncID,omitempty"`
-	ApiID      string   `protobuf:"bytes,3,opt,name=apiID,proto3" json:"apiID,omitempty"`
-	ApiInfo    *APIInfo `protobuf:"bytes,4,opt,name=apiInfo,proto3" json:"apiInfo,omitempty"`
+	Id         string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
+	MenuFuncID string   `protobuf:"bytes,2,opt,name=menuFuncID,proto3" json:"menuFuncID"`
+	ApiID      string   `protobuf:"bytes,3,opt,name=apiID,proto3" json:"apiID"`
+	ApiInfo    *APIInfo `protobuf:"bytes,4,opt,name=apiInfo,proto3" json:"apiInfo"`
 }
 
 func (x *MenuFuncApi) Reset() {
@@ -431,23 +431,23 @@ type QueryMenuRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: uri:"pageIndex" form:"pageIndex"
-	PageIndex int64 `protobuf:"varint,1,opt,name=pageIndex,proto3" json:"pageIndex,omitempty" uri:"pageIndex" form:"pageIndex"`
+	PageIndex int64 `protobuf:"varint,1,opt,name=pageIndex,proto3" json:"pageIndex" uri:"pageIndex" form:"pageIndex"`
 	// @inject_tag: uri:"pageSize" form:"pageSize"
-	PageSize int64 `protobuf:"varint,2,opt,name=pageSize,proto3" json:"pageSize,omitempty" uri:"pageSize" form:"pageSize"`
+	PageSize int64 `protobuf:"varint,2,opt,name=pageSize,proto3" json:"pageSize" uri:"pageSize" form:"pageSize"`
 	// @inject_tag: uri:"orderField" form:"orderField"
-	OrderField string `protobuf:"bytes,3,opt,name=orderField,proto3" json:"orderField,omitempty" uri:"orderField" form:"orderField"`
+	OrderField string `protobuf:"bytes,3,opt,name=orderField,proto3" json:"orderField" uri:"orderField" form:"orderField"`
 	// @inject_tag: uri:"desc" form:"desc"
-	Desc bool `protobuf:"varint,4,opt,name=desc,proto3" json:"desc,omitempty" uri:"desc" form:"desc"`
+	Desc bool `protobuf:"varint,4,opt,name=desc,proto3" json:"desc" uri:"desc" form:"desc"`
 	// @inject_tag: uri:"name" form:"name"
-	Name string `protobuf:"bytes,5,opt,name=name,proto3" json:"name,omitempty" uri:"name" form:"name"`
+	Name string `protobuf:"bytes,5,opt,name=name,proto3" json:"name" uri:"name" form:"name"`
 	// @inject_tag: uri:"path" form:"path"
-	Path string `protobuf:"bytes,6,opt,name=path,proto3" json:"path,omitempty" uri:"path" form:"path"`
+	Path string `protobuf:"bytes,6,opt,name=path,proto3" json:"path" uri:"path" form:"path"`
 	// @inject_tag: uri:"title" form:"title"
-	Title string `protobuf:"bytes,7,opt,name=title,proto3" json:"title,omitempty" uri:"title" form:"title"`
+	Title string `protobuf:"bytes,7,opt,name=title,proto3" json:"title" uri:"title" form:"title"`
 	// @inject_tag: uri:"parentID" form:"parentID"
-	ParentID string `protobuf:"bytes,8,opt,name=parentID,proto3" json:"parentID,omitempty" uri:"parentID" form:"parentID"`
+	ParentID string `protobuf:"bytes,8,opt,name=parentID,proto3" json:"parentID" uri:"parentID" form:"parentID"`
 	// @inject_tag: uri:"level" form:"level"
-	Level int32 `protobuf:"varint,9,opt,name=level,proto3" json:"level,omitempty" uri:"level" form:"level"`
+	Level int32 `protobuf:"varint,9,opt,name=level,proto3" json:"level" uri:"level" form:"level"`
 }
 
 func (x *QueryMenuRequest) Reset() {
@@ -550,12 +550,12 @@ type QueryMenuResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Code    Code        `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code,omitempty"`
-	Message string      `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Data    []*MenuInfo `protobuf:"bytes,3,rep,name=data,proto3" json:"data,omitempty"`
-	Pages   int64       `protobuf:"varint,4,opt,name=pages,proto3" json:"pages,omitempty"`
-	Records int64       `protobuf:"varint,5,opt,name=records,proto3" json:"records,omitempty"`
-	Total   int64       `protobuf:"varint,6,opt,name=total,proto3" json:"total,omitempty"`
+	Code    Code        `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code"`
+	Message string      `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	Data    []*MenuInfo `protobuf:"bytes,3,rep,name=data,proto3" json:"data"`
+	Pages   int64       `protobuf:"varint,4,opt,name=pages,proto3" json:"pages"`
+	Records int64       `protobuf:"varint,5,opt,name=records,proto3" json:"records"`
+	Total   int64       `protobuf:"varint,6,opt,name=total,proto3" json:"total"`
 }
 
 func (x *QueryMenuResponse) Reset() {
@@ -637,9 +637,9 @@ type GetAllMenuResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Code    Code        `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code,omitempty"`
-	Message string      `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Data    []*MenuInfo `protobuf:"bytes,3,rep,name=data,proto3" json:"data,omitempty"`
+	Code    Code        `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code"`
+	Message string      `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	Data    []*MenuInfo `protobuf:"bytes,3,rep,name=data,proto3" json:"data"`
 }
 
 func (x *GetAllMenuResponse) Reset() {
@@ -700,9 +700,9 @@ type GetMenuDetailResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Code    Code      `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code,omitempty"`
-	Message string    `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Data    *MenuInfo `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+	Code    Code      `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code"`
+	Message string    `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	Data    *MenuInfo `protobuf:"bytes,3,opt,name=data,proto3" json:"data"`
 }
 
 func (x *GetMenuDetailResponse) Reset() {

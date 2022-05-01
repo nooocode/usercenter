@@ -1,6 +1,8 @@
 definitions:
   http.MiniLoginRequest:
     properties:
+      app:
+        type: string
       encryptedData:
         type: string
       iv:

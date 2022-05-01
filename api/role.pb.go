@@ -25,7 +25,7 @@ type StatisticRoleCountRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	TenantID string `protobuf:"bytes,1,opt,name=tenantID,proto3" json:"tenantID,omitempty"`
+	TenantID string `protobuf:"bytes,1,opt,name=tenantID,proto3" json:"tenantID"`
 }
 
 func (x *StatisticRoleCountRequest) Reset() {
@@ -72,17 +72,17 @@ type RoleInfo struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id       string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	TenantID string `protobuf:"bytes,2,opt,name=tenantID,proto3" json:"tenantID,omitempty"`
+	Id       string `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
+	TenantID string `protobuf:"bytes,2,opt,name=tenantID,proto3" json:"tenantID"`
 	// @inject_tag: validate:"required"
-	Name          string      `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty" validate:"required"`
-	ParentID      string      `protobuf:"bytes,4,opt,name=parentID,proto3" json:"parentID,omitempty"`
-	Children      []*RoleInfo `protobuf:"bytes,5,rep,name=children,proto3" json:"children,omitempty"`
-	RoleMenus     []*RoleMenu `protobuf:"bytes,6,rep,name=roleMenus,proto3" json:"roleMenus,omitempty"`
-	DefaultRouter string      `protobuf:"bytes,7,opt,name=defaultRouter,proto3" json:"defaultRouter,omitempty"`
-	Description   string      `protobuf:"bytes,8,opt,name=description,proto3" json:"description,omitempty"`
-	CanDel        bool        `protobuf:"varint,9,opt,name=canDel,proto3" json:"canDel,omitempty"`
-	TenantName    string      `protobuf:"bytes,10,opt,name=tenantName,proto3" json:"tenantName,omitempty"`
+	Name          string      `protobuf:"bytes,3,opt,name=name,proto3" json:"name" validate:"required"`
+	ParentID      string      `protobuf:"bytes,4,opt,name=parentID,proto3" json:"parentID"`
+	Children      []*RoleInfo `protobuf:"bytes,5,rep,name=children,proto3" json:"children"`
+	RoleMenus     []*RoleMenu `protobuf:"bytes,6,rep,name=roleMenus,proto3" json:"roleMenus"`
+	DefaultRouter string      `protobuf:"bytes,7,opt,name=defaultRouter,proto3" json:"defaultRouter"`
+	Description   string      `protobuf:"bytes,8,opt,name=description,proto3" json:"description"`
+	CanDel        bool        `protobuf:"varint,9,opt,name=canDel,proto3" json:"canDel"`
+	TenantName    string      `protobuf:"bytes,10,opt,name=tenantName,proto3" json:"tenantName"`
 }
 
 func (x *RoleInfo) Reset() {
@@ -192,11 +192,11 @@ type RoleMenu struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id     string    `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	RoleID string    `protobuf:"bytes,2,opt,name=roleID,proto3" json:"roleID,omitempty"`
-	MenuID string    `protobuf:"bytes,3,opt,name=menuID,proto3" json:"menuID,omitempty"`
-	Funcs  string    `protobuf:"bytes,4,opt,name=funcs,proto3" json:"funcs,omitempty"`
-	Menu   *MenuInfo `protobuf:"bytes,5,opt,name=menu,proto3" json:"menu,omitempty"`
+	Id     string    `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
+	RoleID string    `protobuf:"bytes,2,opt,name=roleID,proto3" json:"roleID"`
+	MenuID string    `protobuf:"bytes,3,opt,name=menuID,proto3" json:"menuID"`
+	Funcs  string    `protobuf:"bytes,4,opt,name=funcs,proto3" json:"funcs"`
+	Menu   *MenuInfo `protobuf:"bytes,5,opt,name=menu,proto3" json:"menu"`
 }
 
 func (x *RoleMenu) Reset() {
@@ -272,22 +272,22 @@ type QueryRoleRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: uri:"pageIndex" form:"pageIndex"
-	PageIndex int64 `protobuf:"varint,1,opt,name=pageIndex,proto3" json:"pageIndex,omitempty" uri:"pageIndex" form:"pageIndex"`
+	PageIndex int64 `protobuf:"varint,1,opt,name=pageIndex,proto3" json:"pageIndex" uri:"pageIndex" form:"pageIndex"`
 	// @inject_tag: uri:"pageSize" form:"pageSize"
-	PageSize int64 `protobuf:"varint,2,opt,name=pageSize,proto3" json:"pageSize,omitempty" uri:"pageSize" form:"pageSize"`
+	PageSize int64 `protobuf:"varint,2,opt,name=pageSize,proto3" json:"pageSize" uri:"pageSize" form:"pageSize"`
 	// @inject_tag: uri:"orderField" form:"orderField"
-	OrderField string `protobuf:"bytes,3,opt,name=orderField,proto3" json:"orderField,omitempty" uri:"orderField" form:"orderField"`
+	OrderField string `protobuf:"bytes,3,opt,name=orderField,proto3" json:"orderField" uri:"orderField" form:"orderField"`
 	// @inject_tag: uri:"desc" form:"desc"
-	Desc bool `protobuf:"varint,4,opt,name=desc,proto3" json:"desc,omitempty" uri:"desc" form:"desc"`
+	Desc bool `protobuf:"varint,4,opt,name=desc,proto3" json:"desc" uri:"desc" form:"desc"`
 	// @inject_tag: uri:"name" form:"name"
-	Name string `protobuf:"bytes,5,opt,name=name,proto3" json:"name,omitempty" uri:"name" form:"name"`
+	Name string `protobuf:"bytes,5,opt,name=name,proto3" json:"name" uri:"name" form:"name"`
 	//租户ID
 	// @inject_tag: uri:"tenantID" form:"tenantID"
-	TenantID string `protobuf:"bytes,6,opt,name=tenantID,proto3" json:"tenantID,omitempty" uri:"tenantID" form:"tenantID"`
+	TenantID string `protobuf:"bytes,6,opt,name=tenantID,proto3" json:"tenantID" uri:"tenantID" form:"tenantID"`
 	// true-包含公共角色 false-不包含公共角色
 	//公共角色定义：不设置租户的角色
 	// @inject_tag: uri:"containerComm" form:"containerComm"
-	ContainerComm bool `protobuf:"varint,7,opt,name=containerComm,proto3" json:"containerComm,omitempty" uri:"containerComm" form:"containerComm"`
+	ContainerComm bool `protobuf:"varint,7,opt,name=containerComm,proto3" json:"containerComm" uri:"containerComm" form:"containerComm"`
 }
 
 func (x *QueryRoleRequest) Reset() {
@@ -376,12 +376,12 @@ type QueryRoleResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Code    Code        `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code,omitempty"`
-	Message string      `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Data    []*RoleInfo `protobuf:"bytes,3,rep,name=data,proto3" json:"data,omitempty"`
-	Pages   int64       `protobuf:"varint,4,opt,name=pages,proto3" json:"pages,omitempty"`
-	Records int64       `protobuf:"varint,5,opt,name=records,proto3" json:"records,omitempty"`
-	Total   int64       `protobuf:"varint,6,opt,name=total,proto3" json:"total,omitempty"`
+	Code    Code        `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code"`
+	Message string      `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	Data    []*RoleInfo `protobuf:"bytes,3,rep,name=data,proto3" json:"data"`
+	Pages   int64       `protobuf:"varint,4,opt,name=pages,proto3" json:"pages"`
+	Records int64       `protobuf:"varint,5,opt,name=records,proto3" json:"records"`
+	Total   int64       `protobuf:"varint,6,opt,name=total,proto3" json:"total"`
 }
 
 func (x *QueryRoleResponse) Reset() {
@@ -463,9 +463,9 @@ type GetAllRoleResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Code    Code        `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code,omitempty"`
-	Message string      `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Data    []*RoleInfo `protobuf:"bytes,3,rep,name=data,proto3" json:"data,omitempty"`
+	Code    Code        `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code"`
+	Message string      `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	Data    []*RoleInfo `protobuf:"bytes,3,rep,name=data,proto3" json:"data"`
 }
 
 func (x *GetAllRoleResponse) Reset() {
@@ -527,11 +527,11 @@ type GetAllRoleRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: uri:"tenantID" form:"tenantID"
-	TenantID string `protobuf:"bytes,1,opt,name=tenantID,proto3" json:"tenantID,omitempty" uri:"tenantID" form:"tenantID"`
+	TenantID string `protobuf:"bytes,1,opt,name=tenantID,proto3" json:"tenantID" uri:"tenantID" form:"tenantID"`
 	// true-包含公共角色 false-不包含公共角色
 	//公共角色定义：不设置租户的角色
 	// @inject_tag: uri:"containerComm" form:"containerComm"
-	ContainerComm bool `protobuf:"varint,2,opt,name=containerComm,proto3" json:"containerComm,omitempty" uri:"containerComm" form:"containerComm"`
+	ContainerComm bool `protobuf:"varint,2,opt,name=containerComm,proto3" json:"containerComm" uri:"containerComm" form:"containerComm"`
 }
 
 func (x *GetAllRoleRequest) Reset() {
@@ -585,9 +585,9 @@ type GetRoleDetailResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Code    Code      `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code,omitempty"`
-	Message string    `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Data    *RoleInfo `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+	Code    Code      `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code"`
+	Message string    `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	Data    *RoleInfo `protobuf:"bytes,3,opt,name=data,proto3" json:"data"`
 }
 
 func (x *GetRoleDetailResponse) Reset() {

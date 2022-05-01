@@ -112,8 +112,8 @@ type CommonResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Code    Code   `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code,omitempty"`
-	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Code    Code   `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code"`
+	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
 }
 
 func (x *CommonResponse) Reset() {
@@ -168,8 +168,8 @@ type DelRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: validate:"required"
-	Id       string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty" validate:"required"`
-	TenantID string `protobuf:"bytes,2,opt,name=tenantID,proto3" json:"tenantID,omitempty"`
+	Id       string `protobuf:"bytes,1,opt,name=id,proto3" json:"id" validate:"required"`
+	TenantID string `protobuf:"bytes,2,opt,name=tenantID,proto3" json:"tenantID"`
 }
 
 func (x *DelRequest) Reset() {
@@ -224,9 +224,9 @@ type EnableRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: validate:"required"
-	Id       string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty" validate:"required"`
-	TenantID string `protobuf:"bytes,2,opt,name=tenantID,proto3" json:"tenantID,omitempty"`
-	Enable   bool   `protobuf:"varint,3,opt,name=enable,proto3" json:"enable,omitempty"`
+	Id       string `protobuf:"bytes,1,opt,name=id,proto3" json:"id" validate:"required"`
+	TenantID string `protobuf:"bytes,2,opt,name=tenantID,proto3" json:"tenantID"`
+	Enable   bool   `protobuf:"varint,3,opt,name=enable,proto3" json:"enable"`
 }
 
 func (x *EnableRequest) Reset() {
@@ -288,7 +288,7 @@ type GetAllRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: uri:"tenantID" form:"tenantID"
-	TenantID string `protobuf:"bytes,1,opt,name=tenantID,proto3" json:"tenantID,omitempty" uri:"tenantID" form:"tenantID"`
+	TenantID string `protobuf:"bytes,1,opt,name=tenantID,proto3" json:"tenantID" uri:"tenantID" form:"tenantID"`
 }
 
 func (x *GetAllRequest) Reset() {
@@ -336,9 +336,9 @@ type GetDetailRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: uri:"id" form:"id" validate:"required"
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty" uri:"id" form:"id" validate:"required"`
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id" uri:"id" form:"id" validate:"required"`
 	// @inject_tag: uri:"tenantID" form:"tenantID"
-	TenantID string `protobuf:"bytes,2,opt,name=tenantID,proto3" json:"tenantID,omitempty" uri:"tenantID" form:"tenantID"`
+	TenantID string `protobuf:"bytes,2,opt,name=tenantID,proto3" json:"tenantID" uri:"tenantID" form:"tenantID"`
 }
 
 func (x *GetDetailRequest) Reset() {
@@ -392,9 +392,9 @@ type StatisticCountResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Code    Code   `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code,omitempty"`
-	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Count   int32  `protobuf:"varint,3,opt,name=count,proto3" json:"count,omitempty"`
+	Code    Code   `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code"`
+	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	Count   int32  `protobuf:"varint,3,opt,name=count,proto3" json:"count"`
 }
 
 func (x *StatisticCountResponse) Reset() {

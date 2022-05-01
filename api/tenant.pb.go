@@ -63,24 +63,24 @@ type TenantInfo struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
 	// @inject_tag: validate:"required"
-	Name          string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty" validate:"required"`
-	Contact       string `protobuf:"bytes,3,opt,name=contact,proto3" json:"contact,omitempty"`
-	CellPhone     string `protobuf:"bytes,4,opt,name=cellPhone,proto3" json:"cellPhone,omitempty"`
-	Address       string `protobuf:"bytes,5,opt,name=address,proto3" json:"address,omitempty"`
-	BusinessScope string `protobuf:"bytes,6,opt,name=businessScope,proto3" json:"businessScope,omitempty"`
-	AreaCovered   string `protobuf:"bytes,7,opt,name=areaCovered,proto3" json:"areaCovered,omitempty"`
-	StaffSize     int32  `protobuf:"varint,8,opt,name=staffSize,proto3" json:"staffSize,omitempty"`
-	Enable        bool   `protobuf:"varint,9,opt,name=enable,proto3" json:"enable,omitempty"`
+	Name          string `protobuf:"bytes,2,opt,name=name,proto3" json:"name" validate:"required"`
+	Contact       string `protobuf:"bytes,3,opt,name=contact,proto3" json:"contact"`
+	CellPhone     string `protobuf:"bytes,4,opt,name=cellPhone,proto3" json:"cellPhone"`
+	Address       string `protobuf:"bytes,5,opt,name=address,proto3" json:"address"`
+	BusinessScope string `protobuf:"bytes,6,opt,name=businessScope,proto3" json:"businessScope"`
+	AreaCovered   string `protobuf:"bytes,7,opt,name=areaCovered,proto3" json:"areaCovered"`
+	StaffSize     int32  `protobuf:"varint,8,opt,name=staffSize,proto3" json:"staffSize"`
+	Enable        bool   `protobuf:"varint,9,opt,name=enable,proto3" json:"enable"`
 	//省份
-	Province string `protobuf:"bytes,10,opt,name=province,proto3" json:"province,omitempty"`
+	Province string `protobuf:"bytes,10,opt,name=province,proto3" json:"province"`
 	//城市
-	City string `protobuf:"bytes,11,opt,name=city,proto3" json:"city,omitempty"`
+	City string `protobuf:"bytes,11,opt,name=city,proto3" json:"city"`
 	//区/县
-	Area string `protobuf:"bytes,12,opt,name=area,proto3" json:"area,omitempty"`
+	Area string `protobuf:"bytes,12,opt,name=area,proto3" json:"area"`
 	//街道/镇
-	Town string `protobuf:"bytes,13,opt,name=town,proto3" json:"town,omitempty"`
+	Town string `protobuf:"bytes,13,opt,name=town,proto3" json:"town"`
 }
 
 func (x *TenantInfo) Reset() {
@@ -212,27 +212,27 @@ type QueryTenantRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: uri:"pageIndex" form:"pageIndex"
-	PageIndex int64 `protobuf:"varint,1,opt,name=pageIndex,proto3" json:"pageIndex,omitempty" uri:"pageIndex" form:"pageIndex"`
+	PageIndex int64 `protobuf:"varint,1,opt,name=pageIndex,proto3" json:"pageIndex" uri:"pageIndex" form:"pageIndex"`
 	// @inject_tag: uri:"pageSize" form:"pageSize"
-	PageSize int64 `protobuf:"varint,2,opt,name=pageSize,proto3" json:"pageSize,omitempty" uri:"pageSize" form:"pageSize"`
+	PageSize int64 `protobuf:"varint,2,opt,name=pageSize,proto3" json:"pageSize" uri:"pageSize" form:"pageSize"`
 	// @inject_tag: uri:"orderField" form:"orderField"
-	OrderField string `protobuf:"bytes,3,opt,name=orderField,proto3" json:"orderField,omitempty" uri:"orderField" form:"orderField"`
+	OrderField string `protobuf:"bytes,3,opt,name=orderField,proto3" json:"orderField" uri:"orderField" form:"orderField"`
 	// @inject_tag: uri:"desc" form:"desc"
-	Desc bool `protobuf:"varint,4,opt,name=desc,proto3" json:"desc,omitempty" uri:"desc" form:"desc"`
+	Desc bool `protobuf:"varint,4,opt,name=desc,proto3" json:"desc" uri:"desc" form:"desc"`
 	// @inject_tag: uri:"name" form:"name"
-	Name string `protobuf:"bytes,5,opt,name=name,proto3" json:"name,omitempty" uri:"name" form:"name"`
+	Name string `protobuf:"bytes,5,opt,name=name,proto3" json:"name" uri:"name" form:"name"`
 	//省份
 	// @inject_tag: uri:"province" form:"province"
-	Province string `protobuf:"bytes,6,opt,name=province,proto3" json:"province,omitempty" uri:"province" form:"province"`
+	Province string `protobuf:"bytes,6,opt,name=province,proto3" json:"province" uri:"province" form:"province"`
 	//城市
 	// @inject_tag: uri:"city" form:"city"
-	City string `protobuf:"bytes,7,opt,name=city,proto3" json:"city,omitempty" uri:"city" form:"city"`
+	City string `protobuf:"bytes,7,opt,name=city,proto3" json:"city" uri:"city" form:"city"`
 	//区/县
 	// @inject_tag: uri:"area" form:"area"
-	Area string `protobuf:"bytes,8,opt,name=area,proto3" json:"area,omitempty" uri:"area" form:"area"`
+	Area string `protobuf:"bytes,8,opt,name=area,proto3" json:"area" uri:"area" form:"area"`
 	//街道/镇
 	// @inject_tag: uri:"town" form:"town"
-	Town string `protobuf:"bytes,9,opt,name=town,proto3" json:"town,omitempty" uri:"town" form:"town"`
+	Town string `protobuf:"bytes,9,opt,name=town,proto3" json:"town" uri:"town" form:"town"`
 }
 
 func (x *QueryTenantRequest) Reset() {
@@ -335,12 +335,12 @@ type QueryTenantResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Code    Code          `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code,omitempty"`
-	Message string        `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Data    []*TenantInfo `protobuf:"bytes,3,rep,name=data,proto3" json:"data,omitempty"`
-	Pages   int64         `protobuf:"varint,4,opt,name=pages,proto3" json:"pages,omitempty"`
-	Records int64         `protobuf:"varint,5,opt,name=records,proto3" json:"records,omitempty"`
-	Total   int64         `protobuf:"varint,6,opt,name=total,proto3" json:"total,omitempty"`
+	Code    Code          `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code"`
+	Message string        `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	Data    []*TenantInfo `protobuf:"bytes,3,rep,name=data,proto3" json:"data"`
+	Pages   int64         `protobuf:"varint,4,opt,name=pages,proto3" json:"pages"`
+	Records int64         `protobuf:"varint,5,opt,name=records,proto3" json:"records"`
+	Total   int64         `protobuf:"varint,6,opt,name=total,proto3" json:"total"`
 }
 
 func (x *QueryTenantResponse) Reset() {
@@ -422,9 +422,9 @@ type GetAllTenantResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Code    Code          `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code,omitempty"`
-	Message string        `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Data    []*TenantInfo `protobuf:"bytes,3,rep,name=data,proto3" json:"data,omitempty"`
+	Code    Code          `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code"`
+	Message string        `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	Data    []*TenantInfo `protobuf:"bytes,3,rep,name=data,proto3" json:"data"`
 }
 
 func (x *GetAllTenantResponse) Reset() {
@@ -485,9 +485,9 @@ type GetTenantDetailResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Code    Code        `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code,omitempty"`
-	Message string      `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Data    *TenantInfo `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+	Code    Code        `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code"`
+	Message string      `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	Data    *TenantInfo `protobuf:"bytes,3,opt,name=data,proto3" json:"data"`
 }
 
 func (x *GetTenantDetailResponse) Reset() {

@@ -25,38 +25,38 @@ type UserProfile struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id       string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	TenantID string `protobuf:"bytes,20,opt,name=tenantID,proto3" json:"tenantID,omitempty"`
+	Id       string `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
+	TenantID string `protobuf:"bytes,20,opt,name=tenantID,proto3" json:"tenantID"`
 	//昵称
 	// @inject_tag: validate:"required"
-	Nickname string `protobuf:"bytes,2,opt,name=nickname,proto3" json:"nickname,omitempty" validate:"required"`
+	Nickname string `protobuf:"bytes,2,opt,name=nickname,proto3" json:"nickname" validate:"required"`
 	//邮箱
-	Email string `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
+	Email string `protobuf:"bytes,3,opt,name=email,proto3" json:"email"`
 	//手机号
 	// @inject_tag: validate:"required"
-	Mobile string `protobuf:"bytes,4,opt,name=mobile,proto3" json:"mobile,omitempty" validate:"required"`
+	Mobile string `protobuf:"bytes,4,opt,name=mobile,proto3" json:"mobile" validate:"required"`
 	//身份证号码
-	IdCard string `protobuf:"bytes,5,opt,name=idCard,proto3" json:"idCard,omitempty"`
+	IdCard string `protobuf:"bytes,5,opt,name=idCard,proto3" json:"idCard"`
 	//头像
-	Avatar string `protobuf:"bytes,6,opt,name=avatar,proto3" json:"avatar,omitempty"`
+	Avatar string `protobuf:"bytes,6,opt,name=avatar,proto3" json:"avatar"`
 	//姓名
-	RealName string `protobuf:"bytes,7,opt,name=realName,proto3" json:"realName,omitempty"`
+	RealName string `protobuf:"bytes,7,opt,name=realName,proto3" json:"realName"`
 	//性别
-	Gender      bool   `protobuf:"varint,8,opt,name=gender,proto3" json:"gender,omitempty"`
-	Country     string `protobuf:"bytes,9,opt,name=country,proto3" json:"country,omitempty"`
-	Province    string `protobuf:"bytes,10,opt,name=province,proto3" json:"province,omitempty"`
-	City        string `protobuf:"bytes,11,opt,name=city,proto3" json:"city,omitempty"`
-	County      string `protobuf:"bytes,12,opt,name=county,proto3" json:"county,omitempty"`
-	Description string `protobuf:"bytes,13,opt,name=description,proto3" json:"description,omitempty"`
-	Eid         string `protobuf:"bytes,14,opt,name=eid,proto3" json:"eid,omitempty"`
-	Birthday    int64  `protobuf:"varint,15,opt,name=birthday,proto3" json:"birthday,omitempty"`
+	Gender      bool   `protobuf:"varint,8,opt,name=gender,proto3" json:"gender"`
+	Country     string `protobuf:"bytes,9,opt,name=country,proto3" json:"country"`
+	Province    string `protobuf:"bytes,10,opt,name=province,proto3" json:"province"`
+	City        string `protobuf:"bytes,11,opt,name=city,proto3" json:"city"`
+	County      string `protobuf:"bytes,12,opt,name=county,proto3" json:"county"`
+	Description string `protobuf:"bytes,13,opt,name=description,proto3" json:"description"`
+	Eid         string `protobuf:"bytes,14,opt,name=eid,proto3" json:"eid"`
+	Birthday    int64  `protobuf:"varint,15,opt,name=birthday,proto3" json:"birthday"`
 	//下面数据只有查询的时候用到，更新的时候不需要传
 	//用户类型
-	Type  int32       `protobuf:"varint,16,opt,name=type,proto3" json:"type,omitempty"`
-	Group string      `protobuf:"bytes,17,opt,name=group,proto3" json:"group,omitempty"`
-	Menus []*MenuInfo `protobuf:"bytes,18,rep,name=menus,proto3" json:"menus,omitempty"`
+	Type  int32       `protobuf:"varint,16,opt,name=type,proto3" json:"type"`
+	Group string      `protobuf:"bytes,17,opt,name=group,proto3" json:"group"`
+	Menus []*MenuInfo `protobuf:"bytes,18,rep,name=menus,proto3" json:"menus"`
 	//只有调用UpdateProfileAndUserName接口时需要
-	UserName string `protobuf:"bytes,19,opt,name=userName,proto3" json:"userName,omitempty"`
+	UserName string `protobuf:"bytes,19,opt,name=userName,proto3" json:"userName"`
 }
 
 func (x *UserProfile) Reset() {
@@ -236,10 +236,10 @@ type StatisticUserCountRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	TenantID string `protobuf:"bytes,1,opt,name=tenantID,proto3" json:"tenantID,omitempty"`
+	TenantID string `protobuf:"bytes,1,opt,name=tenantID,proto3" json:"tenantID"`
 	//用户类型
-	Type  int32  `protobuf:"varint,2,opt,name=type,proto3" json:"type,omitempty"`
-	Group string `protobuf:"bytes,3,opt,name=group,proto3" json:"group,omitempty"`
+	Type  int32  `protobuf:"varint,2,opt,name=type,proto3" json:"type"`
+	Group string `protobuf:"bytes,3,opt,name=group,proto3" json:"group"`
 }
 
 func (x *StatisticUserCountRequest) Reset() {
@@ -301,13 +301,13 @@ type LoginRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	//用户名
-	UserName string `protobuf:"bytes,1,opt,name=userName,proto3" json:"userName,omitempty"`
+	UserName string `protobuf:"bytes,1,opt,name=userName,proto3" json:"userName"`
 	//密码
-	Password string `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
+	Password string `protobuf:"bytes,2,opt,name=password,proto3" json:"password"`
 	//微信Union ID
-	WechatUnionID string `protobuf:"bytes,3,opt,name=wechatUnionID,proto3" json:"wechatUnionID,omitempty"`
+	WechatUnionID string `protobuf:"bytes,3,opt,name=wechatUnionID,proto3" json:"wechatUnionID"`
 	//微信OpenID
-	WechatOpenID string `protobuf:"bytes,4,opt,name=wechatOpenID,proto3" json:"wechatOpenID,omitempty"`
+	WechatOpenID string `protobuf:"bytes,4,opt,name=wechatOpenID,proto3" json:"wechatOpenID"`
 }
 
 func (x *LoginRequest) Reset() {
@@ -375,9 +375,9 @@ type LoginResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Code    Code   `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code,omitempty"`
-	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Data    string `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+	Code    Code   `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code"`
+	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	Data    string `protobuf:"bytes,3,opt,name=data,proto3" json:"data"`
 }
 
 func (x *LoginResponse) Reset() {
@@ -438,37 +438,37 @@ type UserInfo struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id       string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	TenantID string `protobuf:"bytes,2,opt,name=tenantID,proto3" json:"tenantID,omitempty"`
+	Id       string `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
+	TenantID string `protobuf:"bytes,2,opt,name=tenantID,proto3" json:"tenantID"`
 	// @inject_tag: validate:"required"
-	UserName string `protobuf:"bytes,3,opt,name=userName,proto3" json:"userName,omitempty" validate:"required"`
+	UserName string `protobuf:"bytes,3,opt,name=userName,proto3" json:"userName" validate:"required"`
 	// @inject_tag: validate:"required"
-	Nickname  string      `protobuf:"bytes,4,opt,name=nickname,proto3" json:"nickname,omitempty" validate:"required"`
-	UserRoles []*UserRole `protobuf:"bytes,5,rep,name=userRoles,proto3" json:"userRoles,omitempty"`
-	RoleIDs   []string    `protobuf:"bytes,6,rep,name=roleIDs,proto3" json:"roleIDs,omitempty"`
-	Enable    bool        `protobuf:"varint,7,opt,name=enable,proto3" json:"enable,omitempty"`
-	Email     string      `protobuf:"bytes,8,opt,name=email,proto3" json:"email,omitempty"`
+	Nickname  string      `protobuf:"bytes,4,opt,name=nickname,proto3" json:"nickname" validate:"required"`
+	UserRoles []*UserRole `protobuf:"bytes,5,rep,name=userRoles,proto3" json:"userRoles"`
+	RoleIDs   []string    `protobuf:"bytes,6,rep,name=roleIDs,proto3" json:"roleIDs"`
+	Enable    bool        `protobuf:"varint,7,opt,name=enable,proto3" json:"enable"`
+	Email     string      `protobuf:"bytes,8,opt,name=email,proto3" json:"email"`
 	// @inject_tag: validate:"required"
-	Mobile      string `protobuf:"bytes,9,opt,name=mobile,proto3" json:"mobile,omitempty" validate:"required"`
-	IdCard      string `protobuf:"bytes,10,opt,name=idCard,proto3" json:"idCard,omitempty"`
-	Avatar      string `protobuf:"bytes,11,opt,name=avatar,proto3" json:"avatar,omitempty"`
-	Eid         string `protobuf:"bytes,12,opt,name=eid,proto3" json:"eid,omitempty"`
-	Title       string `protobuf:"bytes,13,opt,name=title,proto3" json:"title,omitempty"`
-	Description string `protobuf:"bytes,14,opt,name=description,proto3" json:"description,omitempty"`
-	RealName    string `protobuf:"bytes,15,opt,name=realName,proto3" json:"realName,omitempty"`
-	Gender      bool   `protobuf:"varint,16,opt,name=gender,proto3" json:"gender,omitempty"`
-	Password    string `protobuf:"bytes,17,opt,name=password,proto3" json:"password,omitempty"`
-	Type        int32  `protobuf:"varint,18,opt,name=type,proto3" json:"type,omitempty"`
-	TenantName  string `protobuf:"bytes,19,opt,name=tenantName,proto3" json:"tenantName,omitempty"`
+	Mobile      string `protobuf:"bytes,9,opt,name=mobile,proto3" json:"mobile" validate:"required"`
+	IdCard      string `protobuf:"bytes,10,opt,name=idCard,proto3" json:"idCard"`
+	Avatar      string `protobuf:"bytes,11,opt,name=avatar,proto3" json:"avatar"`
+	Eid         string `protobuf:"bytes,12,opt,name=eid,proto3" json:"eid"`
+	Title       string `protobuf:"bytes,13,opt,name=title,proto3" json:"title"`
+	Description string `protobuf:"bytes,14,opt,name=description,proto3" json:"description"`
+	RealName    string `protobuf:"bytes,15,opt,name=realName,proto3" json:"realName"`
+	Gender      bool   `protobuf:"varint,16,opt,name=gender,proto3" json:"gender"`
+	Password    string `protobuf:"bytes,17,opt,name=password,proto3" json:"password"`
+	Type        int32  `protobuf:"varint,18,opt,name=type,proto3" json:"type"`
+	TenantName  string `protobuf:"bytes,19,opt,name=tenantName,proto3" json:"tenantName"`
 	//分组，例如属于某个组织的，或者某个个人
-	Group         string `protobuf:"bytes,20,opt,name=group,proto3" json:"group,omitempty"`
-	WechatUnionID string `protobuf:"bytes,21,opt,name=wechatUnionID,proto3" json:"wechatUnionID,omitempty"`
-	WechatOpenID  string `protobuf:"bytes,22,opt,name=wechatOpenID,proto3" json:"wechatOpenID,omitempty"`
-	City          string `protobuf:"bytes,23,opt,name=city,proto3" json:"city,omitempty"`
-	Country       string `protobuf:"bytes,24,opt,name=country,proto3" json:"country,omitempty"`
-	Province      string `protobuf:"bytes,25,opt,name=province,proto3" json:"province,omitempty"`
+	Group         string `protobuf:"bytes,20,opt,name=group,proto3" json:"group"`
+	WechatUnionID string `protobuf:"bytes,21,opt,name=wechatUnionID,proto3" json:"wechatUnionID"`
+	WechatOpenID  string `protobuf:"bytes,22,opt,name=wechatOpenID,proto3" json:"wechatOpenID"`
+	City          string `protobuf:"bytes,23,opt,name=city,proto3" json:"city"`
+	Country       string `protobuf:"bytes,24,opt,name=country,proto3" json:"country"`
+	Province      string `protobuf:"bytes,25,opt,name=province,proto3" json:"province"`
 	//注册时间
-	CreatedAt string `protobuf:"bytes,26,opt,name=createdAt,proto3" json:"createdAt,omitempty"`
+	CreatedAt string `protobuf:"bytes,26,opt,name=createdAt,proto3" json:"createdAt"`
 }
 
 func (x *UserInfo) Reset() {
@@ -690,9 +690,9 @@ type UserRole struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id     string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	UserID string `protobuf:"bytes,2,opt,name=userID,proto3" json:"userID,omitempty"`
-	RoleID string `protobuf:"bytes,3,opt,name=roleID,proto3" json:"roleID,omitempty"`
+	Id     string `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
+	UserID string `protobuf:"bytes,2,opt,name=userID,proto3" json:"userID"`
+	RoleID string `protobuf:"bytes,3,opt,name=roleID,proto3" json:"roleID"`
 }
 
 func (x *UserRole) Reset() {
@@ -755,34 +755,34 @@ type QueryUserRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: uri:"pageIndex" form:"pageIndex"
-	PageIndex int64 `protobuf:"varint,1,opt,name=pageIndex,proto3" json:"pageIndex,omitempty" uri:"pageIndex" form:"pageIndex"`
+	PageIndex int64 `protobuf:"varint,1,opt,name=pageIndex,proto3" json:"pageIndex" uri:"pageIndex" form:"pageIndex"`
 	// @inject_tag: uri:"pageSize" form:"pageSize"
-	PageSize int64 `protobuf:"varint,2,opt,name=pageSize,proto3" json:"pageSize,omitempty" uri:"pageSize" form:"pageSize"`
+	PageSize int64 `protobuf:"varint,2,opt,name=pageSize,proto3" json:"pageSize" uri:"pageSize" form:"pageSize"`
 	// @inject_tag: uri:"orderField" form:"orderField"
-	OrderField string `protobuf:"bytes,3,opt,name=orderField,proto3" json:"orderField,omitempty" uri:"orderField" form:"orderField"`
+	OrderField string `protobuf:"bytes,3,opt,name=orderField,proto3" json:"orderField" uri:"orderField" form:"orderField"`
 	// @inject_tag: uri:"desc" form:"desc"
-	Desc bool `protobuf:"varint,4,opt,name=desc,proto3" json:"desc,omitempty" uri:"desc" form:"desc"`
+	Desc bool `protobuf:"varint,4,opt,name=desc,proto3" json:"desc" uri:"desc" form:"desc"`
 	// @inject_tag: uri:"userName" form:"userName"
-	UserName string `protobuf:"bytes,5,opt,name=userName,proto3" json:"userName,omitempty" uri:"userName" form:"userName"`
+	UserName string `protobuf:"bytes,5,opt,name=userName,proto3" json:"userName" uri:"userName" form:"userName"`
 	// @inject_tag: uri:"nickname" form:"nickname"
-	Nickname string `protobuf:"bytes,6,opt,name=nickname,proto3" json:"nickname,omitempty" uri:"nickname" form:"nickname"`
+	Nickname string `protobuf:"bytes,6,opt,name=nickname,proto3" json:"nickname" uri:"nickname" form:"nickname"`
 	// @inject_tag: uri:"idCard" form:"idCard"
-	IdCard string `protobuf:"bytes,7,opt,name=idCard,proto3" json:"idCard,omitempty" uri:"idCard" form:"idCard"`
+	IdCard string `protobuf:"bytes,7,opt,name=idCard,proto3" json:"idCard" uri:"idCard" form:"idCard"`
 	// @inject_tag: uri:"mobile" form:"mobile"
-	Mobile string `protobuf:"bytes,8,opt,name=mobile,proto3" json:"mobile,omitempty" uri:"mobile" form:"mobile"`
+	Mobile string `protobuf:"bytes,8,opt,name=mobile,proto3" json:"mobile" uri:"mobile" form:"mobile"`
 	// @inject_tag: uri:"title" form:"title"
-	Title string `protobuf:"bytes,9,opt,name=title,proto3" json:"title,omitempty" uri:"title" form:"title"`
+	Title string `protobuf:"bytes,9,opt,name=title,proto3" json:"title" uri:"title" form:"title"`
 	// @inject_tag: uri:"userNames" form:"userNames"
-	UserNames string `protobuf:"bytes,10,opt,name=userNames,proto3" json:"userNames,omitempty" uri:"userNames" form:"userNames"`
+	UserNames string `protobuf:"bytes,10,opt,name=userNames,proto3" json:"userNames" uri:"userNames" form:"userNames"`
 	// @inject_tag: uri:"wechatID" form:"wechatID"
-	WechatID string `protobuf:"bytes,11,opt,name=wechatID,proto3" json:"wechatID,omitempty" uri:"wechatID" form:"wechatID"`
+	WechatID string `protobuf:"bytes,11,opt,name=wechatID,proto3" json:"wechatID" uri:"wechatID" form:"wechatID"`
 	// @inject_tag: uri:"tenantID" form:"tenantID"
-	TenantID string `protobuf:"bytes,12,opt,name=tenantID,proto3" json:"tenantID,omitempty" uri:"tenantID" form:"tenantID"`
+	TenantID string `protobuf:"bytes,12,opt,name=tenantID,proto3" json:"tenantID" uri:"tenantID" form:"tenantID"`
 	//用户类型
 	// @inject_tag: uri:"type" form:"type"
-	Type int32 `protobuf:"varint,13,opt,name=type,proto3" json:"type,omitempty" uri:"type" form:"type"`
+	Type int32 `protobuf:"varint,13,opt,name=type,proto3" json:"type" uri:"type" form:"type"`
 	// @inject_tag: uri:"group" form:"group"
-	Group string `protobuf:"bytes,14,opt,name=group,proto3" json:"group,omitempty" uri:"group" form:"group"`
+	Group string `protobuf:"bytes,14,opt,name=group,proto3" json:"group" uri:"group" form:"group"`
 }
 
 func (x *QueryUserRequest) Reset() {
@@ -920,12 +920,12 @@ type QueryUserResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Code    Code        `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code,omitempty"`
-	Message string      `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Data    []*UserInfo `protobuf:"bytes,3,rep,name=data,proto3" json:"data,omitempty"`
-	Pages   int64       `protobuf:"varint,4,opt,name=pages,proto3" json:"pages,omitempty"`
-	Records int64       `protobuf:"varint,5,opt,name=records,proto3" json:"records,omitempty"`
-	Total   int64       `protobuf:"varint,6,opt,name=total,proto3" json:"total,omitempty"`
+	Code    Code        `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code"`
+	Message string      `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	Data    []*UserInfo `protobuf:"bytes,3,rep,name=data,proto3" json:"data"`
+	Pages   int64       `protobuf:"varint,4,opt,name=pages,proto3" json:"pages"`
+	Records int64       `protobuf:"varint,5,opt,name=records,proto3" json:"records"`
+	Total   int64       `protobuf:"varint,6,opt,name=total,proto3" json:"total"`
 }
 
 func (x *QueryUserResponse) Reset() {
@@ -1007,9 +1007,9 @@ type GetProfileResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Code    Code      `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code,omitempty"`
-	Message string    `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Data    *UserInfo `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+	Code    Code      `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code"`
+	Message string    `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	Data    *UserInfo `protobuf:"bytes,3,opt,name=data,proto3" json:"data"`
 }
 
 func (x *GetProfileResponse) Reset() {
@@ -1070,9 +1070,9 @@ type GetAllUsersResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Code    Code        `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code,omitempty"`
-	Message string      `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Data    []*UserInfo `protobuf:"bytes,3,rep,name=data,proto3" json:"data,omitempty"`
+	Code    Code        `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code"`
+	Message string      `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	Data    []*UserInfo `protobuf:"bytes,3,rep,name=data,proto3" json:"data"`
 }
 
 func (x *GetAllUsersResponse) Reset() {
@@ -1134,11 +1134,11 @@ type GetAllUsersRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: uri:"tenantID" form:"tenantID"
-	TenantID string `protobuf:"bytes,1,opt,name=tenantID,proto3" json:"tenantID,omitempty" uri:"tenantID" form:"tenantID"`
+	TenantID string `protobuf:"bytes,1,opt,name=tenantID,proto3" json:"tenantID" uri:"tenantID" form:"tenantID"`
 	// @inject_tag: uri:"group" form:"group"
-	Group string `protobuf:"bytes,2,opt,name=group,proto3" json:"group,omitempty" uri:"group" form:"group"`
+	Group string `protobuf:"bytes,2,opt,name=group,proto3" json:"group" uri:"group" form:"group"`
 	// @inject_tag: uri:"type" form:"type"
-	Type int32 `protobuf:"varint,3,opt,name=type,proto3" json:"type,omitempty" uri:"type" form:"type"`
+	Type int32 `protobuf:"varint,3,opt,name=type,proto3" json:"type" uri:"type" form:"type"`
 }
 
 func (x *GetAllUsersRequest) Reset() {
@@ -1199,9 +1199,9 @@ type GetUserDetailResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Code    Code      `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code,omitempty"`
-	Message string    `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Data    *UserInfo `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+	Code    Code      `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code"`
+	Message string    `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	Data    *UserInfo `protobuf:"bytes,3,opt,name=data,proto3" json:"data"`
 }
 
 func (x *GetUserDetailResponse) Reset() {
@@ -1263,14 +1263,14 @@ type ChangePwdRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: validate:"required"
-	Id       string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty" validate:"required"`
-	TenantID string `protobuf:"bytes,2,opt,name=tenantID,proto3" json:"tenantID,omitempty"`
+	Id       string `protobuf:"bytes,1,opt,name=id,proto3" json:"id" validate:"required"`
+	TenantID string `protobuf:"bytes,2,opt,name=tenantID,proto3" json:"tenantID"`
 	// @inject_tag: validate:"required"
-	NewPwd string `protobuf:"bytes,3,opt,name=newPwd,proto3" json:"newPwd,omitempty" validate:"required"`
+	NewPwd string `protobuf:"bytes,3,opt,name=newPwd,proto3" json:"newPwd" validate:"required"`
 	// @inject_tag: validate:"required"
-	OldPwd string `protobuf:"bytes,4,opt,name=oldPwd,proto3" json:"oldPwd,omitempty" validate:"required"`
+	OldPwd string `protobuf:"bytes,4,opt,name=oldPwd,proto3" json:"oldPwd" validate:"required"`
 	// @inject_tag: validate:"required"
-	NewConfirmPwd string `protobuf:"bytes,5,opt,name=newConfirmPwd,proto3" json:"newConfirmPwd,omitempty" validate:"required"`
+	NewConfirmPwd string `protobuf:"bytes,5,opt,name=newConfirmPwd,proto3" json:"newConfirmPwd" validate:"required"`
 }
 
 func (x *ChangePwdRequest) Reset() {
@@ -1345,7 +1345,7 @@ type LogoutRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Token string `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
+	Token string `protobuf:"bytes,1,opt,name=token,proto3" json:"token"`
 }
 
 func (x *LogoutRequest) Reset() {

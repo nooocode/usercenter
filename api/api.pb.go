@@ -26,23 +26,23 @@ type APIInfo struct {
 	unknownFields protoimpl.UnknownFields
 
 	//UUID
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
 	//路径
 	// @inject_tag: validate:"required"
-	Path string `protobuf:"bytes,2,opt,name=path,proto3" json:"path,omitempty" validate:"required"`
+	Path string `protobuf:"bytes,2,opt,name=path,proto3" json:"path" validate:"required"`
 	//分组
-	Group string `protobuf:"bytes,3,opt,name=group,proto3" json:"group,omitempty"`
+	Group string `protobuf:"bytes,3,opt,name=group,proto3" json:"group"`
 	//方法 GET POST PUT 等等
 	// @inject_tag: validate:"required"
-	Method string `protobuf:"bytes,4,opt,name=method,proto3" json:"method,omitempty" validate:"required"`
+	Method string `protobuf:"bytes,4,opt,name=method,proto3" json:"method" validate:"required"`
 	//描述
-	Description string `protobuf:"bytes,5,opt,name=description,proto3" json:"description,omitempty"`
+	Description string `protobuf:"bytes,5,opt,name=description,proto3" json:"description"`
 	//是否启用
-	Enable bool `protobuf:"varint,6,opt,name=enable,proto3" json:"enable,omitempty"`
+	Enable bool `protobuf:"varint,6,opt,name=enable,proto3" json:"enable"`
 	//是否检查权限
-	CheckAuth bool `protobuf:"varint,7,opt,name=checkAuth,proto3" json:"checkAuth,omitempty"`
+	CheckAuth bool `protobuf:"varint,7,opt,name=checkAuth,proto3" json:"checkAuth"`
 	//是否需要登录
-	CheckLogin bool `protobuf:"varint,8,opt,name=checkLogin,proto3" json:"checkLogin,omitempty"`
+	CheckLogin bool `protobuf:"varint,8,opt,name=checkLogin,proto3" json:"checkLogin"`
 }
 
 func (x *APIInfo) Reset() {
@@ -139,23 +139,23 @@ type QueryAPIRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: uri:"pageIndex" form:"pageIndex"
-	PageIndex int64 `protobuf:"varint,1,opt,name=pageIndex,proto3" json:"pageIndex,omitempty" uri:"pageIndex" form:"pageIndex"`
+	PageIndex int64 `protobuf:"varint,1,opt,name=pageIndex,proto3" json:"pageIndex" uri:"pageIndex" form:"pageIndex"`
 	// @inject_tag: uri:"pageSize" form:"pageSize"
-	PageSize int64 `protobuf:"varint,2,opt,name=pageSize,proto3" json:"pageSize,omitempty" uri:"pageSize" form:"pageSize"`
+	PageSize int64 `protobuf:"varint,2,opt,name=pageSize,proto3" json:"pageSize" uri:"pageSize" form:"pageSize"`
 	// @inject_tag: uri:"orderField" form:"orderField"
-	OrderField string `protobuf:"bytes,3,opt,name=orderField,proto3" json:"orderField,omitempty" uri:"orderField" form:"orderField"`
+	OrderField string `protobuf:"bytes,3,opt,name=orderField,proto3" json:"orderField" uri:"orderField" form:"orderField"`
 	// @inject_tag: uri:"desc" form:"desc"
-	Desc bool `protobuf:"varint,4,opt,name=desc,proto3" json:"desc,omitempty" uri:"desc" form:"desc"`
+	Desc bool `protobuf:"varint,4,opt,name=desc,proto3" json:"desc" uri:"desc" form:"desc"`
 	// @inject_tag: uri:"path" form:"path"
-	Path string `protobuf:"bytes,5,opt,name=path,proto3" json:"path,omitempty" uri:"path" form:"path"`
+	Path string `protobuf:"bytes,5,opt,name=path,proto3" json:"path" uri:"path" form:"path"`
 	// @inject_tag: uri:"method" form:"method"
-	Method string `protobuf:"bytes,6,opt,name=method,proto3" json:"method,omitempty" uri:"method" form:"method"`
+	Method string `protobuf:"bytes,6,opt,name=method,proto3" json:"method" uri:"method" form:"method"`
 	// @inject_tag: uri:"group" form:"group"
-	Group string `protobuf:"bytes,7,opt,name=group,proto3" json:"group,omitempty" uri:"group" form:"group"`
+	Group string `protobuf:"bytes,7,opt,name=group,proto3" json:"group" uri:"group" form:"group"`
 	// @inject_tag: uri:"checkAuth" form:"checkAuth"
-	CheckAuth int32 `protobuf:"varint,8,opt,name=checkAuth,proto3" json:"checkAuth,omitempty" uri:"checkAuth" form:"checkAuth"`
+	CheckAuth int32 `protobuf:"varint,8,opt,name=checkAuth,proto3" json:"checkAuth" uri:"checkAuth" form:"checkAuth"`
 	// @inject_tag: uri:"checkLogin" form:"checkLogin"
-	CheckLogin int32 `protobuf:"varint,9,opt,name=checkLogin,proto3" json:"checkLogin,omitempty" uri:"checkLogin" form:"checkLogin"`
+	CheckLogin int32 `protobuf:"varint,9,opt,name=checkLogin,proto3" json:"checkLogin" uri:"checkLogin" form:"checkLogin"`
 }
 
 func (x *QueryAPIRequest) Reset() {
@@ -258,12 +258,12 @@ type QueryAPIResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Code    Code       `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code,omitempty"`
-	Message string     `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Data    []*APIInfo `protobuf:"bytes,3,rep,name=data,proto3" json:"data,omitempty"`
-	Pages   int64      `protobuf:"varint,4,opt,name=pages,proto3" json:"pages,omitempty"`
-	Records int64      `protobuf:"varint,5,opt,name=records,proto3" json:"records,omitempty"`
-	Total   int64      `protobuf:"varint,6,opt,name=total,proto3" json:"total,omitempty"`
+	Code    Code       `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code"`
+	Message string     `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	Data    []*APIInfo `protobuf:"bytes,3,rep,name=data,proto3" json:"data"`
+	Pages   int64      `protobuf:"varint,4,opt,name=pages,proto3" json:"pages"`
+	Records int64      `protobuf:"varint,5,opt,name=records,proto3" json:"records"`
+	Total   int64      `protobuf:"varint,6,opt,name=total,proto3" json:"total"`
 }
 
 func (x *QueryAPIResponse) Reset() {
@@ -345,9 +345,9 @@ type GetAllAPIResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Code    Code       `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code,omitempty"`
-	Message string     `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Data    []*APIInfo `protobuf:"bytes,3,rep,name=data,proto3" json:"data,omitempty"`
+	Code    Code       `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code"`
+	Message string     `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	Data    []*APIInfo `protobuf:"bytes,3,rep,name=data,proto3" json:"data"`
 }
 
 func (x *GetAllAPIResponse) Reset() {
@@ -408,9 +408,9 @@ type GetAPIDetailResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Code    Code     `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code,omitempty"`
-	Message string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Data    *APIInfo `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+	Code    Code     `protobuf:"varint,1,opt,name=code,proto3,enum=usercenter.Code" json:"code"`
+	Message string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	Data    *APIInfo `protobuf:"bytes,3,opt,name=data,proto3" json:"data"`
 }
 
 func (x *GetAPIDetailResponse) Reset() {
