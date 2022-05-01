@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"net/http"
 
-	"dubbo.apache.org/dubbo-go/v3/config"
 	"github.com/gin-gonic/gin"
 	"github.com/nooocode/pkg/constants"
 	"github.com/nooocode/pkg/model"
 	"github.com/nooocode/pkg/utils/log"
 	"github.com/nooocode/pkg/utils/middleware"
 	apipb "github.com/nooocode/usercenter/api"
+	ucconfig "github.com/nooocode/usercenter/config"
 	ucmodel "github.com/nooocode/usercenter/model"
 	userm "github.com/nooocode/usercenter/utils/middleware"
 	wchat "github.com/silenceper/wechat/v2"
@@ -21,22 +21,22 @@ import (
 )
 
 var (
-	miniProgram   *miniprogram.MiniProgram
-	MiniAppID     string
-	MiniAppSecret string
+	miniPrograms = make(map[string]*miniprogram.MiniProgram)
 )
 
 func InitMini() {
-	params := config.GetRootConfig().ConfigCenter.Params
-	wc := wchat.NewWechat()
-	memory := cache.NewMemory()
-	cfg := &miniConfig.Config{
-		AppID:     params["miniAppID"],
-		AppSecret: params["miniAppSecret"],
-		Cache:     memory,
+	for _, miniApp := range ucconfig.DefaultConfig.MiniApp {
+		wc := wchat.NewWechat()
+		miniPrograms[miniApp.Name] = wc.GetMiniProgram(&miniConfig.Config{
+			AppID:     miniApp.ID,
+			AppSecret: miniApp.Secret,
+			Cache:     cache.NewMemory(),
+		})
 	}
-	miniProgram = wc.GetMiniProgram(cfg)
+}
 
+func GetMiniProgram(app string) *miniprogram.MiniProgram {
+	return miniPrograms[app]
 }
 
 type MiniLoginRequest struct {
@@ -45,6 +45,7 @@ type MiniLoginRequest struct {
 	EncryptedData   string `json:"encryptedData"`
 	IV              string `json:"iv"`
 	Register        bool   `json:"register"`
+	App             string `json:"app"`
 }
 
 // wechatMiniLogin
@@ -72,6 +73,14 @@ func wechatMiniLogin(c *gin.Context) {
 		return
 	}
 	fmt.Printf("req:%#v\n", req)
+	miniProgram := GetMiniProgram(req.App)
+	if miniProgram == nil {
+		resp.Code = model.BadRequest
+		resp.Message = "非法应用"
+		c.JSON(http.StatusOK, resp)
+		log.Warnf(context.Background(), "TransID:%s,非法的应用:%v", transID, req.App)
+		return
+	}
 	result, err := miniProgram.GetAuth().Code2Session(req.JsCode)
 	if err != nil {
 		resp.Code = model.BadRequest
@@ -157,6 +166,14 @@ func wechatMiniCheckRegister(c *gin.Context) {
 		return
 	}
 	fmt.Printf("req:%#v\n", req)
+	miniProgram := GetMiniProgram(req.App)
+	if miniProgram == nil {
+		resp.Code = model.BadRequest
+		resp.Message = "非法应用"
+		c.JSON(http.StatusOK, resp)
+		log.Warnf(context.Background(), "TransID:%s,非法的应用:%v", transID, req.App)
+		return
+	}
 	result, err := miniProgram.GetAuth().Code2Session(req.JsCode)
 	if err != nil {
 		resp.Code = model.BadRequest
@@ -197,6 +214,14 @@ func bindPhone(c *gin.Context) {
 	//获取手机号
 	phoneNumber := ""
 	if req.PhoneNumberCode != "" {
+		miniProgram := GetMiniProgram(req.App)
+		if miniProgram == nil {
+			resp.Code = model.BadRequest
+			resp.Message = "非法应用"
+			c.JSON(http.StatusOK, resp)
+			log.Warnf(context.Background(), "TransID:%s,非法的应用:%v", transID, req.App)
+			return
+		}
 		result2, err := miniProgram.GetAuth().GetPhoneNumber(req.PhoneNumberCode)
 		if err != nil {
 			log.Warnf(context.Background(), "TransID:%s,GetPhoneNumber:%v", transID, err)

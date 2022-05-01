@@ -3,12 +3,14 @@ package main
 import (
 	"fmt"
 	"strconv"
+	"strings"
 
 	"dubbo.apache.org/dubbo-go/v3/config"
 	_ "dubbo.apache.org/dubbo-go/v3/imports"
 	"github.com/gin-gonic/gin"
 	"github.com/nooocode/pkg/constants"
 	"github.com/nooocode/pkg/utils"
+	ucconfig "github.com/nooocode/usercenter/config"
 	"github.com/nooocode/usercenter/docs"
 	"github.com/nooocode/usercenter/http"
 	"github.com/nooocode/usercenter/model"
@@ -22,6 +24,7 @@ import (
 // gin-swagger middleware
 // swagger embed files
 func main() {
+
 	config.SetProviderService(&provider.UserProvider{})
 	config.SetProviderService(&provider.TenantProvider{})
 	config.SetProviderService(&provider.RoleProvider{})
@@ -31,24 +34,20 @@ func main() {
 	if err := config.Load(); err != nil {
 		panic(err)
 	}
-	params := config.GetRootConfig().ConfigCenter.Params
-	fmt.Println(params)
-	model.Init(params["mysql"], params["debug"] == "true")
-	tokenExpiredStr := params["token-expired"]
-	tokenExpired := 120
-	if tokenExpiredStr != "" {
-		var err error
-		tokenExpired, err = strconv.Atoi(tokenExpiredStr)
-		if err != nil {
-			panic(err)
-		}
+	nacosAddr := config.GetRootConfig().ConfigCenter.Address
+	list := strings.Split(nacosAddr, ":")
+	port, err := strconv.ParseUint(list[1], 10, 64)
+	if err != nil {
+		panic(err)
 	}
-	token.InitTokenCache(params["token-key"], params["redis-addr"], params["redis-user-name"], params["redis-pwd"], tokenExpired)
-	constants.SetPlatformTenantID(params["platformTenantID"])
-	constants.SetSuperAdminRoleID(params["superAdminRoleID"])
-	constants.SetDefaultRoleID(params["defaultRoleID"])
-	constants.SetEnabelTenant(params["enableTenat"] == "true")
-	model.SetDefaultPwd(params["defaultPwd"])
+	ucconfig.Init(list[0], port, config.GetRootConfig().ConfigCenter.Username, config.GetRootConfig().ConfigCenter.Password)
+	model.Init(ucconfig.DefaultConfig.Mysql, ucconfig.DefaultConfig.Debug)
+	token.InitTokenCache(ucconfig.DefaultConfig.Token.Key, ucconfig.DefaultConfig.Token.RedisAddr, ucconfig.DefaultConfig.Token.RedisName, ucconfig.DefaultConfig.Token.RedisPwd, ucconfig.DefaultConfig.Token.Expired)
+	constants.SetPlatformTenantID(ucconfig.DefaultConfig.PlatformTenantID)
+	constants.SetSuperAdminRoleID(ucconfig.DefaultConfig.SuperAdminRoleID)
+	constants.SetDefaultRoleID(ucconfig.DefaultConfig.DefaultRoleID)
+	constants.SetEnabelTenant(ucconfig.DefaultConfig.EnableTenant)
+	model.SetDefaultPwd(ucconfig.DefaultConfig.DefaultPwd)
 	fmt.Println("started server")
 	Start(48080)
 }

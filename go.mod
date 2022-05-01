@@ -15,6 +15,7 @@ require (
 	github.com/golang-jwt/jwt/v4 v4.4.0
 	github.com/google/uuid v1.3.0
 	github.com/jinzhu/copier v0.3.2
+	github.com/nacos-group/nacos-sdk-go v1.0.9
 	github.com/nooocode/pkg v1.2.0
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/silenceper/wechat/v2 v2.1.2

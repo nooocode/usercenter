@@ -6,3 +6,4 @@ protoc-go-inject-tag -input=menu.pb.go
 protoc-go-inject-tag -input=role.pb.go
 protoc-go-inject-tag -input=tenant.pb.go
 protoc-go-inject-tag -input=user.pb.go
+sed -i "" -e "s/,omitempty//g" *.pb.go
