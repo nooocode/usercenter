@@ -54,6 +54,8 @@ message QueryAPIRequest{
     int32 checkAuth=8;
     // @inject_tag: uri:"checkLogin" form:"checkLogin"
     int32 checkLogin=9;
+    // @inject_tag: uri:"ids" form:"ids"
+    repeated string ids=10;
 }
 
 message QueryAPIResponse{

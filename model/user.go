@@ -161,7 +161,7 @@ type QueryUserResponse struct {
 //@description: 分页查询User
 //@param: user User, info PageInfo, order string, desc bool
 //@return: list []*User, total int64 , err error
-func QueryUser(req *apipb.QueryUserRequest, resp *apipb.QueryUserResponse) {
+func QueryUser(req *apipb.QueryUserRequest, resp *apipb.QueryUserResponse, preload bool) {
 	db := dbClient.DB().Model(&User{})
 
 	if req.UserName != "" {
@@ -202,6 +202,10 @@ func QueryUser(req *apipb.QueryUserRequest, resp *apipb.QueryUserResponse) {
 		db = db.Where("`group` = ?", req.Group)
 	}
 
+	if len(req.Ids) > 0 {
+		db = db.Where("id in ?", req.Ids)
+	}
+
 	OrderStr := "`user_name`"
 	if req.OrderField != "" {
 		if req.Desc {
@@ -211,13 +215,17 @@ func QueryUser(req *apipb.QueryUserRequest, resp *apipb.QueryUserResponse) {
 		}
 	}
 	var err error
-	var users []*User
-	resp.Records, resp.Pages, err = dbClient.PageQueryWithPreload(db, req.PageSize, req.PageIndex, OrderStr, []string{"Tenant"}, &users)
+	var list []*User
+	if preload {
+		resp.Records, resp.Pages, err = dbClient.PageQueryWithPreload(db, req.PageSize, req.PageIndex, OrderStr, []string{"Metadata.MetadataFields", "Fields", clause.Associations}, &list)
+	} else {
+		resp.Records, resp.Pages, err = dbClient.PageQuery(db, req.PageSize, req.PageIndex, OrderStr, &list)
+	}
 	if err != nil {
-		resp.Code = model.InternalServerError
+		resp.Code = apipb.Code_InternalServerError
 		resp.Message = err.Error()
 	} else {
-		resp.Data = UsersToPB(users)
+		resp.Data = UsersToPB(list)
 	}
 	resp.Total = resp.Records
 }
@@ -270,7 +278,7 @@ func UpdateUser(user *User) error {
 		if err != nil {
 			return err
 		}
-
+		//TODO 更新角色后，需要重新登录才能生效
 		var deleteUserRole []string
 		for _, oldUserRole := range oldUser.UserRoles {
 			flag := false

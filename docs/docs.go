@@ -16,6 +16,232 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/api/auth/tenant/export": {
+            "get": {
+                "description": "导出",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/octet-stream"
+                ],
+                "tags": [
+                    "租户管理"
+                ],
+                "summary": "导出",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "jwt token",
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "从1开始",
+                        "name": "pageIndex",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "默认每页10条",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "排序字段",
+                        "name": "orderField",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否倒序排序",
+                        "name": "desc",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "租户名称",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "IDs",
+                        "name": "ids",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/usercenter.CommonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/tenant/import": {
+            "post": {
+                "description": "导入",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "租户管理"
+                ],
+                "summary": "导入",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer+空格+Token",
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "要上传的文件",
+                        "name": "files",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/usercenter.CommonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/user/export": {
+            "get": {
+                "description": "导出",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/octet-stream"
+                ],
+                "tags": [
+                    "用户管理"
+                ],
+                "summary": "导出",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "jwt token",
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "从1开始",
+                        "name": "pageIndex",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "默认每页10条",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "排序字段",
+                        "name": "orderField",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否倒序排序",
+                        "name": "desc",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Nickname",
+                        "name": "nickname",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "UserName",
+                        "name": "userName",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "IDs",
+                        "name": "ids",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/usercenter.CommonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/user/import": {
+            "post": {
+                "description": "导入",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户管理"
+                ],
+                "summary": "导入",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer+空格+Token",
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "要上传的文件",
+                        "name": "files",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/usercenter.CommonResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/core/auth/api/add": {
             "post": {
                 "description": "新增API",
@@ -198,6 +424,128 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/usercenter.EnableRequest"
                         }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/usercenter.CommonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/core/auth/api/export": {
+            "get": {
+                "description": "导出",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/octet-stream"
+                ],
+                "tags": [
+                    "API管理"
+                ],
+                "summary": "导出",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "jwt token",
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "从1开始",
+                        "name": "pageIndex",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "默认每页10条",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "排序字段",
+                        "name": "orderField",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否倒序排序",
+                        "name": "desc",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Group",
+                        "name": "group",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Method",
+                        "name": "method",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Path",
+                        "name": "path",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "IDs",
+                        "name": "ids",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/usercenter.CommonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/core/auth/api/import": {
+            "post": {
+                "description": "导入",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "API管理"
+                ],
+                "summary": "导入",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer+空格+Token",
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "要上传的文件",
+                        "name": "files",
+                        "in": "formData",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -490,6 +838,110 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/core/auth/menu/export": {
+            "get": {
+                "description": "导出",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/octet-stream"
+                ],
+                "tags": [
+                    "菜单管理"
+                ],
+                "summary": "导出",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "jwt token",
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "从1开始",
+                        "name": "pageIndex",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "默认每页10条",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "排序字段",
+                        "name": "orderField",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否倒序排序",
+                        "name": "desc",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "IDs",
+                        "name": "ids",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/usercenter.CommonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/core/auth/menu/import": {
+            "post": {
+                "description": "导入",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "菜单管理"
+                ],
+                "summary": "导入",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer+空格+Token",
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "要上传的文件",
+                        "name": "files",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/usercenter.CommonResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/core/auth/menu/query": {
             "get": {
                 "description": "分页查询",
@@ -777,6 +1229,110 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/usercenter.GetRoleDetailResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/core/auth/role/export": {
+            "get": {
+                "description": "导出",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/octet-stream"
+                ],
+                "tags": [
+                    "角色管理"
+                ],
+                "summary": "导出",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "jwt token",
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "从1开始",
+                        "name": "pageIndex",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "默认每页10条",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "排序字段",
+                        "name": "orderField",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否倒序排序",
+                        "name": "desc",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "IDs",
+                        "name": "ids",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/usercenter.CommonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/core/auth/role/import": {
+            "post": {
+                "description": "导入",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "角色管理"
+                ],
+                "summary": "导入",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer+空格+Token",
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "要上传的文件",
+                        "name": "files",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/usercenter.CommonResponse"
                         }
                     }
                 }

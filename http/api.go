@@ -2,6 +2,9 @@ package http
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -10,6 +13,7 @@ import (
 	apipb "github.com/nooocode/usercenter/api"
 	ucmodel "github.com/nooocode/usercenter/model"
 	"github.com/nooocode/usercenter/utils/middleware"
+	"gorm.io/gorm"
 )
 
 // AddAPI godoc
@@ -259,4 +263,123 @@ func GetAPIDetail(c *gin.Context) {
 		resp.Message = err.Error()
 	}
 	c.JSON(http.StatusOK, resp)
+}
+
+// ImportAPI
+// @Summary 导入
+// @Description 导入
+// @Tags API管理
+// @Accept  mpfd
+// @Produce  json
+// @Param authorization header string true "Bearer+空格+Token"
+// @Param files formData file true "要上传的文件"
+// @Success 200 {object} apipb.CommonResponse
+// @Router /api/core/auth/api/import [post]
+func ImportAPI(c *gin.Context) {
+	resp := &apipb.QueryAPIResponse{
+		Code: apipb.Code_Success,
+	}
+	//从API中读取文件
+	file, fileHeader, err := c.Request.FormFile("files")
+	if err != nil {
+		fmt.Println(err)
+		resp.Code = model.BadRequest
+		resp.Message = err.Error()
+		c.JSON(http.StatusBadRequest, resp)
+		return
+	}
+	//defer 结束时关闭文件
+	defer file.Close()
+	fmt.Println("filename: " + fileHeader.Filename)
+	buf, err := ioutil.ReadAll(file)
+	if err != nil {
+		fmt.Println(err)
+		resp.Code = apipb.Code_BadRequest
+		resp.Message = err.Error()
+		c.JSON(http.StatusBadRequest, resp)
+		return
+	}
+
+	var list []*apipb.APIInfo
+	err = json.Unmarshal(buf, &list)
+	if err != nil {
+		fmt.Println(err)
+		resp.Code = apipb.Code_BadRequest
+		resp.Message = err.Error()
+		c.JSON(http.StatusBadRequest, resp)
+		return
+	}
+	successCount := 0
+	failCount := 0
+	for _, f := range list {
+		err = ucmodel.UpdateAPI(ucmodel.PBToAPI(f))
+		if err == gorm.ErrRecordNotFound {
+			err = ucmodel.CreateAPI(ucmodel.PBToAPI(f))
+		}
+		if err != nil {
+			failCount++
+			fmt.Println(err)
+		} else {
+			successCount++
+		}
+	}
+	resp.Message = fmt.Sprintf("导入成功数量:%d,导入失败数量:%d", successCount, failCount)
+	c.JSON(http.StatusOK, resp)
+}
+
+// ExportAPI godoc
+// @Summary 导出
+// @Description 导出
+// @Tags API管理
+// @Accept  json
+// @Produce  octet-stream
+// @Param authorization header string true "jwt token"
+// @Param pageIndex query int false "从1开始"
+// @Param pageSize query int false "默认每页10条"
+// @Param orderField query string false "排序字段"
+// @Param desc query bool false "是否倒序排序"
+// @Param group query string false "Group"
+// @Param method query string false "Method"
+// @Param path query string false "Path"
+// @Param ids query []string false "IDs"
+// @Success 200 {object} apipb.CommonResponse
+// @Router /api/core/auth/api/export [get]
+func ExportAPI(c *gin.Context) {
+	req := &apipb.QueryAPIRequest{}
+	resp := &apipb.QueryAPIResponse{
+		Code: apipb.Code_Success,
+	}
+	err := c.BindQuery(req)
+	if err != nil {
+		resp.Code = apipb.Code_BadRequest
+		resp.Message = err.Error()
+		c.JSON(http.StatusOK, resp)
+		return
+	}
+	req.PageIndex = 1
+	req.PageSize = 1000
+	ucmodel.QueryAPI(req, resp)
+	if resp.Code != apipb.Code_Success {
+		c.JSON(http.StatusOK, resp)
+		return
+	}
+	c.Header("Content-Type", "application/octet-stream")
+
+	c.Header("Content-Disposition", "attachment;filename=API.json")
+	c.Header("Content-Transfer-Encoding", "binary")
+	buf, _ := json.Marshal(resp.Data)
+	c.Writer.Write(buf)
+}
+
+func RegisterAPIRouter(r *gin.Engine) {
+	apiGroup := r.Group("/api/core/auth/api")
+	apiGroup.POST("add", AddAPI)
+	apiGroup.PUT("update", UpdateAPI)
+	apiGroup.GET("query", QueryAPI)
+	apiGroup.DELETE("delete", DeleteAPI)
+	apiGroup.POST("enable", EnableAPI)
+	apiGroup.GET("all", GetAllAPI)
+	apiGroup.GET("detail", GetAPIDetail)
+	apiGroup.GET("export", ExportAPI)
+	apiGroup.POST("import", ImportAPI)
 }

@@ -158,3 +158,13 @@ func GetTitleDetail(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, resp)
 }
+
+func RegisterTitleRouter(r *gin.Engine) {
+	titleGroup := r.Group("/api/core/auth/title")
+	titleGroup.POST("add", AddTitle)
+	titleGroup.PUT("update", UpdateTitle)
+	titleGroup.GET("query", QueryTitle)
+	titleGroup.DELETE("delete", DeleteTitle)
+	titleGroup.GET("all", GetAllTitle)
+	titleGroup.GET("detail", GetTitleDetail)
+}

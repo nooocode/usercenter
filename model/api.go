@@ -108,6 +108,10 @@ func QueryAPI(req *apipb.QueryAPIRequest, resp *apipb.QueryAPIResponse) {
 		db = db.Where("check_login = ?", req.CheckLogin == 1)
 	}
 
+	if len(req.Ids) > 0 {
+		db = db.Where("id in ?", req.Ids)
+	}
+
 	OrderStr := "`path`"
 	if req.OrderField != "" {
 		if req.Desc {

@@ -157,3 +157,13 @@ func GetAPPDetail(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, resp)
 }
+
+func RegisterAPPRouter(r *gin.Engine) {
+	appGroup := r.Group("/api/core/auth/app")
+	appGroup.POST("add", AddAPP)
+	appGroup.PUT("update", UpdateAPP)
+	appGroup.GET("query", QueryAPP)
+	appGroup.DELETE("delete", DeleteAPP)
+	appGroup.GET("all", GetAllAPP)
+	appGroup.GET("detail", GetAPPDetail)
+}

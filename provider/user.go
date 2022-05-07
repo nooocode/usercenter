@@ -62,7 +62,7 @@ func (u *UserProvider) Query(ctx context.Context, in *apipb.QueryUserRequest) (*
 	resp := &apipb.QueryUserResponse{
 		Code: commonmodel.Success,
 	}
-	model.QueryUser(in, resp)
+	model.QueryUser(in, resp, false)
 	return resp, nil
 }
 

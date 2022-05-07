@@ -270,7 +270,7 @@ func DeleteRole(roleID string) (err error) {
 	})
 }
 
-func QueryRole(req *apipb.QueryRoleRequest, resp *apipb.QueryRoleResponse) {
+func QueryRole(req *apipb.QueryRoleRequest, resp *apipb.QueryRoleResponse, preload bool) {
 	db := dbClient.DB().Model(&Role{})
 
 	if req.Name != "" {
@@ -278,6 +278,10 @@ func QueryRole(req *apipb.QueryRoleRequest, resp *apipb.QueryRoleResponse) {
 	}
 	if req.TenantID != "" {
 		db = db.Where("tenant_id = ?", req.TenantID)
+	}
+
+	if len(req.Ids) > 0 {
+		db = db.Where("id in ?", req.Ids)
 	}
 
 	OrderStr := "`name`"
@@ -289,13 +293,17 @@ func QueryRole(req *apipb.QueryRoleRequest, resp *apipb.QueryRoleResponse) {
 		}
 	}
 	var err error
-	var roles []*Role
-	resp.Records, resp.Pages, err = dbClient.PageQueryWithPreload(db, req.PageSize, req.PageIndex, OrderStr, []string{"Tenant"}, &roles)
+	var list []*Role
+	if preload {
+		resp.Records, resp.Pages, err = dbClient.PageQueryWithPreload(db, req.PageSize, req.PageIndex, OrderStr, []string{"Metadata.MetadataFields", "Fields", clause.Associations}, &list)
+	} else {
+		resp.Records, resp.Pages, err = dbClient.PageQuery(db, req.PageSize, req.PageIndex, OrderStr, &list)
+	}
 	if err != nil {
-		resp.Code = model.InternalServerError
+		resp.Code = apipb.Code_InternalServerError
 		resp.Message = err.Error()
 	} else {
-		resp.Data = RolesToPB(roles)
+		resp.Data = RolesToPB(list)
 	}
 }
 

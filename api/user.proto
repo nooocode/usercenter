@@ -153,6 +153,8 @@ message QueryUserRequest{
     int32 type=13;
     // @inject_tag: uri:"group" form:"group"
     string group=14;
+    // @inject_tag: uri:"ids" form:"ids"
+    repeated string ids=15;
 }
 
 message QueryUserResponse{

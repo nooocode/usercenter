@@ -52,7 +52,7 @@ func (u *RoleProvider) Query(ctx context.Context, in *apipb.QueryRoleRequest) (*
 	resp := &apipb.QueryRoleResponse{
 		Code: commonmodel.Success,
 	}
-	model.QueryRole(in, resp)
+	model.QueryRole(in, resp, false)
 	return resp, nil
 }
 

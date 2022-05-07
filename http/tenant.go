@@ -2,6 +2,9 @@ package http
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -11,6 +14,7 @@ import (
 	apipb "github.com/nooocode/usercenter/api"
 	ucmodel "github.com/nooocode/usercenter/model"
 	"github.com/nooocode/usercenter/utils/middleware"
+	"gorm.io/gorm"
 )
 
 // AddTenant
@@ -305,6 +309,110 @@ func CopyTenant(c *gin.Context) {
 	c.JSON(http.StatusOK, resp)
 }
 
+// ExportTenant godoc
+// @Summary 导出
+// @Description 导出
+// @Tags 租户管理
+// @Accept  json
+// @Produce  octet-stream
+// @Param authorization header string true "jwt token"
+// @Param pageIndex query int false "从1开始"
+// @Param pageSize query int false "默认每页10条"
+// @Param orderField query string false "排序字段"
+// @Param desc query bool false "是否倒序排序"
+// @Param name query string false "租户名称"
+// @Param ids query []string false "IDs"
+// @Success 200 {object} apipb.CommonResponse
+// @Router /api/auth/tenant/export [get]
+func ExportTenant(c *gin.Context) {
+	req := &apipb.QueryTenantRequest{}
+	resp := &apipb.QueryTenantResponse{
+		Code: apipb.Code_Success,
+	}
+	err := c.BindQuery(req)
+	if err != nil {
+		resp.Code = apipb.Code_BadRequest
+		resp.Message = err.Error()
+		c.JSON(http.StatusOK, resp)
+		return
+	}
+	req.PageIndex = 1
+	req.PageSize = 1000
+	ucmodel.QueryTenant(req, resp)
+	if resp.Code != apipb.Code_Success {
+		c.JSON(http.StatusOK, resp)
+		return
+	}
+	c.Header("Content-Type", "application/octet-stream")
+
+	c.Header("Content-Disposition", "attachment;filename=Tenant.json")
+	c.Header("Content-Transfer-Encoding", "binary")
+	buf, _ := json.Marshal(resp.Data)
+	c.Writer.Write(buf)
+}
+
+// ImportTenant
+// @Summary 导入
+// @Description 导入
+// @Tags 租户管理
+// @Accept  mpfd
+// @Produce  json
+// @Param authorization header string true "Bearer+空格+Token"
+// @Param files formData file true "要上传的文件"
+// @Success 200 {object} apipb.CommonResponse
+// @Router /api/auth/tenant/import [post]
+func ImportTenant(c *gin.Context) {
+	resp := &apipb.QueryTenantResponse{
+		Code: apipb.Code_Success,
+	}
+	//从租户中读取文件
+	file, fileHeader, err := c.Request.FormFile("files")
+	if err != nil {
+		fmt.Println(err)
+		resp.Code = model.BadRequest
+		resp.Message = err.Error()
+		c.JSON(http.StatusBadRequest, resp)
+		return
+	}
+	//defer 结束时关闭文件
+	defer file.Close()
+	fmt.Println("filename: " + fileHeader.Filename)
+	buf, err := ioutil.ReadAll(file)
+	if err != nil {
+		fmt.Println(err)
+		resp.Code = apipb.Code_BadRequest
+		resp.Message = err.Error()
+		c.JSON(http.StatusBadRequest, resp)
+		return
+	}
+
+	var list []*apipb.TenantInfo
+	err = json.Unmarshal(buf, &list)
+	if err != nil {
+		fmt.Println(err)
+		resp.Code = apipb.Code_BadRequest
+		resp.Message = err.Error()
+		c.JSON(http.StatusBadRequest, resp)
+		return
+	}
+	successCount := 0
+	failCount := 0
+	for _, f := range list {
+		err = ucmodel.UpdateTenant(ucmodel.PBToTenant(f))
+		if err == gorm.ErrRecordNotFound {
+			err = ucmodel.CreateTenant(ucmodel.PBToTenant(f))
+		}
+		if err != nil {
+			failCount++
+			fmt.Println(err)
+		} else {
+			successCount++
+		}
+	}
+	resp.Message = fmt.Sprintf("导入成功数量:%d,导入失败数量:%d", successCount, failCount)
+	c.JSON(http.StatusOK, resp)
+}
+
 func RegisterTenantRouter(r *gin.Engine) {
 	g := r.Group("/api/core/auth/tenant")
 
@@ -316,4 +424,6 @@ func RegisterTenantRouter(r *gin.Engine) {
 	g.GET("detail", GetTenantDetail)
 	g.POST("copy", CopyTenant)
 	g.POST("enable", EnableTenant)
+	g.GET("export", ExportRole)
+	g.POST("import", ImportRole)
 }

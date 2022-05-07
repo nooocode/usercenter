@@ -52,7 +52,7 @@ func (u *MenuProvider) Query(ctx context.Context, in *apipb.QueryMenuRequest) (*
 	resp := &apipb.QueryMenuResponse{
 		Code: commonmodel.Success,
 	}
-	model.QueryMenu(in, resp)
+	model.QueryMenu(in, resp, false)
 	return resp, nil
 }
 

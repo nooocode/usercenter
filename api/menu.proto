@@ -75,6 +75,8 @@ message QueryMenuRequest{
     string parentID=8;
     // @inject_tag: uri:"level" form:"level"
     int32 level=9;
+    // @inject_tag: uri:"ids" form:"ids"
+    repeated string ids=10;
 }
 
 message QueryMenuResponse{

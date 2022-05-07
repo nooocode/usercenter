@@ -94,6 +94,10 @@ func QueryTenant(req *apipb.QueryTenantRequest, resp *apipb.QueryTenantResponse)
 		db = db.Where("town = ?", req.Town)
 	}
 
+	if len(req.Ids) > 0 {
+		db = db.Where("id in ?", req.Ids)
+	}
+
 	OrderStr := "`created_at`"
 	if req.OrderField != "" {
 		if req.Desc {

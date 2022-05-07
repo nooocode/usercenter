@@ -61,6 +61,8 @@ message QueryTenantRequest{
     //街道/镇
     // @inject_tag: uri:"town" form:"town"
     string town=9;
+    // @inject_tag: uri:"ids" form:"ids"
+    repeated string ids=10;
 }
 
 message QueryTenantResponse{

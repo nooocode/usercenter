@@ -618,6 +618,156 @@ definitions:
 info:
   contact: {}
 paths:
+  /api/auth/tenant/export:
+    get:
+      consumes:
+      - application/json
+      description: 导出
+      parameters:
+      - description: jwt token
+        in: header
+        name: authorization
+        required: true
+        type: string
+      - description: 从1开始
+        in: query
+        name: pageIndex
+        type: integer
+      - description: 默认每页10条
+        in: query
+        name: pageSize
+        type: integer
+      - description: 排序字段
+        in: query
+        name: orderField
+        type: string
+      - description: 是否倒序排序
+        in: query
+        name: desc
+        type: boolean
+      - description: 租户名称
+        in: query
+        name: name
+        type: string
+      - description: IDs
+        in: query
+        items:
+          type: string
+        name: ids
+        type: array
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/usercenter.CommonResponse'
+      summary: 导出
+      tags:
+      - 租户管理
+  /api/auth/tenant/import:
+    post:
+      consumes:
+      - multipart/form-data
+      description: 导入
+      parameters:
+      - description: Bearer+空格+Token
+        in: header
+        name: authorization
+        required: true
+        type: string
+      - description: 要上传的文件
+        in: formData
+        name: files
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/usercenter.CommonResponse'
+      summary: 导入
+      tags:
+      - 租户管理
+  /api/auth/user/export:
+    get:
+      consumes:
+      - application/json
+      description: 导出
+      parameters:
+      - description: jwt token
+        in: header
+        name: authorization
+        required: true
+        type: string
+      - description: 从1开始
+        in: query
+        name: pageIndex
+        type: integer
+      - description: 默认每页10条
+        in: query
+        name: pageSize
+        type: integer
+      - description: 排序字段
+        in: query
+        name: orderField
+        type: string
+      - description: 是否倒序排序
+        in: query
+        name: desc
+        type: boolean
+      - description: Nickname
+        in: query
+        name: nickname
+        type: string
+      - description: UserName
+        in: query
+        name: userName
+        type: string
+      - description: IDs
+        in: query
+        items:
+          type: string
+        name: ids
+        type: array
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/usercenter.CommonResponse'
+      summary: 导出
+      tags:
+      - 用户管理
+  /api/auth/user/import:
+    post:
+      consumes:
+      - multipart/form-data
+      description: 导入
+      parameters:
+      - description: Bearer+空格+Token
+        in: header
+        name: authorization
+        required: true
+        type: string
+      - description: 要上传的文件
+        in: formData
+        name: files
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/usercenter.CommonResponse'
+      summary: 导入
+      tags:
+      - 用户管理
   /api/core/auth/api/add:
     post:
       consumes:
@@ -744,6 +894,87 @@ paths:
           schema:
             $ref: '#/definitions/usercenter.CommonResponse'
       summary: 禁用/启用API
+      tags:
+      - API管理
+  /api/core/auth/api/export:
+    get:
+      consumes:
+      - application/json
+      description: 导出
+      parameters:
+      - description: jwt token
+        in: header
+        name: authorization
+        required: true
+        type: string
+      - description: 从1开始
+        in: query
+        name: pageIndex
+        type: integer
+      - description: 默认每页10条
+        in: query
+        name: pageSize
+        type: integer
+      - description: 排序字段
+        in: query
+        name: orderField
+        type: string
+      - description: 是否倒序排序
+        in: query
+        name: desc
+        type: boolean
+      - description: Group
+        in: query
+        name: group
+        type: string
+      - description: Method
+        in: query
+        name: method
+        type: string
+      - description: Path
+        in: query
+        name: path
+        type: string
+      - description: IDs
+        in: query
+        items:
+          type: string
+        name: ids
+        type: array
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/usercenter.CommonResponse'
+      summary: 导出
+      tags:
+      - API管理
+  /api/core/auth/api/import:
+    post:
+      consumes:
+      - multipart/form-data
+      description: 导入
+      parameters:
+      - description: Bearer+空格+Token
+        in: header
+        name: authorization
+        required: true
+        type: string
+      - description: 要上传的文件
+        in: formData
+        name: files
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/usercenter.CommonResponse'
+      summary: 导入
       tags:
       - API管理
   /api/core/auth/api/query:
@@ -929,6 +1160,75 @@ paths:
           schema:
             $ref: '#/definitions/usercenter.GetMenuDetailResponse'
       summary: 查询明细
+      tags:
+      - 菜单管理
+  /api/core/auth/menu/export:
+    get:
+      consumes:
+      - application/json
+      description: 导出
+      parameters:
+      - description: jwt token
+        in: header
+        name: authorization
+        required: true
+        type: string
+      - description: 从1开始
+        in: query
+        name: pageIndex
+        type: integer
+      - description: 默认每页10条
+        in: query
+        name: pageSize
+        type: integer
+      - description: 排序字段
+        in: query
+        name: orderField
+        type: string
+      - description: 是否倒序排序
+        in: query
+        name: desc
+        type: boolean
+      - description: IDs
+        in: query
+        items:
+          type: string
+        name: ids
+        type: array
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/usercenter.CommonResponse'
+      summary: 导出
+      tags:
+      - 菜单管理
+  /api/core/auth/menu/import:
+    post:
+      consumes:
+      - multipart/form-data
+      description: 导入
+      parameters:
+      - description: Bearer+空格+Token
+        in: header
+        name: authorization
+        required: true
+        type: string
+      - description: 要上传的文件
+        in: formData
+        name: files
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/usercenter.CommonResponse'
+      summary: 导入
       tags:
       - 菜单管理
   /api/core/auth/menu/query:
@@ -1122,6 +1422,75 @@ paths:
           schema:
             $ref: '#/definitions/usercenter.GetRoleDetailResponse'
       summary: 查询明细
+      tags:
+      - 角色管理
+  /api/core/auth/role/export:
+    get:
+      consumes:
+      - application/json
+      description: 导出
+      parameters:
+      - description: jwt token
+        in: header
+        name: authorization
+        required: true
+        type: string
+      - description: 从1开始
+        in: query
+        name: pageIndex
+        type: integer
+      - description: 默认每页10条
+        in: query
+        name: pageSize
+        type: integer
+      - description: 排序字段
+        in: query
+        name: orderField
+        type: string
+      - description: 是否倒序排序
+        in: query
+        name: desc
+        type: boolean
+      - description: IDs
+        in: query
+        items:
+          type: string
+        name: ids
+        type: array
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/usercenter.CommonResponse'
+      summary: 导出
+      tags:
+      - 角色管理
+  /api/core/auth/role/import:
+    post:
+      consumes:
+      - multipart/form-data
+      description: 导入
+      parameters:
+      - description: Bearer+空格+Token
+        in: header
+        name: authorization
+        required: true
+        type: string
+      - description: 要上传的文件
+        in: formData
+        name: files
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/usercenter.CommonResponse'
+      summary: 导入
       tags:
       - 角色管理
   /api/core/auth/role/query:

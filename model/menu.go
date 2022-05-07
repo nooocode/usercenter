@@ -237,26 +237,12 @@ func GetMenuByID(id string) (*Menu, error) {
 	return menu, err
 }
 
-type QueryMenuRequest struct {
-	model.CommonRequest
-	Name     string `json:"name" form:"name" uri:"name"`
-	Path     string `json:"path" form:"path" uri:"path"`
-	ParentID string `json:"group" form:"group" uri:"group"`
-	Title    string `json:"title"  form:"title" uri:"title"`
-	Level    uint   `json:"level"  form:"level" uri:"level"`
-}
-
-type QueryMenuResponse struct {
-	model.CommonResponse
-	Data []*Menu `json:"data"`
-}
-
 //@author: [guoxf](https://github.com/guoxf)
 //@function: GetMenuInfoList
 //@description: 分页查询Menu
 //@param: api Menu, info PageInfo, order string, desc bool
 //@return: list []*Menu, total int64 , err error
-func QueryMenu(req *apipb.QueryMenuRequest, resp *apipb.QueryMenuResponse) {
+func QueryMenu(req *apipb.QueryMenuRequest, resp *apipb.QueryMenuResponse, preload bool) {
 	db := dbClient.DB().Model(&Menu{})
 
 	if req.Name != "" {
@@ -279,6 +265,10 @@ func QueryMenu(req *apipb.QueryMenuRequest, resp *apipb.QueryMenuResponse) {
 		db = db.Where("`level` = ?", req.Level)
 	}
 
+	if len(req.Ids) > 0 {
+		db = db.Where("id in ?", req.Ids)
+	}
+
 	OrderStr := "`sort`"
 	if req.OrderField != "" {
 		if req.Desc {
@@ -288,10 +278,17 @@ func QueryMenu(req *apipb.QueryMenuRequest, resp *apipb.QueryMenuResponse) {
 		}
 	}
 	var err error
-	resp.Records, resp.Pages, err = dbClient.PageQuery(db, req.PageSize, req.PageIndex, OrderStr, &resp.Data)
+	var list []*Menu
+	if preload {
+		resp.Records, resp.Pages, err = dbClient.PageQueryWithPreload(db, req.PageSize, req.PageIndex, OrderStr, []string{"Metadata.MetadataFields", "Fields", clause.Associations}, &list)
+	} else {
+		resp.Records, resp.Pages, err = dbClient.PageQuery(db, req.PageSize, req.PageIndex, OrderStr, &list)
+	}
 	if err != nil {
-		resp.Code = model.InternalServerError
+		resp.Code = apipb.Code_InternalServerError
 		resp.Message = err.Error()
+	} else {
+		resp.Data = MenusToPB(list)
 	}
 	resp.Total = resp.Records
 }
