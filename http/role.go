@@ -358,6 +358,6 @@ func RegisterRoleRouter(r *gin.Engine) {
 	roleGroup.DELETE("delete", DeleteRole)
 	roleGroup.GET("all", GetAllRole)
 	roleGroup.GET("detail", GetRoleDetail)
-	roleGroup.GET("export", ExportMenu)
-	roleGroup.POST("import", ImportMenu)
+	roleGroup.GET("export", ExportRole)
+	roleGroup.POST("import", ImportRole)
 }

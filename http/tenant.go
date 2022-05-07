@@ -424,6 +424,6 @@ func RegisterTenantRouter(r *gin.Engine) {
 	g.GET("detail", GetTenantDetail)
 	g.POST("copy", CopyTenant)
 	g.POST("enable", EnableTenant)
-	g.GET("export", ExportRole)
-	g.POST("import", ImportRole)
+	g.GET("export", ExportTenant)
+	g.POST("import", ImportTenant)
 }
