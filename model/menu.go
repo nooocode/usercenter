@@ -280,7 +280,7 @@ func QueryMenu(req *apipb.QueryMenuRequest, resp *apipb.QueryMenuResponse, prelo
 	var err error
 	var list []*Menu
 	if preload {
-		resp.Records, resp.Pages, err = dbClient.PageQueryWithPreload(db, req.PageSize, req.PageIndex, OrderStr, []string{"Metadata.MetadataFields", "Fields", clause.Associations}, &list)
+		resp.Records, resp.Pages, err = dbClient.PageQueryWithPreload(db, req.PageSize, req.PageIndex, OrderStr, []string{"MenuFuncs.MenuFuncApis", "Parameters", clause.Associations}, &list)
 	} else {
 		resp.Records, resp.Pages, err = dbClient.PageQuery(db, req.PageSize, req.PageIndex, OrderStr, &list)
 	}

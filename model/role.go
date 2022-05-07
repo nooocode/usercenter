@@ -295,7 +295,7 @@ func QueryRole(req *apipb.QueryRoleRequest, resp *apipb.QueryRoleResponse, prelo
 	var err error
 	var list []*Role
 	if preload {
-		resp.Records, resp.Pages, err = dbClient.PageQueryWithPreload(db, req.PageSize, req.PageIndex, OrderStr, []string{"Metadata.MetadataFields", "Fields", clause.Associations}, &list)
+		resp.Records, resp.Pages, err = dbClient.PageQueryWithPreload(db, req.PageSize, req.PageIndex, OrderStr, []string{"RoleMenus", clause.Associations}, &list)
 	} else {
 		resp.Records, resp.Pages, err = dbClient.PageQuery(db, req.PageSize, req.PageIndex, OrderStr, &list)
 	}

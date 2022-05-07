@@ -217,7 +217,7 @@ func QueryUser(req *apipb.QueryUserRequest, resp *apipb.QueryUserResponse, prelo
 	var err error
 	var list []*User
 	if preload {
-		resp.Records, resp.Pages, err = dbClient.PageQueryWithPreload(db, req.PageSize, req.PageIndex, OrderStr, []string{"Metadata.MetadataFields", "Fields", clause.Associations}, &list)
+		resp.Records, resp.Pages, err = dbClient.PageQueryWithPreload(db, req.PageSize, req.PageIndex, OrderStr, []string{"UserRoles", clause.Associations}, &list)
 	} else {
 		resp.Records, resp.Pages, err = dbClient.PageQuery(db, req.PageSize, req.PageIndex, OrderStr, &list)
 	}
